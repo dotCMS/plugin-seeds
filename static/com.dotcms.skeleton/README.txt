@@ -1,11 +1,5 @@
-This plugin is the proper place to override 
-the dotCMS default configuration.  By adding 
-files under the ./conf folder, you can modify 
-your dotCMS's behavior. 
+This plugin works as an skeleton/basic example of a static plugin.
 
-See the example
+It can be imported to the IDE and use gradle jar tasks to compile the /src folder.
 
-	$DOTCMS_ROOT/docs/examples/plugins/hello.world 
-
-for a complete demonstration of what you can 
-do with plugins
+For complete deploy process this folder needs to be under /plugins directory of a dotCMS official distribution.
