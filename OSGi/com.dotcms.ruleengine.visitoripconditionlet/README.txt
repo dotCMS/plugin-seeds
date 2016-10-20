@@ -71,7 +71,7 @@ a plugin can Import the packages to use them inside the OSGI blundle.
 --
 --
 --
-com.dotmarketing.osgi.ruleengine.conditionlet.MyConditionlet
+com.dotmarketing.osgi.ruleengine.conditionlet.VisitorIPConditionlet
 -----------------------------------------------
 
 Implementation of a Conditionlet object.

@@ -68,7 +68,7 @@ a plugin can Import the packages to use them inside the OSGI blundle.
 --
 --
 --
-com.dotmarketing.osgi.ruleengine.Actionlet.SampleOSGiRuleActionlet
+com.dotmarketing.osgi.ruleengine.actionlet.VelocityScriptingActionlet
 -----------------------------------------------
 
 Implementation of a Actionlet object.
@@ -79,3 +79,28 @@ Activator
 
 This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
 This activator will allow you to register the Actionlet object using the GenericBundleActivator.registerActionlet method
+
+———————————
+How to Use
+———————————
+
+Once the plugin is installed, then :
+
+1) Go to the Rule Engine portlet
+2) Add or modify a rule
+3) Add this VelocityScriptingActionlet actionlet passing the following parameter:
+    3.1) request attribute key value
+    3.2) and the velocity script code to execute.
+
+Note: If The velocity script uses quotes or single quotes, those should be escaped to avoid a validation error on the rule engine. The quotes can be replaced with this values:
+
+1) For single quotes (‘) replace with ${singleQuote}
+2) For double quotes (“) replace with ${quote}
+
+
+for example if you velocity code is:
+<ul> #foreach($con in $dotcontent.pull(“+contentType:News”, 2, “random”)) <li>$con.title</li> #end </ul>
+
+then should pass this code:
+
+<ul> #foreach($con in $dotcontent.pull(${quote}+contentType:News${quote}, 2, ${quote}random${quote})) <li>$con.title</li> #end </ul>
