@@ -11,7 +11,6 @@ version = '1.0'
 /* This plugin uses Java 1.8 */
 sourceCompatibility = '1.8'
 
-
 configurations {
     provided
     provided.extendsFrom(compile)
@@ -21,14 +20,14 @@ repositories {
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
+    mavenCentral()
 }
 
 dependencies {
     compile(group: 'com.dotcms', name: 'dotcms', version: '3.6.0') {
         transitive = true
     }
-    /* Specifying an alternate configuration (see above 'configurations') keeps servlet-api.jar from being added to our own output Jar. */
-    provided "javax.servlet:servlet-api:2.5"
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
 
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
