@@ -87,7 +87,7 @@ public class VisitorIPConditionlet extends Conditionlet<VisitorIPConditionlet.In
 		public final Comparison<String> comparison;
 
 		public Instance(Conditionlet definition, Map<String, ParameterModel> parameters) {
-			checkState(parameters != null && parameters.size() == 2, "Current URL Condition requires parameters %s and %s.", COMPARISON_KEY, CIDR_NETMASK_RANGE__KEY);
+			checkState(parameters != null && parameters.size() == 2, "Current Visitor IP Condition requires parameters %s and %s.", COMPARISON_KEY, CIDR_NETMASK_RANGE__KEY);
 			assert parameters != null;
 			this.netmask = parameters.get(CIDR_NETMASK_RANGE__KEY).getValue();
 			String comparisonValue = parameters.get(COMPARISON_KEY).getValue();
