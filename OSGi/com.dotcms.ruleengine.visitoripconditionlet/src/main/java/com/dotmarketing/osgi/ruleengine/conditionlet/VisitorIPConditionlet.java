@@ -37,7 +37,7 @@ public class VisitorIPConditionlet extends Conditionlet<VisitorIPConditionlet.In
 	public static final String CIDR_NETMASK_RANGE__KEY = "cidr_netmask";
 	private static final String I18N_BASE = "api.ruleengine.system.conditionlet.VisitorIPCIDR";
 	
-	private static final ParameterDefinition<TextType> netmask = new ParameterDefinition<>(3, CIDR_NETMASK_RANGE__KEY,
+	private static final ParameterDefinition<TextType> netmask = new ParameterDefinition<>(2, CIDR_NETMASK_RANGE__KEY,
 			new TextInput<>(new TextType().required()));
 
 
