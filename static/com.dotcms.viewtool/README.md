@@ -2,4 +2,9 @@ This plugin works as an skeleton/basic example of a static plugin. It can be imp
 
 Viewtool: Java classes that are made accessible to velocity templates.
 
+Usage:
+```
+$helloWorld.hello()
+```
+
 [dotCMS documentation](https://dotcms.com/docs/latest/custom-viewtool-example)
