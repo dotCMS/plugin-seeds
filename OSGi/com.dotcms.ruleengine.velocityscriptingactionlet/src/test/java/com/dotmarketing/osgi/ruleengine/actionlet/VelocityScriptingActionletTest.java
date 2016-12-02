@@ -1,26 +1,19 @@
 package com.dotmarketing.osgi.ruleengine.actionlet;
 
-import com.dotcms.repackage.com.google.common.collect.ImmutableMap;
-import com.dotmarketing.portlets.rules.model.ParameterModel;
-import com.dotmarketing.portlets.rules.model.RuleAction;
-import com.dotmarketing.util.Logger;
-import com.dotmarketing.util.UtilMethods;
+import static com.dotmarketing.osgi.ruleengine.actionlet.VelocityScriptingActionlet.INPUT_VELOCITY_SCRIPT_KEY;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.mockito.Mockito;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static com.dotmarketing.osgi.ruleengine.actionlet.VelocityScriptingActionlet.REQUEST_KEY;
-import static com.dotmarketing.osgi.ruleengine.actionlet.VelocityScriptingActionlet.INPUT_VELOCITY_SCRIPT_KEY;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
+import com.dotmarketing.portlets.rules.model.ParameterModel;
+import com.dotmarketing.portlets.rules.model.RuleAction;
 
 public class VelocityScriptingActionletTest {
    
@@ -29,7 +22,7 @@ public class VelocityScriptingActionletTest {
     public void testGeneralConfiguration() throws Exception {
     	VelocityScriptingActionlet actionlet = new VelocityScriptingActionlet();
         assertThat(actionlet.getI18nKey(), is("api.system.ruleengine.actionlet.VelocityScripting"));
-        assertThat("There is only two parameters.", actionlet.getParameterDefinitions().size(), is(2));
+        assertThat("There is onlye one parameter.", actionlet.getParameterDefinitions().size(), is(1));
         assertThat(actionlet.getId(), is("VelocityScriptingActionlet"));
     }
 
@@ -37,9 +30,7 @@ public class VelocityScriptingActionletTest {
     public void testValidateParameters(SimpleCase theCase) throws Exception {
     	VelocityScriptingActionlet actionlet = new VelocityScriptingActionlet();
         List<ParameterModel> list = new ArrayList<>();
-        ParameterModel param = new ParameterModel(REQUEST_KEY, theCase.key);
-        list.add(param);
-        param = new ParameterModel(INPUT_VELOCITY_SCRIPT_KEY, theCase.value);
+        ParameterModel param = new ParameterModel(INPUT_VELOCITY_SCRIPT_KEY, theCase.value);
         list.add(param);
         
         RuleAction actionInstance = new RuleAction();
