@@ -3,13 +3,13 @@ package com.dotmarketing.osgi.ruleengine.conditionlet;
 import static com.dotcms.repackage.com.google.common.base.Preconditions.checkState;
 import static com.dotmarketing.portlets.rules.parameter.comparison.Comparison.IS;
 import static com.dotmarketing.portlets.rules.parameter.comparison.Comparison.IS_NOT;
-import static com.dotmarketing.portlets.rules.parameter.comparison.Comparison.NETMASK;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.UnknownHostException;
 
 import com.dotcms.repackage.org.apache.commons.net.util.SubnetUtils;
 import com.dotcms.util.HttpRequestDataUtil;
@@ -21,7 +21,6 @@ import com.dotmarketing.portlets.rules.exception.ComparisonNotSupportedException
 import com.dotmarketing.portlets.rules.model.ParameterModel;
 import com.dotmarketing.portlets.rules.parameter.ParameterDefinition;
 import com.dotmarketing.portlets.rules.parameter.comparison.Comparison;
-import com.dotmarketing.portlets.rules.parameter.comparison.Is;
 import com.dotmarketing.portlets.rules.parameter.display.TextInput;
 import com.dotmarketing.portlets.rules.parameter.type.TextType;
 import com.dotmarketing.util.Logger;
