@@ -1,17 +1,15 @@
 
-README
+# README
 ------
 
-This plugin allows to add an Actionlet (VelocityScriptingActionlet) that allow users to execute 
-some velocity code in a rule and return the result as a request attribute. This bundle plugin is 
-an example of how to add dotcms Rule Engine Actionlet classes with our bundle plugin.
+This plugin allows to add an Rules Engine Actionlet (VelocityScriptingActionlet) that allow users to execute 
+arbitrary velocity code in a rule.  Using this, an admin can leverage the power of Velocity and work directly with the request, response and session objects.
 
-
-How to build this example
+## How to build this example
 -------------------------
 
 To install all you need to do is build the JAR. to do this run
-./gradlew jar
+```./gradlew jar```
 This will build a jar in the build/libs directory
 
 1. To install this bundle:
@@ -26,7 +24,7 @@ Remove the bundle jar file from the Felix OSGI container (dotCMS/felix/load).
         OR
 Undeploy the bundle using the dotCMS UI (CMS Admin->Dynamic Plugins->Undeploy).
 
-How to add a Actionlet OSGI plugin
+## How to add a Actionlet OSGI plugin
 ---------------------------------
 
 --
