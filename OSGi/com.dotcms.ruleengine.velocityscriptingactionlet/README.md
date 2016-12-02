@@ -29,10 +29,9 @@ Undeploy the bundle using the dotCMS UI (CMS Admin->Dynamic Plugins->Undeploy).
 
 Once the plugin is installed, then :
 
-1) Go to the Rule Engine portlet
-2) Add or modify a rule
-3) Add this VelocityScriptingActionlet actionlet passing the following parameter:
-    3.1) and the velocity script code to execute.
+1. Go to the Rule Engine portlet
+2. Add or modify a rule
+3. Add this VelocityScriptingActionlet actionlet and type the velocity code as the parameter
 
 Note: If The velocity script uses quotes or single quotes, those should be escaped to avoid a validation error on the rule engine. The quotes can be replaced with this values:
 
