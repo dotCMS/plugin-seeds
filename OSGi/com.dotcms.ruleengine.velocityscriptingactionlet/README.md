@@ -1,6 +1,6 @@
 
 # README
-------
+
 
 This plugin allows to add an Rules Engine Actionlet (VelocityScriptingActionlet) that allow users to execute 
 arbitrary velocity code in a rule.  Using this, an admin can leverage the power of Velocity and work directly with the request, response and session objects.
