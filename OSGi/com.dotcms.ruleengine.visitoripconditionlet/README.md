@@ -1,6 +1,6 @@
 # README
 
-This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a speficif subnet.  It takes either a single standard IP(v4) like 192.168.1.45 or a whole subnet using CIDR notation, e.g. 192.168.1.1/24
+This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a specific subnet.  It takes either a single standard IP(v4) like `192.168.1.45` or a whole subnet using CIDR notation, e.g. `192.168.1.1/24`
 
 **Note:** This plugin requires to add in the startup.sh or dotStartup.sh the following JAVA_OPTS parameter.
 If you are using tomcat to retrieve the IP's with IPv4 format. `JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"`
