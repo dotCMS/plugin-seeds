@@ -6,7 +6,6 @@ This plugin allows to add an Rules Engine Actionlet (VelocityScriptingActionlet)
 arbitrary velocity code in a rule.  Using this, an admin can leverage the power of Velocity and work directly with the request, response and session objects.
 
 ## How to build this example
--------------------------
 
 To install all you need to do is build the JAR. to do this run
 ```./gradlew jar```
@@ -26,7 +25,7 @@ Undeploy the bundle using the dotCMS UI (CMS Admin->Dynamic Plugins->Undeploy).
 
 
 ## How to Use
-———————————
+
 
 Once the plugin is installed, then :
 
@@ -40,10 +39,11 @@ Note: If The velocity script uses quotes or single quotes, those should be escap
 1) For single quotes (‘) replace with ${singleQuote}
 2) For double quotes (“) replace with ${quote}
 
-
 for example if you velocity code is:
+```
 <ul> #foreach($con in $dotcontent.pull(“+contentType:News”, 2, “random”)) <li>$con.title</li> #end </ul>
-
+```
 then should pass this code:
-
+```
 <ul> #foreach($con in $dotcontent.pull(${quote}+contentType:News${quote}, 2, ${quote}random${quote})) <li>$con.title</li> #end </ul>
+```
