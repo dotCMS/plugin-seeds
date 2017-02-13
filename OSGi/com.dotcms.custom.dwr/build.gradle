@@ -10,16 +10,21 @@ configurations {
     ext.resourcesLibsFolder = 'src/main/resources/libs'
 }
 
-repositories {
-    maven {
+
+/*repositories {
+	maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
+}*/
+repositories {
+    maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+    maven { url "http://repo.dotcms.com/artifactory/libs-snapshot-local" }
 }
 
 dependencies {
 
     compile fileTree(dir: configurations.resourcesLibsFolder, include: '*.jar')
-    compile(group: 'com.dotcms', name: 'dotcms', version: '3.6.0') {
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
         transitive = true
     }
     providedCompile "javax.servlet:servlet-api:2.5"
