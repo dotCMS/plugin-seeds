@@ -27,7 +27,7 @@ dependencies {
     compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
         transitive = true
     }
-    providedCompile "javax.servlet:servlet-api:2.5"
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 }
 
 jar {
@@ -38,8 +38,8 @@ jar {
         instruction 'Bundle-Description', 'DWR OSGi Example for dotcms'
         instruction 'Bundle-DocURL', 'http://www.dotcms.com'
         instruction 'Bundle-Activator', 'com.dotmarketing.osgi.custom.dwr.osgi.Activator'
-        instruction 'Import-Package', 'com.dotmarketing.osgi',
-                'javax.servlet', 'com.dotcms.repackage.org.apache.felix.http.api','*;version=0'
+        instruction 'Import-Package', 'com.dotmarketing.osgi;version=0',
+                'javax.servlet;version=0', 'org.apache.felix.http.api;version=0','*;version=0'
     }
 }
 
