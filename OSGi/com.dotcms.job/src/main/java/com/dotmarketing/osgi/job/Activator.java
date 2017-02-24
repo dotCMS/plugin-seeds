@@ -1,6 +1,6 @@
 package com.dotmarketing.osgi.job;
 
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleContext;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.quartz.CronScheduledTask;
 import org.quartz.CronTrigger;

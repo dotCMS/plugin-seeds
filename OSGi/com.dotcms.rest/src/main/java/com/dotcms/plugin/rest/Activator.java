@@ -1,6 +1,6 @@
 package com.dotcms.plugin.rest;
 
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleContext;
 import com.dotcms.rest.config.RestServiceUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.util.Logger;

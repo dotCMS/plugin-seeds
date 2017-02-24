@@ -1,6 +1,6 @@
 package com.dotcms.osgi;
 
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleContext;
 import com.dotmarketing.osgi.GenericBundleActivator;
 
 /**

@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.dotcms.api.tree.Parentable;
 import com.dotcms.repackage.org.apache.commons.lang.builder.ToStringBuilder;
+import com.dotcms.api.tree.TreeableAPI;
 import com.dotmarketing.beans.Identifier;
 import com.dotmarketing.beans.Inode;
 import com.dotmarketing.business.APILocator;
@@ -27,7 +29,7 @@ import com.dotmarketing.util.UtilMethods;
 import com.liferay.portal.model.User;
 
 /** @author Hibernate CodeGenerator */
-public class Folder extends Inode implements Serializable, Permissionable, Treeable, Ruleable {
+public class Folder extends Inode implements Serializable, Permissionable, Treeable, Ruleable, Parentable {
 
     private static final long serialVersionUID = 1L;
 
@@ -78,6 +80,15 @@ public class Folder extends Inode implements Serializable, Permissionable, Treea
         return name;
     }
 
+    @Override
+    public boolean isParent() {
+        return true;
+    }
+
+    @Override
+    public List<Treeable> getChildren(User user, boolean live, boolean working, boolean archived, boolean respectFrontEndPermissions) throws DotSecurityException, DotDataException {
+        return APILocator.getTreeableAPI().loadAssetsUnderFolder(this,user,live,working, archived, respectFrontEndPermissions);
+    }
 
 
     /**
@@ -162,7 +173,7 @@ public class Folder extends Inode implements Serializable, Permissionable, Treea
      * @param hostId The hostId to set.
      */
     public void setHostId(String hostId) {
-        if(!InodeUtils.isSet(hostId)){
+        if(!InodeUtils.isSet(hostId) && UtilMethods.isSet(this.identifier)){
             try {
                 hostId = APILocator.getIdentifierAPI().find(this.identifier).getHostId();
             } catch (Exception e) {
@@ -220,6 +231,8 @@ public class Folder extends Inode implements Serializable, Permissionable, Treea
         retMap.put("showOnMenu", this.showOnMenu);
         retMap.put("sortOrder", this.sortOrder);
         retMap.put("defaultFileType", this.defaultFileType);
+        retMap.put("path", this.getPath());
+        retMap.put("modDate", this.getModDate());
         return retMap;
     }
 
@@ -269,18 +282,15 @@ public class Folder extends Inode implements Serializable, Permissionable, Treea
         Identifier id = null;
 
         try {
+
             id = APILocator.getIdentifierAPI().find(this.getIdentifier());
+
+            System.out.println("Path: " + id!=null?id.getPath():null);
         } catch (DotDataException e) {
             Logger.error(Folder.class, e.getMessage(), e);
         } catch (Exception e) {
             Logger.debug(this, " This is usually not a problem as it is usually just the identifier not being found" +  e.getMessage(), e);
         }
-
-        //TODO: New code in this class!
-        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
-        Logger.info( this, "Modified Code, this class was redefined." );
-        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
-        //TODO: New code in this class!
 
         return id!=null?id.getPath():null;
     }

@@ -1,6 +1,6 @@
 package com.dotmarketing.osgi.servlet;
 
-import com.dotcms.repackage.org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTracker;
 import com.dotmarketing.osgi.service.HelloWorld;
 
 import javax.servlet.ServletException;
@@ -22,6 +22,8 @@ public class HelloWorldServlet extends HttpServlet {
 
     protected void doGet ( HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse ) throws ServletException, IOException {
 
+        System.out.println("Saying hello");
+
         httpServletResponse.setContentType( "text/html" );
 
         ServletOutputStream out = httpServletResponse.getOutputStream();
@@ -32,6 +34,8 @@ public class HelloWorldServlet extends HttpServlet {
 
         if ( service != null ) {
             out.println( service.hello() );
+        } else {
+            System.out.println("No Hello World service");
         }
 
         out.println( "</body></html>" );

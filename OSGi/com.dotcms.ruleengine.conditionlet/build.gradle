@@ -21,14 +21,17 @@ repositories {
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
+    maven {
+        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
+    }
 }
 
 dependencies {
-    compile(group: 'com.dotcms', name: 'dotcms', version: '3.6.0') {
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
         transitive = true
     }
     /* Specifying an alternate configuration (see above 'configurations') keeps servlet-api.jar from being added to our own output Jar. */
-    provided "javax.servlet:servlet-api:2.5"
+    provided "javax.servlet:javax.servlet-api:3.1.0"
 
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
