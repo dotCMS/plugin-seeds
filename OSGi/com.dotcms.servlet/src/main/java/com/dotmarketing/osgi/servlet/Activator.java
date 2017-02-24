@@ -23,22 +23,17 @@ public class Activator extends GenericBundleActivator {
         initializeServices( context );
 
         //Create new ServiceTracker for HelloWorldService via HelloWorld interface
-        //helloWorldServiceTracker = new ServiceTracker( context, VerySimpleHelloWorldServlet.class.getName(), null );
-        //helloWorldServiceTracker = new ServiceTracker( context, HelloWorldServlet.class.getName(), null );
         helloWorldServiceTracker = new ServiceTracker( context, HelloWorld.class.getName(), null );
 
         //Service reference to ExtHttpService that will allows to register servlets and filters
         ServiceReference sRef = context.getServiceReference( ExtHttpService.class.getName() );
 
-        System.out.println("sReef: " + sRef);
         if ( sRef != null ) {
 
             helloWorldServiceTracker.addingService( sRef );
             httpService = (ExtHttpService) context.getService( sRef );
-            System.out.println("httpService: " + httpService);
             try {
                 //Registering a simple test servlet
-                //simpleServlet = new VerySimpleHelloWorldServlet(  );
                 simpleServlet = new HelloWorldServlet( helloWorldServiceTracker );
                 httpService.registerServlet( "/helloworld", simpleServlet, null, null );
 

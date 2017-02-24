@@ -284,13 +284,17 @@ public class Folder extends Inode implements Serializable, Permissionable, Treea
         try {
 
             id = APILocator.getIdentifierAPI().find(this.getIdentifier());
-
-            System.out.println("Path: " + id!=null?id.getPath():null);
         } catch (DotDataException e) {
             Logger.error(Folder.class, e.getMessage(), e);
         } catch (Exception e) {
             Logger.debug(this, " This is usually not a problem as it is usually just the identifier not being found" +  e.getMessage(), e);
         }
+
+        //TODO: New code in this class!
+        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
+        Logger.info( this, "Modified Code, this class was redefined." );
+        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
+        //TODO: New code in this class!
 
         return id!=null?id.getPath():null;
     }
