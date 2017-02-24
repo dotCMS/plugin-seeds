@@ -1,10 +1,9 @@
 package com.dotcms.osgi.fixasset;
 
 
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
-import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.util.TaskLocatorUtil;
+import org.osgi.framework.BundleContext;
 
 /**
  * Created by Jonathan Gamba
@@ -21,13 +20,7 @@ public class Activator extends GenericBundleActivator {
 
         initializeServices ( context );
 
-
-        
-        
         TaskLocatorUtil.addFixTask(SampleFixTask.class);
-        
-        
-
     }
 
     public void stop ( BundleContext context ) throws Exception {

@@ -1,6 +1,6 @@
 package com.dotmarketing.osgi.service;
 
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleContext;
 import com.dotmarketing.osgi.GenericBundleActivator;
 
 import java.util.Hashtable;
