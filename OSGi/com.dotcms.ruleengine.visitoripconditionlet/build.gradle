@@ -20,14 +20,11 @@ repositories {
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
-    }
     mavenCentral()
 }
 
 dependencies {
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0'){
         transitive = true
     }
     /* Specifying an alternate configuration (see above 'configurations') keeps servlet-api.jar from being added to our own output Jar. */

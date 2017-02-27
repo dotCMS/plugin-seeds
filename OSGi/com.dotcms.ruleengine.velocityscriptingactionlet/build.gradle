@@ -22,15 +22,11 @@ repositories {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
 
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
-    }
-
     mavenCentral()
 }
 
 dependencies {
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0'){
         transitive = true
     }
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
