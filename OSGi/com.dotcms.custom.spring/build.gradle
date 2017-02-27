@@ -12,19 +12,14 @@ configurations {
     ext.resourcesLibsFolder = 'src/main/resources/libs'
 }
 
-/*task copyToLib(type: Copy) {
+task copyToLib(type: Copy) {
     into configurations.resourcesLibsFolder
     from configurations.pluginLibs
-}*/
+}
 
 repositories {
-    //Set Repositories. Provide your own if necessary.
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
-    }
-
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
     }
 }
 
@@ -32,7 +27,7 @@ dependencies {
 
     //Compile against dotCMS 3.1
     compile fileTree(dir: configurations.resourcesLibsFolder, include: '*.jar')
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0'){
         transitive = true
     }
     providedCompile "javax.servlet:javax.servlet-api:3.1.0"
@@ -110,7 +105,7 @@ jar {
 }
 
 //Move the dependencies to the src/main/resources/libs folder
-//tasks.copyToLib.execute()
+tasks.copyToLib.execute()
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
