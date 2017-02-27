@@ -17,6 +17,10 @@ repositories {
 	maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
+
+    maven {
+        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
+    }
 }
 
 // Dependencies list
@@ -24,11 +28,10 @@ dependencies {
 	// include all jars within the resource libs
 	compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
 	// Using all jar from artifactory part of the dotcms group
-	compile (group: 'com.dotcms', name: 'dotcms', version: '3.6.0'){
-		transitive = true
-	}
-	// this is provided by the container
-	providedCompile "javax.servlet:servlet-api:2.5"
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0_b85e558-SNAPSHOT'){
+        transitive = true
+    }
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 }
 
 // gradle task creates the manifest for the OSGi bundle

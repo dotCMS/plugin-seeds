@@ -1,16 +1,18 @@
 package com.dotmarketing.osgi.servlet;
 
-import com.dotcms.repackage.org.apache.felix.http.api.ExtHttpService;
-import com.dotcms.repackage.org.osgi.framework.BundleContext;
-import com.dotcms.repackage.org.osgi.framework.ServiceReference;
-import com.dotcms.repackage.org.osgi.util.tracker.ServiceTracker;
 import com.dotmarketing.filters.CMSFilter;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.osgi.service.HelloWorld;
+import org.apache.felix.http.api.ExtHttpService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+
+import javax.servlet.Servlet;
 
 public class Activator extends GenericBundleActivator {
 
-    private HelloWorldServlet simpleServlet;
+    private Servlet simpleServlet;
     private ExtHttpService httpService;
     private ServiceTracker helloWorldServiceTracker;
 
@@ -25,6 +27,7 @@ public class Activator extends GenericBundleActivator {
 
         //Service reference to ExtHttpService that will allows to register servlets and filters
         ServiceReference sRef = context.getServiceReference( ExtHttpService.class.getName() );
+
         if ( sRef != null ) {
 
             helloWorldServiceTracker.addingService( sRef );
