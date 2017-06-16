@@ -43,18 +43,18 @@ public class Activator extends GenericBundleActivator {
         
         
         
-        // Forwarding calls a RequestDispatcher, which short-circuits any use
-        // of the CMSFilter that maps uris to pages and files for front end traffic
-        // This means that it is only possible to tuckey forward to
-        // servlets or non-dotcms served pages
+        // Forwarding calls a RequestDispatcher, which short-circuits any use dotCMS
+        // served pages or files. 
+        // You can still use tuckey to forward to
+        // servlets or non-dotcms served pages though
         
         addRewriteRule( "^/example/forwardTuckey/(.*)$", "/dA/249eeb5c-7002", "forward", "ExampleTuckeyForward" );
 
         
         
-        // It is still possible to forward to dotCMS pages or urls though.  What you need to do
-        // is set the request Parameter CMSFilter.CMS_FILTER_URI_OVERRIDE.  This allows you
-        // to specify a forwarding page in dotCMS
+        // To forward to a dotCMS served resource, you need to 
+        // set the request Parameter CMSFilter.CMS_FILTER_URI_OVERRIDE.  
+        // This allows you to specify a forwarding page in dotCMS
         
         NormalRule forwardRule = new NormalRule();
         forwardRule.setFrom( "^/example/forwardDotCMS/(.*)$" );
