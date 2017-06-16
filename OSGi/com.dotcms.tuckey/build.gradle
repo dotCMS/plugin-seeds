@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
 	compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.1.0'){
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.1.1'){
         transitive = true
     }
     /* Specifying an alternate configuration (see above 'configurations') keeps servlet-api.jar from being added to our own output Jar. */
