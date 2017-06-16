@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
 	compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0'){
+    compile (group: 'com.dotcms', name: 'dotcms', version: '4.+'){
         transitive = true
     }
     /* Specifying an alternate configuration (see above 'configurations') keeps servlet-api.jar from being added to our own output Jar. */
@@ -27,7 +27,7 @@ jar {
         instruction 'Bundle-Vendor', 'dotcms'
         instruction 'Bundle-Description', 'dotCMS - Tuckey Rewrite Rules example'
         instruction 'Bundle-DocURL', 'http://www.dotcms.com'
-        instruction 'Bundle-Activator', 'com.dotmarketing.osgi.tuckey.Activator'
+        instruction 'Bundle-Activator', 'com.dotcms.tuckey.Activator'
         instruction 'DynamicImport-Package', '*'
         instruction 'Import-Package', '*;version=0'
     }
