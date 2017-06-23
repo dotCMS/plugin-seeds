@@ -1,12 +1,12 @@
 
-h1. README
+# README
 
 This bundle plugin is an example of how add Tuckey rewrite Rules using an OSGI bundle plugin.
 
-h2. How to build this example
+## How to build this example
 
 To install all you need to do is build the JAR. to do this run
-*./gradlew jar*
+`./gradlew jar`
 This will build a jar in the build/libs directory
 
 * To install this bundle:
@@ -19,7 +19,7 @@ This will build a jar in the build/libs directory
             OR
     Undeploy the bundle using the dotCMS UI (CMS Admin->Dynamic Plugins->Undeploy).
 
-h2. How to create a bundle plugin for Tuckeys rewrite Rules
+## How to create a bundle plugin for Tuckeys rewrite Rules
 
 In order to create this OSGI plugin, you must create a META-INF/MANIFEST to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -35,24 +35,7 @@ Dynamically add required imports the plugin may need without add them explicitly
 * *Import-Package*: This is a comma separated list of package's name. In this list there must be the packages that you are
 using inside the bundle plugin and that are exported by the dotCMS runtime.
 
-
-h2. Beware (!)
-
-In order to work inside the Apache Felix OSGI runtime, the import and export directive must be bidirectional.
-
-The DotCMS must declare the set of packages that will be available to the OSGI plugins by changing the file: *dotCMS/WEB-INF/felix/osgi-extra.conf*.
-This is possible also using the dotCMS UI (CMS Admin->Dynamic Plugins->Exported Packages).
-
-Only after that exported packages are defined in this list, a plugin can Import the packages to use them inside the OSGI blundle.
-
-
-h2. Components
-
-h3. com.dotmarketing.osgi.tuckey.HelloWorldServlet
-
-Simple and standard implementation of a HttpServlet that we will use in order to test the added Tuckey Rewrite Rules
-
-h3. Activator
+## Activator
 
 This bundle activator extends from *com.dotmarketing.osgi.GenericBundleActivator* and implements *BundleActivator.start()*.
 Will manually register Tuckey Rewrite Rules making use of the method *addRewriteRule*
@@ -61,9 +44,13 @@ Will manually register Tuckey Rewrite Rules making use of the method *addRewrite
 
 ________________________________________________________________________________________
 
-h2. Testing
+## Testing
 
-* *Accessing our simple test servlet*: http://localhost:8080/app/helloworld
-* *Testing the forward rule*: http://localhost:8080/example/url/forward
-* *Testing the redirect rule*: http://localhost:8080/example/url/redirect
-* *Testing the conditions*: http://localhost:8080/example/url/condition -> If call it using google Chrome it will display the message "from google Chrome" if not, will do nothing (404 error).
+* *Testing the forward rule (non dotCMS resource)*: http://localhost:8080/example/forwardTuckey/
+* *Testing the forward rule (dotCMS resource)*: http://localhost:8080/example/forwardDotCMS/
+* *Testing the redirect rule*: http://localhost:8080/example/redirect/
+* *Testing the rewrite rule*: http://localhost:8080/example/rewrite/locations/
+* *Testing the conditions*: http://localhost:8080/example/condition -> If call it using google Chrome it will display the message "from google Chrome" if not, will do nothing (404 error).
+
+
+
