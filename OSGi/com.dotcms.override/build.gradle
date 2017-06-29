@@ -29,7 +29,7 @@ jar {
         instruction 'Bundle-Activator', 'com.dotmarketing.osgi.override.Activator'
         instruction 'Override-Classes', 'com.dotmarketing.portlets.folders.model.Folder'
         instruction 'DynamicImport-Package', '*'
-        instruction 'Import-Package', '*;version=0'
+        instruction 'Import-Package', '!com.dotmarketing.portlets.folders.model;version=0,*;version=0'
     }
 }
 
