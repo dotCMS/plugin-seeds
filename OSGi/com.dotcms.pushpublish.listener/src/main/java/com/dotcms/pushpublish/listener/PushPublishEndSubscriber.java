@@ -1,7 +1,8 @@
 package com.dotcms.pushpublish.listener;
 
-import com.dotcms.api.system.event.local.Subscriber;
-import com.dotcms.api.system.event.local.type.PushPublishEndEvent;
+
+import com.dotcms.system.event.local.model.Subscriber;
+import com.dotcms.system.event.local.type.pushpublish.PushPublishEndEvent;
 
 public class PushPublishEndSubscriber {
     @Subscriber

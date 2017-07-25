@@ -1,7 +1,8 @@
 package com.dotcms.pushpublish.listener;
 
-import com.dotcms.api.system.event.local.EventSubscriber;
-import com.dotcms.api.system.event.local.type.AllEndpointsSuccessEvent;
+
+import com.dotcms.system.event.local.model.EventSubscriber;
+import com.dotcms.system.event.local.type.pushpublish.AllEndpointsSuccessEvent;
 
 /**
  * Sample class

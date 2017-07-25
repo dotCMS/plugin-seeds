@@ -1,16 +1,16 @@
 package com.dotcms.pushpublish;
 
-import com.dotcms.api.system.event.local.type.AddedToQueueEvent;
-import com.dotcms.api.system.event.local.type.AllEndpointsSuccessEvent;
-import com.dotcms.api.system.event.local.type.PushPublishEndEvent;
-import com.dotcms.api.system.event.local.type.PushPublishStartEvent;
 import com.dotcms.pushpublish.listener.AddToQueueSubscriber;
 import com.dotcms.pushpublish.listener.PushPublishEndSubscriber;
 import com.dotcms.pushpublish.listener.PushPublishStartSubscriber;
 import com.dotcms.pushpublish.listener.SuccessEndpointsSubscriber;
+import com.dotcms.system.event.local.business.LocalSystemEventsAPI;
+import com.dotcms.system.event.local.type.pushpublish.AddedToQueueEvent;
+import com.dotcms.system.event.local.type.pushpublish.AllEndpointsSuccessEvent;
+import com.dotcms.system.event.local.type.pushpublish.PushPublishEndEvent;
+import com.dotcms.system.event.local.type.pushpublish.PushPublishStartEvent;
 import org.osgi.framework.BundleContext;
 import com.dotmarketing.osgi.GenericBundleActivator;
-import com.dotcms.api.system.event.local.LocalSystemEventsAPI;
 import com.dotmarketing.business.APILocator;
 
 
