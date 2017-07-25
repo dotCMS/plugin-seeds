@@ -1,7 +1,7 @@
 package com.dotcms.pushpublish.listener;
 
 
-import com.dotcms.system.event.local.domain.Subscriber;
+import com.dotcms.system.event.local.model.Subscriber;
 import com.dotcms.system.event.local.type.pushpublish.PushPublishStartEvent;
 
 public class PushPublishStartSubscriber {
