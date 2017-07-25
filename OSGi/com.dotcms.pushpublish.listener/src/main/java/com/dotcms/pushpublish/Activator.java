@@ -2,6 +2,8 @@ package com.dotcms.pushpublish;
 
 import com.dotcms.api.system.event.local.type.AddedToQueueEvent;
 import com.dotcms.api.system.event.local.type.AllEndpointsSuccessEvent;
+import com.dotcms.api.system.event.local.type.PushPublishEndEvent;
+import com.dotcms.api.system.event.local.type.PushPublishStartEvent;
 import com.dotcms.pushpublish.listener.AddToQueueSubscriber;
 import com.dotcms.pushpublish.listener.PushPublishEndSubscriber;
 import com.dotcms.pushpublish.listener.PushPublishStartSubscriber;
@@ -46,5 +48,17 @@ public class Activator extends GenericBundleActivator {
     public void stop(BundleContext bundleContext) throws Exception {
         // remember to "unregister" anything you registered at the "start" method
         // this will ensure the working consistency of the system.
+        final LocalSystemEventsAPI localSystemEventsAPI =
+                APILocator.getLocalSystemEventsAPI();
+
+        //Important: unsubscribe events
+        localSystemEventsAPI.unsubscribe(PushPublishStartEvent.class, PushPublishStartSubscriber.class.getName() + "#notify");
+
+        localSystemEventsAPI.unsubscribe(PushPublishEndEvent.class, PushPublishEndSubscriber.class.getName() + "#notify");
+
+        localSystemEventsAPI.unsubscribe(AddedToQueueEvent.class, AddToQueueSubscriber.class.getName());
+
+        localSystemEventsAPI.unsubscribe(AllEndpointsSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
+
     }
 } // EOC Activator
