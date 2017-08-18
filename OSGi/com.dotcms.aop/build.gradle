@@ -6,7 +6,7 @@ repositories {
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
-    
+
 }
 
 apply plugin: 'java'
@@ -70,7 +70,6 @@ dependencies {
     providedCompile (group: 'com.dotcms', name: 'dotcms', version: '4.2.0'){
         transitive = true
     }
-    //aspects fileTree(dir: 'lib', include: 'dotcms_4.2.0_e0a2d2b.jar')
     aspects (group: 'com.dotcms', name: 'dotcms', version: '4.2.0')
     providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 }
