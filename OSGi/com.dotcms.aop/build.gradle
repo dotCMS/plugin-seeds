@@ -6,12 +6,7 @@ repositories {
     maven {
         url "http://repo.dotcms.com/artifactory/libs-release"
     }
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-snapshot-local"
-    }
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-snapshot"
-    }
+    
 }
 
 apply plugin: 'java'
@@ -72,11 +67,11 @@ dependencies {
 
     ajc     "org.aspectj:aspectjtools:1.8.10"
     providedCompile "org.aspectj:aspectjrt:1.8.10"
-    providedCompile (group: 'com.dotcms', name: 'dotcms', version: '4.2.0-SNAPSHOT'){
+    providedCompile (group: 'com.dotcms', name: 'dotcms', version: '4.2.0'){
         transitive = true
     }
     //aspects fileTree(dir: 'lib', include: 'dotcms_4.2.0_e0a2d2b.jar')
-    aspects (group: 'com.dotcms', name: 'dotcms', version: '4.2.0-SNAPSHOT')
+    aspects (group: 'com.dotcms', name: 'dotcms', version: '4.2.0')
     providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 }
 
