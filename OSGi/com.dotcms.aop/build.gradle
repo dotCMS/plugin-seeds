@@ -1,0 +1,91 @@
+group 'com.dotcms.aop'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    maven {
+        url "http://repo.dotcms.com/artifactory/libs-release"
+    }
+
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'osgi'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+compileJava.enabled = false;
+
+project.ext {
+    aspectjVersion = '1.8.10'
+}
+
+configurations {
+    ajc
+    provided
+    aspects
+    ajInpath
+}
+
+task compileAjc(overwrite: true) {
+
+    // Declare the output directory to enable uptodate checks
+    outputs.dir sourceSets.main.output.classesDir
+
+    doLast{
+        // Resolve the AspectJ compiler via dependencies of the ajc configuration
+        ant.taskdef( resource:"org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.ajc.asPath)
+        ant.iajc(source:"1.8", target:"1.8",
+                destDir:sourceSets.main.output.classesDir,
+                maxmem:"512m",
+                fork:"true",
+                // Jars containing aspects to be woven should be declared in the aspects configuration
+                aspectPath:configurations.aspects?.asPath,
+                // Jars containing classes where aspects should be woven into should be declared in the ajInpath configuration
+                inpath:configurations.ajInpath?.asPath,
+                // Define the compile classpath to include a deps of a 'provided' configuration
+                classpath:configurations.compile.asPath + configurations.provided.asPath){
+
+            sourceroots{
+                sourceSets.main.java.srcDirs.each{
+                    // The aspectJ compiler does not like nonexisting source roots, so check if they exist
+                    if (it.exists()) {
+                        pathelement(location:it.absolutePath)
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+// Link the compileAjc task into the dependency chain
+processResources.dependsOn(compileAjc)
+
+dependencies {
+
+    ajc     "org.aspectj:aspectjtools:1.8.10"
+    providedCompile "org.aspectj:aspectjrt:1.8.10"
+    providedCompile (group: 'com.dotcms', name: 'dotcms', version: '4.2.0'){
+        transitive = true
+    }
+    aspects (group: 'com.dotcms', name: 'dotcms', version: '4.2.0')
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+}
+
+jar {
+    manifest {
+        name = 'Osgi AOP class'
+        instruction 'Bundle-Vendor', 'dotcms'
+        instruction 'Bundle-Description', 'dotCMS Osgi AOP class example'
+        instruction 'Bundle-DocURL', 'http://www.dotcms.com'
+        instruction 'Bundle-Activator', 'com.dotcms.plugin.aop.Activator'
+        instruction 'DynamicImport-Package', '*'
+        instruction 'Import-Package', 'version=0,*;version=0'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
