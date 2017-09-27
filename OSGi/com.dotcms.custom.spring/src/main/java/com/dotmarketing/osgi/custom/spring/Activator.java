@@ -1,11 +1,12 @@
 package com.dotmarketing.osgi.custom.spring;
 
-import com.dotmarketing.filters.CMSFilter;
-import com.dotmarketing.osgi.GenericBundleActivator;
 import org.apache.felix.http.api.ExtHttpService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import com.dotmarketing.filters.CMSFilter;
+import com.dotmarketing.osgi.GenericBundleActivator;
 
 /**
  * @author Jonathan Gamba
@@ -28,10 +29,10 @@ public class Activator extends GenericBundleActivator {
 
             ExtHttpService httpService = (ExtHttpService) context.getService(sRef);
             try {
-                DispatcherServlet dispatcherServlet = new DispatcherServlet();
+                DispatcherServlet dispatcherServlet = new CustomDispatcherServlet();
                 dispatcherServlet.setContextConfigLocation( "spring/example-servlet.xml" );
                 httpService.registerServlet("/spring", dispatcherServlet, null, null);
-            } catch ( Exception e ) {
+            } catch ( Throwable e ) {
                 e.printStackTrace();
             }
             CMSFilter.addExclude( "/app/spring" );
