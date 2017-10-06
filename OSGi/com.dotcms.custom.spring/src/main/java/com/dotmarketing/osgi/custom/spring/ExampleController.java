@@ -37,7 +37,7 @@ public class ExampleController {
 
         // set the message
         String aMessage = (userName != null)
-                ? "Hello EDIT " + userName + ", welcome to Spring 4.1.1 and dotCMS!  "
+                ? "Hello EDIT " + userName + ", welcome to Spring 4.3.9.RELEASE and dotCMS!  "
                 : "Hello Total Stranger, welcome to Spring 4.3.9.RELEASE and dotCMS!  ";
 
         // Attach message to the Model
