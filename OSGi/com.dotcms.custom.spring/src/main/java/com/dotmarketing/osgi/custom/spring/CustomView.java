@@ -1,14 +1,13 @@
 package com.dotmarketing.osgi.custom.spring;
 
-import com.dotmarketing.filters.CMSFilter;
+import com.dotmarketing.filters.Constants;
 import com.dotmarketing.util.VelocityUtil;
 import com.dotmarketing.velocity.VelocityServlet;
-import org.apache.velocity.VelocityContext;
-import org.springframework.web.servlet.View;
-
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
+import org.apache.velocity.VelocityContext;
+import org.springframework.web.servlet.View;
 
 /**
  * Copy of the dotCMS View {@link com.dotcms.spring.web.DotView} in order
@@ -46,7 +45,7 @@ public class CustomView implements View {
             // add the context to the request.attr where it will be picked up and used by the VelocityServlet
             request.setAttribute( VelocityServlet.VELOCITY_CONTEXT, ctx );
             // override the page path
-            request.setAttribute( CMSFilter.CMS_FILTER_URI_OVERRIDE, pagePath );
+            request.setAttribute( Constants.CMS_FILTER_URI_OVERRIDE, pagePath );
 
             request.getRequestDispatcher( "/servlets/VelocityServlet" ).forward( request, response );
         } else {
