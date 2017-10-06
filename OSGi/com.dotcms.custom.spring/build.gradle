@@ -35,7 +35,7 @@ dependencies {
 jar {
     manifest {
         attributes (
-                'Bundle-Vendor': 'dotcms',
+                'Bundle-Vendor': 'dotCMS',
                 'Bundle-Description': 'Spring OSGi Example providing its own Spring for dotcms',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.custom.spring.Activator',

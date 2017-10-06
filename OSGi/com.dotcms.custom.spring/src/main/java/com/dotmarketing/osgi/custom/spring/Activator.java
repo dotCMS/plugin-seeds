@@ -17,7 +17,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class Activator extends GenericBundleActivator {
 
     private LoggerContext pluginLoggerContext;
-    private ClassLoader currentContextClassLoader;
 
     @SuppressWarnings ("unchecked")
     public void start(BundleContext context) throws Exception {
@@ -35,7 +34,7 @@ public class Activator extends GenericBundleActivator {
         initializeServices( context );
 
         //Getting the current thread class loader
-        this.currentContextClassLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader currentContextClassLoader = Thread.currentThread().getContextClassLoader();
 
         //Service reference to ExtHttpService that will allows to register servlets and filters
         ServiceReference sRef = context.getServiceReference(ExtHttpService.class.getName());
@@ -68,7 +67,7 @@ public class Activator extends GenericBundleActivator {
                 e.printStackTrace();
             } finally {
                 //Setting back the original class loader to the current thread
-                Thread.currentThread().setContextClassLoader(this.currentContextClassLoader);
+                Thread.currentThread().setContextClassLoader(currentContextClassLoader);
             }
             CMSFilter.addExclude( "/app/spring" );
         }
