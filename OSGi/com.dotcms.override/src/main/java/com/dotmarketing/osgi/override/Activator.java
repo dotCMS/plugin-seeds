@@ -1,8 +1,11 @@
 package com.dotmarketing.osgi.override;
 
-import org.osgi.framework.BundleContext;
+import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
+import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
+import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.portlets.folders.model.Folder;
+import org.osgi.framework.BundleContext;
 
 /**
  * Created by Jonathan Gamba
@@ -10,16 +13,24 @@ import com.dotmarketing.portlets.folders.model.Folder;
  */
 public class Activator extends GenericBundleActivator {
 
+    private LoggerContext pluginLoggerContext;
+
     @SuppressWarnings ("unchecked")
     public void start ( BundleContext context ) throws Exception {
+
+        //Initializing log4j...
+        LoggerContext dotcmsLoggerContext = Log4jUtil.getLoggerContext();
+        //Initialing the log4j context of this plugin based on the dotCMS logger context
+        pluginLoggerContext = (LoggerContext) LogManager
+                .getContext(this.getClass().getClassLoader(),
+                        false,
+                        dotcmsLoggerContext,
+                        dotcmsLoggerContext.getConfigLocation());
 
         //Initializing services...
         initializeServices( context );
 
-        //Expose bundle elements
-        publishBundleServices( context );
-
-        /**
+        /*
          * Trying to use our custom implementation of this class, after the last method call should be possible
          * if was added the Override-Classes property inside the MANIFEST.MF.
          */
@@ -31,6 +42,9 @@ public class Activator extends GenericBundleActivator {
 
         //Unpublish bundle services
         unpublishBundleServices();
+
+        //Shutting down log4j in order to avoid memory leaks
+        Log4jUtil.shutdown(pluginLoggerContext);
     }
 
 }
