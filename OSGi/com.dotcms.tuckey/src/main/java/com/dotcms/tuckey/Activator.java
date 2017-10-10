@@ -1,21 +1,33 @@
 package com.dotcms.tuckey;
 
-import org.osgi.framework.BundleContext;
-
+import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
+import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
 import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.Condition;
 import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.NormalRule;
 import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.SetAttribute;
-import com.dotmarketing.filters.CMSFilter;
+import com.dotmarketing.filters.Constants;
+import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
+import org.osgi.framework.BundleContext;
 
 public class Activator extends GenericBundleActivator {
+
+    private LoggerContext pluginLoggerContext;
 
     @SuppressWarnings ("unchecked")
     public void start ( BundleContext context ) throws Exception {
 
+        //Initializing log4j...
+        LoggerContext dotcmsLoggerContext = Log4jUtil.getLoggerContext();
+        //Initialing the log4j context of this plugin based on the dotCMS logger context
+        pluginLoggerContext = (LoggerContext) LogManager
+                .getContext(this.getClass().getClassLoader(),
+                        false,
+                        dotcmsLoggerContext,
+                        dotcmsLoggerContext.getConfigLocation());
+
         //Initializing services...
         initializeServices( context );
-        
         
         //Register a simple tuckey redirect rule
         addRewriteRule( "^/example/redirect/(.*)$", "/about-us/", "redirect", "ExampleTuckeyRedirect" );
@@ -23,8 +35,6 @@ public class Activator extends GenericBundleActivator {
         //Register a simple tuckey rewrite rule
         addRewriteRule( "^/example/rewrite/(.*)$", "/about-us/$1", "redirect", "ExampleTuckeyRewrite" );
 
-
-        
         //Creating a conditional rule
         NormalRule conditionRule = new NormalRule();
         conditionRule.setFrom( "^/example/condition/(.*)$" );
@@ -40,42 +50,32 @@ public class Activator extends GenericBundleActivator {
 
         //Register the tuckey rewrite rule
         addRewriteRule( conditionRule );
-        
-        
-        
+
         // Forwarding calls a RequestDispatcher, which short-circuits any use dotCMS
         // served pages or files. 
         // You can still use tuckey to forward to
         // servlets or non-dotcms served pages though
-        
         addRewriteRule( "^/example/forwardTuckey/(.*)$", "/dA/249eeb5c-7002", "forward", "ExampleTuckeyForward" );
 
-        
-        
         // To forward to a dotCMS served resource, you need to 
         // set the request Parameter CMSFilter.CMS_FILTER_URI_OVERRIDE.  
         // This allows you to specify a forwarding page in dotCMS
-        
         NormalRule forwardRule = new NormalRule();
         forwardRule.setFrom( "^/example/forwardDotCMS/(.*)$" );
         SetAttribute attribute = new SetAttribute();
-        attribute.setName(CMSFilter.CMS_FILTER_URI_OVERRIDE);
+        attribute.setName(Constants.CMS_FILTER_URI_OVERRIDE);
         attribute.setValue("/about-us/index");
         forwardRule.addSetAttribute(attribute);
         addRewriteRule( forwardRule );
-        
-        
-        
-        
-        
-        
-        
     }
 
     public void stop ( BundleContext context ) throws Exception {
 
         //Unregister all the bundle services
         unregisterServices( context );
+
+        //Shutting down log4j in order to avoid memory leaks
+        Log4jUtil.shutdown(pluginLoggerContext);
     }
 
 }
