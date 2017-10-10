@@ -1,9 +1,8 @@
 package com.dotmarketing.osgi.service;
 
-import org.osgi.framework.BundleContext;
 import com.dotmarketing.osgi.GenericBundleActivator;
-
 import java.util.Hashtable;
+import org.osgi.framework.BundleContext;
 
 /**
  * Created by Jonathan Gamba
@@ -22,7 +21,7 @@ public class Activator extends GenericBundleActivator {
     @Override
     public void start ( BundleContext bundleContext ) throws Exception {
 
-        Hashtable<String, String> props = new Hashtable<String, String>();
+        Hashtable<String, String> props = new Hashtable<>();
         props.put( "Language", "English" );
 
         bundleContext.registerService( HelloWorld.class.getName(), new HelloWorldService(), props );
