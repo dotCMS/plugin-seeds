@@ -37,7 +37,7 @@ public class Activator extends GenericBundleActivator {
         initializeServices ( context );
 
         // Job params
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put( "param1", "value1" );
         params.put( "param2", "value2" );
 
@@ -52,6 +52,7 @@ public class Activator extends GenericBundleActivator {
     }
 
     public void stop ( BundleContext context ) throws Exception {
+
         //Unregister all the bundle services
         unregisterServices( context );
 

@@ -1,48 +1,46 @@
-apply plugin: 'application'
-apply plugin: 'osgi'
-apply plugin: 'war'
-apply plugin: 'eclipse'
+plugins {
+    id 'biz.aQute.bnd.builder' version '3.3.0'
+}
 
 sourceCompatibility = '1.8'
 version = '0.1'
 
 repositories {
-    //Set Repositories. Provide your own if necessary.
-    maven {
-        url "http://repo.dotcms.com/artifactory/libs-release"
-    }
+    maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+}
+
+configurations {
+    osgiLibs
 }
 
 dependencies {
-	compile fileTree(dir: '../com.dotcms.service/build/libs/', include: '*.jar')//As this example depends on the com.dotcms.service example
-	compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
-    compile (group: 'com.dotcms', name: 'dotcms', version: '4.0'){
-        transitive = true
-    }
-    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+    compile fileTree(dir: '../com.dotcms.service/build/libs/', include: '*.jar')//As this example depends on the com.dotcms.service example
+    compile('com.dotcms:dotcms:4.2.0') { transitive = true }
 }
 
 jar {
     manifest {
-        name = 'Osgi Servlet'
-        instruction 'Bundle-Vendor', 'dotcms'
-        instruction 'Bundle-Description', 'dotCMS Osgi Servlet example'
-        instruction 'Bundle-DocURL', 'http://www.dotcms.com'
-        instruction 'Bundle-Activator', 'com.dotmarketing.osgi.servlet.Activator'
-        instruction 'DynamicImport-Package', '*'
-        instruction 'Import-Package',
-                'javax.servlet.http;version=0',
-                'javax.servlet;version=0',
-                'com.dotmarketing.filters;version=0',
-                'com.dotmarketing.osgi;version=0',
-                'com.dotmarketing.util;version=0',
-                'com.dotmarketing.exception;version=0',
-                'org.apache.felix.http.api;version=0',
-                'org.osgi.framework;version=0',
-                'org.osgi.service.http;version=0'
+        attributes (
+                'Bundle-Vendor': 'dotCMS',
+                'Bundle-Description': 'dotCMS - Osgi Servlet example',
+                'Bundle-DocURL': 'https://dotcms.com/',
+                'Bundle-Activator': 'com.dotmarketing.osgi.servlet.Activator',
+                'DynamicImport-Package': '*',
+                'Import-Package': '''
+                    javax.servlet.http;version=0,
+                    javax.servlet;version=0,
+                    com.dotmarketing.filters;version=0,
+                    com.dotmarketing.osgi;version=0,
+                    com.dotmarketing.util;version=0,
+                    com.dotmarketing.exception;version=0,
+                    org.apache.felix.http.api;version=0,
+                    org.osgi.framework;version=0,
+                    org.osgi.service.http;version=0
+                '''
+        )
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.9'
+    gradleVersion = '4.2'
 }
