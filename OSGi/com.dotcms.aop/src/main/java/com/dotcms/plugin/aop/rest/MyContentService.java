@@ -1,6 +1,6 @@
 package com.dotcms.plugin.aop.rest;
 
-import com.dotcms.business.CloseDB;
+import com.dotcms.business.CloseDBIfOpened;
 import com.dotcms.business.WrapInTransaction;
 import com.dotcms.repackage.com.google.common.annotations.VisibleForTesting;
 import com.dotmarketing.beans.Identifier;
@@ -12,7 +12,6 @@ import com.dotmarketing.portlets.contentlet.struts.ContentletForm;
 import com.dotmarketing.portlets.htmlpageasset.business.HTMLPageAssetAPI;
 import com.dotmarketing.util.Logger;
 import com.dotmarketing.util.UtilMethods;
-
 import java.util.Calendar;
 
 public class MyContentService {
@@ -32,7 +31,7 @@ public class MyContentService {
         this.contentFactory = contentFactory;
     }
 
-    @CloseDB
+    @CloseDBIfOpened
     public Contentlet hydrateContentLet (final Contentlet contentlet) {
 
         Contentlet newContentlet = contentlet;
