@@ -3,10 +3,11 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.1'
+version = '0.2'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+    maven { url "http://repo.dotcms.com/artifactory/libs-snapshot" }
 }
 
 configurations {
@@ -14,7 +15,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:4.2.0') { transitive = true }
+    compile('com.dotcms:dotcms:4.3.0-SNAPSHOT') { transitive = true }
 }
 
 jar {
