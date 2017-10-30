@@ -5,13 +5,14 @@ import com.dotcms.pushpublish.listener.PushPublishEndSubscriber;
 import com.dotcms.pushpublish.listener.PushPublishStartSubscriber;
 import com.dotcms.pushpublish.listener.SuccessEndpointsSubscriber;
 import com.dotcms.system.event.local.business.LocalSystemEventsAPI;
-import com.dotcms.system.event.local.type.pushpublish.AddedToQueueEvent;
-import com.dotcms.system.event.local.type.pushpublish.AllEndpointsSuccessEvent;
+import com.dotcms.system.event.local.type.publish.AddedToQueueEvent;
+import com.dotcms.system.event.local.type.pushpublish.AllPushPublishEndpointsSuccessEvent;
 import com.dotcms.system.event.local.type.pushpublish.PushPublishEndEvent;
 import com.dotcms.system.event.local.type.pushpublish.PushPublishStartEvent;
-import org.osgi.framework.BundleContext;
-import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.business.APILocator;
+import com.dotmarketing.osgi.GenericBundleActivator;
+
+import org.osgi.framework.BundleContext;
 
 
 /**
@@ -25,7 +26,7 @@ public class Activator extends GenericBundleActivator {
         //Initializing services...
         initializeServices(bundleContext);
         final LocalSystemEventsAPI localSystemEventsAPI =
-                APILocator.getLocalSystemEventsAPI();
+            APILocator.getLocalSystemEventsAPI();
 
         //Subscribing to a publishing queue event
         AddToQueueSubscriber queueSubscriber = new AddToQueueSubscriber();
@@ -41,7 +42,7 @@ public class Activator extends GenericBundleActivator {
 
         //Subscribing to all endpoints success event
         SuccessEndpointsSubscriber successEndpointsSubscriber = new SuccessEndpointsSubscriber();
-        localSystemEventsAPI.subscribe(AllEndpointsSuccessEvent.class, successEndpointsSubscriber);
+        localSystemEventsAPI.subscribe(AllPushPublishEndpointsSuccessEvent.class, successEndpointsSubscriber);
     }
 
     @Override
@@ -49,16 +50,19 @@ public class Activator extends GenericBundleActivator {
         // remember to "unregister" anything you registered at the "start" method
         // this will ensure the working consistency of the system.
         final LocalSystemEventsAPI localSystemEventsAPI =
-                APILocator.getLocalSystemEventsAPI();
+            APILocator.getLocalSystemEventsAPI();
 
         //Important: unsubscribe events
-        localSystemEventsAPI.unsubscribe(PushPublishStartEvent.class, PushPublishStartSubscriber.class.getName() + "#notify");
+        localSystemEventsAPI
+            .unsubscribe(PushPublishStartEvent.class, PushPublishStartSubscriber.class.getName() + "#notify");
 
-        localSystemEventsAPI.unsubscribe(PushPublishEndEvent.class, PushPublishEndSubscriber.class.getName() + "#notify");
+        localSystemEventsAPI
+            .unsubscribe(PushPublishEndEvent.class, PushPublishEndSubscriber.class.getName() + "#notify");
 
         localSystemEventsAPI.unsubscribe(AddedToQueueEvent.class, AddToQueueSubscriber.class.getName());
 
-        localSystemEventsAPI.unsubscribe(AllEndpointsSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
+        localSystemEventsAPI
+            .unsubscribe(AllPushPublishEndpointsSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
 
     }
 } // EOC Activator

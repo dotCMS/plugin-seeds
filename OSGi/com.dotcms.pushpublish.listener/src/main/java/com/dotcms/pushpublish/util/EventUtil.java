@@ -1,15 +1,15 @@
 package com.dotcms.pushpublish.util;
 
 import com.dotcms.publisher.business.PublishQueueElement;
-import com.dotcms.system.event.local.type.pushpublish.AllEndpointsSuccessEvent;
-import com.dotcms.system.event.local.type.pushpublish.PushPublishEvent;
+import com.dotcms.system.event.local.type.publish.PublishEvent;
+import com.dotcms.system.event.local.type.pushpublish.AllPushPublishEndpointsSuccessEvent;
 import com.dotmarketing.util.Logger;
 
 import java.util.List;
 
 public class EventUtil {
 
-    public static void logBasicEvent(final PushPublishEvent event, final Class clazz){
+    public static void logBasicEvent(final PublishEvent event, final Class clazz) {
         Logger.info(clazz, "----------------------------");
         Logger.info(clazz, "Notifying event named: " + event.getName());
         Logger.info(clazz, "Event Date: " + event.getDate());
@@ -22,7 +22,7 @@ public class EventUtil {
         Logger.info(clazz, "----------------------------");
     } //logBasicEvent.
 
-    public static void logAllEndpointsSuccessEvent(final AllEndpointsSuccessEvent event, final Class clazz){
+    public static void logAllEndpointsSuccessEvent(final AllPushPublishEndpointsSuccessEvent event, final Class clazz) {
         Logger.info(clazz, "----------------------------");
         Logger.info(clazz, "Successfully pushed to all endpoints");
         Logger.info(clazz, "Notifying event named: " + event.getName());
