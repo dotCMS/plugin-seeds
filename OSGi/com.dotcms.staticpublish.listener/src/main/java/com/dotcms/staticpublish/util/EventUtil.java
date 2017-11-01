@@ -1,4 +1,4 @@
-package com.dotcms.pushpublish.util;
+package com.dotcms.staticpublish.util;
 
 import com.dotcms.publisher.business.PublishQueueElement;
 import com.dotcms.system.event.local.type.publish.PublishEvent;

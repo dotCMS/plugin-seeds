@@ -4,9 +4,13 @@
 
 How to subscribe to Static Publish events. 
 
-## Important Note:
+## Important Notes:
 
-Be aware that you need to subscribe and stop the listener under Activator's start and stop method respectively. 
+1. Be aware that you need to subscribe and stop the listener under Activator's start and stop method respectively.
+
+2. We use sshj project in this example, that library relies in Bouncy Castle dependency in order to secure all requests. 
+Bouncy Castle needs to be verified against Java Security Framework, in order to do that Bouncy Castle jars can't be part of this osgi plugin (see link). 
+So we will be using dotCMS own Bouncy Castle library for this purpose. http://side-effects-bang.blogspot.com/2015/02/deploying-uberjars-that-use-bouncy.html
 
 ## How to build an OSGi project
 -------------------------------
