@@ -38,7 +38,7 @@ jar {
                     libs/sshj-0.23.0.jar,
                 ''',
                 'DynamicImport-Package': '*',
-                'Import-Package': '!org.bouncycastle.*,*;version=0'
+                'Import-Package': '*;version=0'
         )
     }
 }
