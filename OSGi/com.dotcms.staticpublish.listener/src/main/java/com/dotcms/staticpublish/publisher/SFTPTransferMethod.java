@@ -12,4 +12,9 @@ public class SFTPTransferMethod implements TransferMethod {
     public void transfer(SSHClient client, Path localPath, Path remotePath) throws IOException {
         client.newSFTPClient().put(new FileSystemFile(localPath.toString()), remotePath.toString());
     }
+
+    @Override
+    public void remove(SSHClient client, Path remotePath) throws IOException {
+        client.newSFTPClient().rm(remotePath.toString());
+    }
 }

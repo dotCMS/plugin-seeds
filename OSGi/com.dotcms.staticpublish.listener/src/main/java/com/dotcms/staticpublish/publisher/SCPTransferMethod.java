@@ -12,4 +12,9 @@ public class SCPTransferMethod implements TransferMethod {
     public void transfer(SSHClient client, Path localPath, Path remotePath) throws IOException {
         client.newSCPFileTransfer().upload(new FileSystemFile(localPath.toString()), remotePath.toString());
     }
+
+    @Override
+    public void remove(SSHClient client, Path remotePath) {
+        throw new UnsupportedOperationException("SCP does not support Remove");
+    }
 }

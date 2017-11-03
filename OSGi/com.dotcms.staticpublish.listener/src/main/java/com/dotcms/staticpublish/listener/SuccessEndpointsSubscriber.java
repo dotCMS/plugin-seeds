@@ -8,8 +8,12 @@ import com.dotcms.system.event.local.model.EventSubscriber;
 import com.dotcms.system.event.local.type.staticpublish.AllStaticPublishEndpointsSuccessEvent;
 import com.dotmarketing.util.Logger;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.Collection;
 
 public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPublishEndpointsSuccessEvent> {
 
@@ -17,24 +21,57 @@ public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPubl
 
         final PublisherConfig config = event.getConfig();
         final File staticBundleRoot = BundlerUtil.getStaticBundleRoot(config);
-        final String remotePath = "/var/www/html/";
+        final String staticBundleRootPath = staticBundleRoot.getPath();
 
-        Logger.info(this, "Start pushing via SCP");
+        final boolean amIPublishing = PublisherConfig.Operation.PUBLISH.equals(config.getOperation());
+
+        if (amIPublishing) {
+            pushSFTP(staticBundleRootPath);
+            //pushSCP(staticBundleRoot);
+        } else {
+            removeSFTP(staticBundleRoot);
+        }
+    }
+
+    private void pushSCP(final File staticBundleRoot) {
+        Logger.info(this, "Start Push via SCP");
         Logger.info(this, "Static Bundle Root: " + staticBundleRoot.getPath());
-        Logger.info(this, "Remote Bundle Path: " + remotePath);
+
+        StaticPublisher publisher = new StaticPublisher();
+        final File[] files = staticBundleRoot.listFiles();
+
+        for (File file : files) {
+            publisher.publishSCP(file.toPath());
+        }
+
+        Logger.info(this, "End of Push via SCP");
+    }
+
+    private void pushSFTP(String staticBundleRootPath) {
+        Logger.info(this, "Start Push via SFTP");
+        Logger.info(this, "Static Bundle Root: " + staticBundleRootPath);
+
+        StaticPublisher publisher = new StaticPublisher();
+        publisher.publishSFTP(Paths.get(staticBundleRootPath));
+
+        Logger.info(this, "End of Push via SFTP");
+    }
+
+    private void removeSFTP(File staticBundleRoot) {
+        Logger.info(this, "Start Push REMOVE via SFTP");
+        Logger.info(this, "Static Bundle Root: " + staticBundleRoot);
 
         StaticPublisher publisher = new StaticPublisher();
 
-        final File[] bundleFiles = staticBundleRoot.listFiles();
-        for (File file : bundleFiles) {
-            publisher.publish(
-                file.toPath(),
-                Paths.get(remotePath)
-            );
+        Collection<File> listFiles =
+            FileUtils.listFiles(staticBundleRoot, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+
+        for (File file : listFiles) {
+            final String absolutePath = file.getPath().replace(staticBundleRoot.getPath(), "");
+            publisher.removeSFTP(absolutePath);
         }
 
-        Logger.info(this, "End of pushing via SCP");
-
+        Logger.info(this, "End of Push REMOVE via SFTP");
     }
 
 } //SuccessEndpointsSubscriber.
