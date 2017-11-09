@@ -15,7 +15,7 @@ configurations {
 
 dependencies {
     compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
-    compile('com.dotcms:dotcms:4.2.0') { transitive = true }
+    compile('com.dotcms:dotcms:4.2.1') { transitive = true }
 }
 
 jar {
