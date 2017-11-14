@@ -15,7 +15,7 @@ configurations {
 
 dependencies {
     compile fileTree(dir: '../com.dotcms.service/build/libs/', include: '*.jar')//As this example depends on the com.dotcms.service example
-    compile('com.dotcms:dotcms:4.2.1') { transitive = true }
+    compile('com.dotcms:dotcms:4.2.2') { transitive = true }
 }
 
 jar {
