@@ -4,7 +4,7 @@ import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
 import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
 import com.dotcms.staticpublish.listener.SuccessEndpointsSubscriber;
 import com.dotcms.system.event.local.business.LocalSystemEventsAPI;
-import com.dotcms.system.event.local.type.staticpublish.AllStaticPublishEndpointsSuccessEvent;
+import com.dotcms.system.event.local.type.staticpublish.SingleStaticPublishEndpointSuccessEvent;
 import com.dotmarketing.business.APILocator;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
@@ -39,7 +39,7 @@ public class Activator extends GenericBundleActivator {
 
         //Subscribing to all endpoints success event
         SuccessEndpointsSubscriber successEndpointsSubscriber = new SuccessEndpointsSubscriber();
-        localSystemEventsAPI.subscribe(AllStaticPublishEndpointsSuccessEvent.class, successEndpointsSubscriber);
+        localSystemEventsAPI.subscribe(SingleStaticPublishEndpointSuccessEvent.class, successEndpointsSubscriber);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Activator extends GenericBundleActivator {
 
         //Important: unsubscribe events
         localSystemEventsAPI
-            .unsubscribe(AllStaticPublishEndpointsSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
+            .unsubscribe(SingleStaticPublishEndpointSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
 
     }
 } // EOC Activator

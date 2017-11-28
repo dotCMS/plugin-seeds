@@ -1,11 +1,12 @@
 package com.dotcms.staticpublish.listener;
 
 
+import com.dotcms.publisher.endpoint.bean.PublishingEndPoint;
 import com.dotcms.publishing.BundlerUtil;
 import com.dotcms.publishing.PublisherConfig;
 import com.dotcms.staticpublish.publisher.StaticPublisher;
 import com.dotcms.system.event.local.model.EventSubscriber;
-import com.dotcms.system.event.local.type.staticpublish.AllStaticPublishEndpointsSuccessEvent;
+import com.dotcms.system.event.local.type.staticpublish.SingleStaticPublishEndpointSuccessEvent;
 import com.dotmarketing.util.Logger;
 
 import org.apache.commons.io.FileUtils;
@@ -15,11 +16,16 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.Collection;
 
-public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPublishEndpointsSuccessEvent> {
+public class SuccessEndpointsSubscriber implements EventSubscriber<SingleStaticPublishEndpointSuccessEvent> {
 
-    public void notify(AllStaticPublishEndpointsSuccessEvent event) {
+    private PublisherConfig config;
 
-        final PublisherConfig config = event.getConfig();
+    private PublishingEndPoint endpoint;
+
+    public void notify(SingleStaticPublishEndpointSuccessEvent event) {
+
+        config = event.getConfig();
+        endpoint = event.getEndpoint();
         final File staticBundleRoot = BundlerUtil.getStaticBundleRoot(config);
         final String staticBundleRootPath = staticBundleRoot.getPath();
 
@@ -37,7 +43,7 @@ public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPubl
         Logger.info(this, "Start Push via SCP");
         Logger.info(this, "Static Bundle Root: " + staticBundleRoot.getPath());
 
-        StaticPublisher publisher = new StaticPublisher();
+        StaticPublisher publisher = new StaticPublisher(config, endpoint);
         final File[] files = staticBundleRoot.listFiles();
 
         for (File file : files) {
@@ -51,7 +57,7 @@ public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPubl
         Logger.info(this, "Start Push via SFTP");
         Logger.info(this, "Static Bundle Root: " + staticBundleRootPath);
 
-        StaticPublisher publisher = new StaticPublisher();
+        StaticPublisher publisher = new StaticPublisher(config, endpoint);
         publisher.publishSFTP(Paths.get(staticBundleRootPath));
 
         Logger.info(this, "End of Push via SFTP");
@@ -61,7 +67,7 @@ public class SuccessEndpointsSubscriber implements EventSubscriber<AllStaticPubl
         Logger.info(this, "Start Push REMOVE via SFTP");
         Logger.info(this, "Static Bundle Root: " + staticBundleRoot);
 
-        StaticPublisher publisher = new StaticPublisher();
+        StaticPublisher publisher = new StaticPublisher(config, endpoint);
 
         Collection<File> listFiles =
             FileUtils.listFiles(staticBundleRoot, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
