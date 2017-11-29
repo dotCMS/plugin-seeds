@@ -18,19 +18,19 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends GenericBundleActivator {
 
-//    private LoggerContext pluginLoggerContext;
+    private LoggerContext pluginLoggerContext;
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
 
 //        //Initializing log4j...
-//        LoggerContext dotcmsLoggerContext = Log4jUtil.getLoggerContext();
+        LoggerContext dotcmsLoggerContext = Log4jUtil.getLoggerContext();
 //        //Initialing the log4j context of this plugin based on the dotCMS logger context
-//        pluginLoggerContext = (LoggerContext) LogManager
-//            .getContext(this.getClass().getClassLoader(),
-//                false,
-//                dotcmsLoggerContext,
-//                dotcmsLoggerContext.getConfigLocation());
+        pluginLoggerContext = (LoggerContext) LogManager
+            .getContext(this.getClass().getClassLoader(),
+               false,
+                dotcmsLoggerContext,
+                dotcmsLoggerContext.getConfigLocation());
 
         //Initializing services...
         initializeServices(bundleContext);
@@ -53,5 +53,9 @@ public class Activator extends GenericBundleActivator {
         localSystemEventsAPI
             .unsubscribe(SingleStaticPublishEndpointSuccessEvent.class, SuccessEndpointsSubscriber.class.getName());
 
+        unregisterServices( bundleContext );
+
+        //Shutting down log4j in order to avoid memory leaks
+        Log4jUtil.shutdown(pluginLoggerContext);
     }
 } // EOC Activator
