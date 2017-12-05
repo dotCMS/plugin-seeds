@@ -1,16 +1,36 @@
 
-# README
+# Static Publish Plugin
 --------
+This plugin allows to push static content from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that will be subscribed to an event (SingleStaticPublishEndpointSuccessEvent) once this plugin is deployed on dotCMS as a dynamic plugin.
 
-How to subscribe to Static Publish events. 
+For further information about dotCMS Dynamic Plugins and Push Publishing Listeners, please visit:
+
+* https://dotcms.com/docs/latest/osgi-plugins 
+* https://dotcms.com/docs/latest/push-publish-listeners-configuration
+
 
 ## Important Notes:
 
 1. Be aware that you need to subscribe and stop the listener under Activator's start and stop method respectively.
-
-2. We use sshj project in this example, that library relies in Bouncy Castle dependency in order to secure all requests. 
+2. dotCMS needs to be installed on the sender under a Platform License in order to use the Static Publish feature. However, the receiver does not need to be a dotCMS instance.
+3. We use sshj project in this example to establish the connection between sender and receiver. This library relies in Bouncy Castle dependency in order to secure all requests. 
 Bouncy Castle needs to be verified against Java Security Framework, in order to do that Bouncy Castle jars can't be part of this osgi plugin (see link). 
 So we will be using dotCMS own Bouncy Castle library for this purpose. http://side-effects-bang.blogspot.com/2015/02/deploying-uberjars-that-use-bouncy.html
+
+## How to Configure
+
+All information required by the sender to establish a secure connection with a remote server needs to be included in the file `src/main/resources/plugin.properties`. 
+
+The following key properties are required:
+
+* **key.file.path**: absolute path (in the sender) where the .pem certificate to be used for the connection is located
+* **ssh.user**: ssh user to be used to connect with the receiver
+* **hosts**: receiver's ip address
+* **remote.path**: absolute path where static content will be stored in the receiver
+
+**Note:** The plugin needs to be built and redeployed as a dynamic plugin in dotCMS each time the `plugin.properties` file is modified
+
+
 
 ## How to build an OSGi project
 -------------------------------
