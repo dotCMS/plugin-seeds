@@ -1,6 +1,7 @@
 
 # Static Publish Plugin
---------
+
+
 This plugin allows to push static content from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that will be subscribed to an event (SingleStaticPublishEndpointSuccessEvent) once this plugin is deployed on dotCMS as a dynamic plugin.
 
 For further information about dotCMS Dynamic Plugins and Push Publishing Listeners, please visit:
@@ -33,7 +34,7 @@ The following key properties are required:
 
 
 ## How to build an OSGi project
--------------------------------
+
 
 To install all you need to do is build the JAR. to do this run
 `./gradlew jar`
