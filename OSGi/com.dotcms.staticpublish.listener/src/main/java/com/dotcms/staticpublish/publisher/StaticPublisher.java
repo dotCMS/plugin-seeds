@@ -44,66 +44,16 @@ public class StaticPublisher {
     }
 
     public void publishSCP(Path localPath) {
-        List<String> hosts       = getHosts();
-        SSHClient ssh            = new SSHClient();
-        List<String> failedHosts = new ArrayList<>();
-        EndpointDetail detail    = new EndpointDetail();
-        try {
-            ssh.loadKnownHosts();
-            this.currentStatusHistory = publishAuditAPI.getPublishAuditStatus(config.getId()).getStatusPojo();
-
-            for (String host : hosts) {
-                try {
-                    ssh.connect(host);
-                    ssh.auth(getUsername(), getAuthPublickey());
-
-                    // Present here to demo algorithm renegotiation - could have just put this before connect()
-                    // Make sure JZlib is in classpath for this to work
-                    ssh.useCompression();
-
-                    Logger.info(this, "Remote Bundle Path: ");
-
-                    final TransferMethod transferMethod = new SCPTransferMethod();
-                    transferMethod.transfer(ssh, localPath, Paths.get(getRemotePath()));
-                } catch (IOException e) {
-                    Logger.error(this, "IOException error: ", e);
-                    failedHosts.add(host);
-                } catch (Exception e) {
-                    Logger.error(this, "Exception Error: ", e);
-                    failedHosts.add(host);
-                } finally {
-                    try {
-                        ssh.disconnect();
-                    } catch (IOException e) {
-                        Logger.error(this, "Unable to disconnect from SSH.", e);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            Logger.error(this, "Error loading ssh known hosts", e);
-            detail.setStatus(Status.FAILED_TO_PUBLISH.getCode());
-            detail.setInfo("Error sending bundle to " + String.join(",", hosts));
-        } catch (DotPublisherException e) {
-            Logger.error(this, "Error loading publish audit status", e);
-            detail.setStatus(Status.FAILED_TO_PUBLISH.getCode());
-            detail.setInfo("Error sending bundle to " + String.join(",", hosts));
-        } catch (Exception e) {
-            Logger.error(this, "Error publishing bundle", e);
-            detail.setStatus(Status.FAILED_TO_PUBLISH.getCode());
-            detail.setInfo("Error sending bundle to " + String.join(",", hosts));
-        } finally{
-            try {
-                updatePublishAudit(hosts, failedHosts, detail);
-            } catch (DotPublisherException e) {
-                Logger.error(this, "Error updating publish audit status", e);
-            }
-        }
+        publish(localPath, new SCPTransferMethod());
     }
 
     public void publishSFTP(final Path localPath) {
+        publish(localPath, new SFTPTransferMethod());
+    }
+
+    private void publish(final Path localPath, TransferMethod transferMethod) {
         final List<String> hosts = getHosts();
         final SSHClient ssh      = new SSHClient();
-        SFTPClient sftp          = null;
         List<String> failedHosts = new ArrayList<>();
         EndpointDetail detail    = new EndpointDetail();
 
@@ -119,7 +69,6 @@ public class StaticPublisher {
 
                     Logger.info(this, "Remote Bundle Path: ");
 
-                    final TransferMethod transferMethod = new SFTPTransferMethod();
                     transferMethod.transfer(ssh, localPath, Paths.get(getRemotePath()));
 
                 } catch (IOException e) {
@@ -130,9 +79,6 @@ public class StaticPublisher {
                     failedHosts.add(host);
                 } finally {
                     try {
-                        if (sftp != null) {
-                            sftp.close();
-                        }
                         ssh.disconnect();
                     } catch (IOException e) {
                         Logger.error(this, "Unable to disconnect from SSH.", e);
