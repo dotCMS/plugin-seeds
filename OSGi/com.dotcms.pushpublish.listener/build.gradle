@@ -15,7 +15,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:4.3.0-SNAPSHOT') { transitive = true }
+    compile('com.dotcms:dotcms:4.3.0') { transitive = true }
 }
 
 jar {
