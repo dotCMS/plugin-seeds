@@ -17,6 +17,7 @@ dependencies {
     compile('com.dotcms:dotcms:4.3.0') { transitive = true }
 }
 
+//Plugin jar
 jar {
     manifest {
         attributes (
@@ -25,11 +26,33 @@ jar {
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.override.Activator',
                 'Override-Classes': 'com.dotmarketing.portlets.folders.model.Folder',
-                'DynamicImport-Package': '*',
                 'Import-Package': '!com.dotmarketing.portlets.folders.model,*;version=0'
         )
     }
 }
+
+//Fragment jar
+task fragmentJar(type: Jar) {
+
+    //Setting the fragment jar name
+    baseName = project.name
+    archiveName = "${baseName}.fragment-${version}.jar"
+
+    manifest {
+        attributes (
+                'Bundle-Vendor': 'dotCMS',
+                'Bundle-Description': 'dotCMS - Override fragment',
+                'Bundle-DocURL': 'https://dotcms.com/',
+                'Fragment-Host': 'system.bundle; extension:=framework',
+                'Export-Package': 'com.dotcms.repackage.org.apache.logging.log4j,' +
+                        'com.dotcms.repackage.org.apache.logging.log4j.core,' +
+                        'com.dotcms.repackage.org.apache.logging.log4j.spi,' +
+                        'org.apache.commons.lang.builder'
+        )
+    }
+}
+
+jar.finalizedBy 'fragmentJar'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
