@@ -41,7 +41,11 @@ task fragmentJar(type: Jar) {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
+                'Bundle-Version': "${version}",
+                'Bundle-Name': 'dotCMS Override fragment',
+                'Bundle-SymbolicName': "${baseName}.fragment",
                 'Bundle-Description': 'dotCMS - Override fragment',
+                'Bundle-ManifestVersion': '2',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Fragment-Host': 'system.bundle; extension:=framework',
                 'Export-Package': 'com.dotcms.repackage.org.apache.logging.log4j,' +
