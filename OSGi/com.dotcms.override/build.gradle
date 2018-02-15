@@ -17,7 +17,20 @@ dependencies {
     compile('com.dotcms:dotcms:4.3.0') { transitive = true }
 }
 
+import java.util.jar.*
+
+ext {
+    bundleSymbolicName = ""
+    bundleVersion = ""
+    importPackage = ""
+    bundleManifestVersion = ""
+    bundleDocURL = ""
+    bundleVendor = ""
+}
+
+/////////////////////////
 //Plugin jar
+/////////////////////////
 jar {
     manifest {
         attributes (
@@ -30,33 +43,52 @@ jar {
         )
     }
 }
+jar.finalizedBy 'fragmentJar'
 
+/////////////////////////
 //Fragment jar
-task fragmentJar(type: Jar) {
+/////////////////////////
 
-    //Setting the fragment jar name
-    baseName = project.name
-    archiveName = "${baseName}.fragment-${version}.jar"
-
-    manifest {
-        attributes (
-                'Bundle-Vendor': 'dotCMS',
-                'Bundle-Version': "${version}",
-                'Bundle-Name': 'dotCMS Override fragment',
-                'Bundle-SymbolicName': "${baseName}.fragment",
-                'Bundle-Description': 'dotCMS - Override fragment',
-                'Bundle-ManifestVersion': '2',
-                'Bundle-DocURL': 'https://dotcms.com/',
-                'Fragment-Host': 'system.bundle; extension:=framework',
-                'Export-Package': 'com.dotcms.repackage.org.apache.logging.log4j,' +
-                        'com.dotcms.repackage.org.apache.logging.log4j.core,' +
-                        'com.dotcms.repackage.org.apache.logging.log4j.spi,' +
-                        'org.apache.commons.lang.builder'
-        )
+/**
+ * Reads the Manifest file of the just created plugin jar in order to get the required info
+ * to automatically create the fragment jar.
+ */
+task readManifesttAttributes {
+    doFirst {
+        File file = configurations.baseline.singleFile
+        JarFile jar = new JarFile(file)
+        Attributes manifest = jar.getManifest().getMainAttributes()
+        bundleSymbolicName = "${manifest.getValue('Bundle-SymbolicName')}"
+        bundleVersion = "${manifest.getValue('Bundle-Version')}"
+        importPackage = "${manifest.getValue('Import-Package')}"
+        bundleManifestVersion = "${manifest.getValue('Bundle-ManifestVersion')}"
+        bundleDocURL = "${manifest.getValue('Bundle-DocURL')}"
+        bundleVendor = "${manifest.getValue('Bundle-Vendor')}"
     }
 }
+task fragmentJar(type: Jar) {
 
-jar.finalizedBy 'fragmentJar'
+    doFirst {
+        //Setting the fragment jar name
+        baseName = project.name
+        archiveName = "${baseName}.fragment-${version}.jar"
+
+        manifest {
+            attributes (
+                    'Bundle-Name': 'dotCMS Override fragment',
+                    'Bundle-Description': 'dotCMS - Override fragment',
+                    'Bundle-Vendor': "${bundleVendor}",
+                    'Bundle-Version': "${version}",
+                    'Bundle-SymbolicName': "${baseName}.fragment",
+                    'Bundle-ManifestVersion': "${bundleManifestVersion}",
+                    'Bundle-DocURL': "${bundleDocURL}",
+                    'Fragment-Host': 'system.bundle; extension:=framework',
+                    'Export-Package': "${importPackage}"
+            )
+        }
+    }
+}
+fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
