@@ -9,19 +9,21 @@ To install all you need to do is build the JAR. to do this run
 
 This will build a jar in the `build/libs` directory
 
-#### To install this bundle:
-Copy the bundle jar file inside the Felix OSGI container (*dotCMS/felix/load*).
+* **To install this bundle:**
+
+    Copy the bundle jar file inside the Felix OSGI container (*dotCMS/felix/load*).
         
-OR
+    OR
         
-Upload the bundle jar file using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
+    Upload the bundle jar file using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
 
-#### To uninstall this bundle:
-Remove the bundle jar file from the Felix OSGI container (*dotCMS/felix/load*).
+* **To uninstall this bundle:**
+    
+    Remove the bundle jar file from the Felix OSGI container (*dotCMS/felix/load*).
 
-OR
+    OR
 
-Undeploy the bundle using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
+    Undeploy the bundle using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
 ## How to create a bundle plugin to override dotCMS classes
 
@@ -46,14 +48,14 @@ If you are building the MANIFEST on your own or desire more info on it below is 
 
 In order to work inside the Apache Felix OSGI runtime, the import and export directive must be bidirectional, there are two ways to accomplish this:
 
-* Exported Packages
+* **Exported Packages**
 
     The dotCMS must declare the set of packages that will be available to the OSGI plugins by changing the file: *dotCMS/WEB-INF/felix/osgi-extra.conf*.
 This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported Packages*).
 
     Only after that exported packages are defined in this list, a plugin can Import the packages to use them inside the OSGI blundle.
     
-* Fragment
+* **Fragment**
 
     A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
