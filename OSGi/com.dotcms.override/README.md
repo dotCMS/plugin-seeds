@@ -39,8 +39,7 @@ If you are building the MANIFEST on your own or desire more info on it below is 
     Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.override.Activator)
     Override-Classes: Comma separated list of classes.
     List of classes we are trying to override, in order to override any dotCMS class is mandatory to add it to this list because dotCMS implementation of the class will be already loaded by the dotCMS class loader so if we don't explicit specify the classes to override the class loader wont try to load them.
-    DynamicImport-Package: *
-    Dynamically add required imports the plugin may need without add them explicitly
+    Export-Package: Declares the packages that are visible outside the plugin. Any package not declared here has visibility only within the bundle.
     Import-Package: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
 ```
 
