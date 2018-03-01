@@ -7,23 +7,23 @@ This bundle plugin is an example of how to override dotCMS classes with our bund
 To install all you need to do is build the JAR. to do this run
 `./gradlew jar`
 
-This will build a jar in the `build/libs` directory
+This will build two jars in the `build/libs` directory: a bundle fragment (in order to expose needed 3rd party libraries from dotCMS) and the plugin jar 
 
 * **To install this bundle:**
 
-    Copy the bundle jar file inside the Felix OSGI container (*dotCMS/felix/load*).
+    Copy the bundle jar files inside the Felix OSGI container (*dotCMS/felix/load*).
         
     OR
         
-    Upload the bundle jar file using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
+    Upload the bundle jars files using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
 
 * **To uninstall this bundle:**
     
-    Remove the bundle jar file from the Felix OSGI container (*dotCMS/felix/load*).
+    Remove the bundle jars files from the Felix OSGI container (*dotCMS/felix/load*).
 
     OR
 
-    Undeploy the bundle using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
+    Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
 ## How to create a bundle plugin to override dotCMS classes
 
