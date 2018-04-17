@@ -1,6 +1,6 @@
 # README
 
-This bundle plugin is an example of how to add Spring support to a bundle plugin, creates and registers a simple Spring Controller using a different Spring version that the one shipped with dotCMS in order to extend the reach of this example.
+This bundle plugin is an example of how to add 3rd party jars to a bundle plugin.
 
 ## How to build this example
 
@@ -25,7 +25,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin with Spring support
+## How to create a bundle plugin with external jars
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -36,8 +36,7 @@ If you are building the MANIFEST on your own or desire more info on it below is 
 ```
     Bundle-Name: The name of your bundle
     Bundle-SymbolicName: A short an unique name for the bundle
-    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.custom.spring.Activator)
-    Bundle-ClassPath: The Bundle-ClassPath specifies where to load classes and jars from from the bundle.
+    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.override.Activator)
     Export-Package: Declares the packages that are visible outside the plugin. Any package not declared here has visibility only within the bundle.
     Import-Package: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
 ```
@@ -62,33 +61,11 @@ As it not contain a Bundle-Activator a fragment cannot be started so after deplo
 ---
 ## Components
 
-### com.dotmarketing.osgi.custom.spring.ExampleController
+### com.dotmarketing.osgi.external.Examples
 
-Simple annotated Spring Controller
-
-### com.dotmarketing.osgi.custom.spring.CustomViewResolver
-
-Custom implementation of an Spring ViewResolver.
-
-### com.dotmarketing.osgi.custom.spring.CustomView
-
-Custom implementation of an Spring View.
-
-### example-servlet.xml
-
-Inside the *com.dotcms.custom.spring/src/main/resources/spring* folder is an Standard Spring configuration file where basically we enabled the support for anntotation-driven controllers and the Spring component-scan functionality.
+Example class that will run simple examples using the 3rd party library that was added to the lib folder of the bundle (lib/date4j.jar).
 
 ### Activator
 
-This bundle activator extends from *com.dotmarketing.osgi.GenericBundleActivator* and implements `BundleActivator.start()`.
-Will manually register making use of the class *DispatcherServlet* our spring configuration file *spring/example-servlet.xml*.
-
-* PLEASE note the `publishBundleServices( context )` call, this call is MANDATORY (!) as it will allow us to share resources between the bundle, the host container (dotCMS) and the Spring context.
-
----
-## Testing
-
-The Spring controller is registered under the url pattern **"/spring"** can be test it running and assuming your dotCMS url is *localhost:8080*:
-
-* [http://localhost:8080/app/spring/examplecontroller/](http://localhost:8080/app/spring/examplecontroller/)
-* [http://localhost:8080/app/spring/examplecontroller/Testing](http://localhost:8080/app/spring/examplecontroller/Testing)
+This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
+Calls the Examples class static methods to run simple tests that use the 3rd party library date4j.jar

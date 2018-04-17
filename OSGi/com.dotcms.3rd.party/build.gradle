@@ -3,14 +3,10 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.1'
+version = '0.2'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
-}
-
-configurations {
-    osgiLibs
 }
 
 dependencies {
@@ -52,6 +48,14 @@ ext {
     bundleDocURL = "" //Auto generated based on the plugin jar
     bundleVendor = "" //Auto generated based on the plugin jar
 }
+/**
+ * The import generates versions like this: version="[1.8,2)"
+ * That format does not work for the export, so we need to replace it
+ * to: version=0
+ */
+ext.fixVersionNumber = {importValue ->
+    return importValue.replaceAll("\"\\[[0-9.,]+\\)\"", "0")
+}
 
 /**
  * Reads the Manifest file of the just created plugin jar in order to get the required info
@@ -76,6 +80,7 @@ task fragmentJar(type: Jar) {
         //Setting the fragment jar name
         baseName = project.name
         archiveName = "${baseName}.fragment-${version}.jar"
+        importPackage = fixVersionNumber(importPackage)
 
         manifest {
             attributes (

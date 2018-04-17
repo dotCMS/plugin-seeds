@@ -3,7 +3,7 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.1'
+version = '0.2'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
@@ -11,7 +11,6 @@ repositories {
 
 configurations {
     pluginLibs
-    osgiLibs
 }
 
 dependencies {
@@ -32,11 +31,16 @@ dependencies {
     pluginLibs group: 'xerces', name: 'xercesImpl', version: '2.11.0'
 }
 
+import java.util.jar.*
+
+/////////////////////////
+//Plugin jar
+/////////////////////////
 jar {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
-                'Bundle-Description': 'Spring OSGi Example providing its own Spring for dotcms',
+                'Bundle-Description': 'dotCMS - Spring OSGi Example providing its own Spring for dotcms',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.custom.spring.Activator',
                 'Bundle-ClassPath' :'''
@@ -61,16 +65,17 @@ jar {
                 ''',
                 'Import-Package': '''
                     bsh;resolution:=optional,
+                    javax.servlet;version=0,
                     javax.servlet.jsp.*;resolution:=optional,
+                    javax.servlet.annotation;version=0,
+                    javax.servlet.http;version=0,
                     org.apache.velocity.*,					
                     com.dotmarketing.osgi.*,
                     com.dotmarketing.util.*;
                     com.dotmarketing.filters.*,
                     com.dotmarketing.loggers.*,
-                    com.dotmarketing.exception.*,
-                    com.dotcms.repackage.org.apache.logging.log4j.core;version=0,
-                    com.dotcms.repackage.org.apache.logging.log4j;version=0,
-                    javax.servlet.*,
+                    org.apache.logging.log4j.core;version=0,
+                    org.apache.logging.log4j;version=0,
                     javax.management.*,
                     org.apache.felix.http.api.*,
                     org.osgi.framework.*,
@@ -84,8 +89,74 @@ task copyToLib(type: Copy) {
     from configurations.pluginLibs
 }
 
-//jar.dependsOn fragment
 jar.dependsOn copyToLib
+jar.finalizedBy 'fragmentJar'
+
+/////////////////////////
+//Fragment jar
+/////////////////////////
+
+ext {
+    bundleName = "dotCMS Custom Spring OSGi fragment"
+    bundleDescription = "dotCMS - Spring OSGi Example providing its own Spring for dotcms fragment"
+    fragmentHost = "system.bundle; extension:=framework"
+    bundleSymbolicName = "" //Auto generated based on the plugin jar
+    bundleVersion = "" //Auto generated based on the plugin jar
+    importPackage = "" //Auto generated based on the plugin jar
+    bundleManifestVersion = "" //Auto generated based on the plugin jar
+    bundleDocURL = "" //Auto generated based on the plugin jar
+    bundleVendor = "" //Auto generated based on the plugin jar
+}
+/**
+ * The import generates versions like this: version="[1.8,2)"
+ * That format does not work for the export, so we need to replace it
+ * to: version=0
+ */
+ext.fixVersionNumber = {importValue ->
+    return importValue.replaceAll("\"\\[[0-9.,]+\\)\"", "0")
+}
+
+/**
+ * Reads the Manifest file of the just created plugin jar in order to get the required info
+ * to automatically create the fragment jar.
+ */
+task readManifesttAttributes {
+    doFirst {
+        File file = configurations.baseline.singleFile
+        JarFile jar = new JarFile(file)
+        Attributes manifest = jar.getManifest().getMainAttributes()
+        bundleSymbolicName = "${manifest.getValue('Bundle-SymbolicName')}"
+        bundleVersion = "${manifest.getValue('Bundle-Version')}"
+        importPackage = "${manifest.getValue('Import-Package')}"
+        bundleManifestVersion = "${manifest.getValue('Bundle-ManifestVersion')}"
+        bundleDocURL = "${manifest.getValue('Bundle-DocURL')}"
+        bundleVendor = "${manifest.getValue('Bundle-Vendor')}"
+    }
+}
+task fragmentJar(type: Jar) {
+
+    doFirst {
+        //Setting the fragment jar name
+        baseName = project.name
+        archiveName = "${baseName}.fragment-${version}.jar"
+        importPackage = fixVersionNumber(importPackage)
+
+        manifest {
+            attributes (
+                    'Bundle-Name': "${bundleName}",
+                    'Bundle-Description': "${bundleDescription}",
+                    'Bundle-Vendor': "${bundleVendor}",
+                    'Bundle-Version': "${version}",
+                    'Bundle-SymbolicName': "${baseName}.fragment",
+                    'Bundle-ManifestVersion': "${bundleManifestVersion}",
+                    'Bundle-DocURL': "${bundleDocURL}",
+                    'Fragment-Host': "${fragmentHost}",
+                    'Export-Package': "${importPackage}"
+            )
+        }
+    }
+}
+fragmentJar.dependsOn 'readManifesttAttributes'
 
 tasks.copyToLib.execute()
 task wrapper(type: Wrapper) {
