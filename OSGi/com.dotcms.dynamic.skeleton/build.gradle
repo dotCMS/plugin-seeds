@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = '1.8'
 
 // Plugin version
-version = '0.1'
+version = '0.2'
 
 // Repositories
 // reference to "artifactory" our oficial repository
@@ -26,7 +26,13 @@ dependencies {
     compile('com.dotcms:dotcms:4.3.2') { transitive = true }
 }
 
-// gradle task creates the manifest for the OSGi bundle
+import java.util.jar.*
+
+/////////////////////////
+//Plugin jar
+/////////////////////////
+
+// gradle task creates the jar for the OSGi bundle plugin
 // replace <plugin_package> and <plugin_description>
 jar {
     manifest {
@@ -35,11 +41,79 @@ jar {
                 'Bundle-Description': '<plugin_description>',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': '<plugin_package>.Activator',
-                'DynamicImport-Package': '*',
                 'Import-Package': '*;version=0'
         )
     }
 }
+jar.finalizedBy 'fragmentJar'
+
+/////////////////////////
+//Fragment jar
+/////////////////////////
+
+// gradle task creates the jar for the OSGi bundle fragment plugin
+// replace <plugin_fragment_name> and <plugin_fragment_description>
+ext {
+    bundleName = "<plugin_fragment_name>"
+    bundleDescription = "<plugin_fragment_description>"
+    fragmentHost = "system.bundle; extension:=framework"
+    bundleSymbolicName = "" //Auto generated based on the plugin jar
+    bundleVersion = "" //Auto generated based on the plugin jar
+    importPackage = "" //Auto generated based on the plugin jar
+    bundleManifestVersion = "" //Auto generated based on the plugin jar
+    bundleDocURL = "" //Auto generated based on the plugin jar
+    bundleVendor = "" //Auto generated based on the plugin jar
+}
+/**
+ * The import generates versions like this: version="[1.8,2)"
+ * That format does not work for the export, so we need to replace it
+ * to: version=0
+ */
+ext.fixVersionNumber = {importValue ->
+    return importValue.replaceAll("\"\\[[0-9.,]+\\)\"", "0")
+}
+
+/**
+ * Reads the Manifest file of the just created plugin jar in order to get the required info
+ * to automatically create the fragment jar.
+ */
+task readManifesttAttributes {
+    doFirst {
+        File file = configurations.baseline.singleFile
+        JarFile jar = new JarFile(file)
+        Attributes manifest = jar.getManifest().getMainAttributes()
+        bundleSymbolicName = "${manifest.getValue('Bundle-SymbolicName')}"
+        bundleVersion = "${manifest.getValue('Bundle-Version')}"
+        importPackage = "${manifest.getValue('Import-Package')}"
+        bundleManifestVersion = "${manifest.getValue('Bundle-ManifestVersion')}"
+        bundleDocURL = "${manifest.getValue('Bundle-DocURL')}"
+        bundleVendor = "${manifest.getValue('Bundle-Vendor')}"
+    }
+}
+task fragmentJar(type: Jar) {
+
+    doFirst {
+        //Setting the fragment jar name
+        baseName = project.name
+        archiveName = "${baseName}.fragment-${version}.jar"
+        importPackage = fixVersionNumber(importPackage)
+
+        manifest {
+            attributes (
+                    'Bundle-Name': "${bundleName}",
+                    'Bundle-Description': "${bundleDescription}",
+                    'Bundle-Vendor': "${bundleVendor}",
+                    'Bundle-Version': "${version}",
+                    'Bundle-SymbolicName': "${baseName}.fragment",
+                    'Bundle-ManifestVersion': "${bundleManifestVersion}",
+                    'Bundle-DocURL': "${bundleDocURL}",
+                    'Fragment-Host': "${fragmentHost}",
+                    'Export-Package': "${importPackage}"
+            )
+        }
+    }
+}
+fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'

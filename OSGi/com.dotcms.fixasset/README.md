@@ -1,6 +1,15 @@
 # README
 
-## How to build an OSGi project
+This bundle plugin is an example of how to add a dotcms fix tasks OSGi. FixTasks are run from the CMS Maintenance scree and can be used to fix corrupt data or other issues where the dotCMS store gets wonky.
+
+Example use cases:  
+
+* To prep legacy data in anticipation of an upgrade
+* To remove orphaned files on the file system
+* to clean up permission references
+* to add missing version_info records
+
+## How to build this example
 
 To install all you need to do is build the JAR. to do this run
 `./gradlew jar`
@@ -23,7 +32,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin
+## How to create a bundle plugin for fix tasks
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -55,3 +64,15 @@ This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported
     A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
 As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
+
+---
+## Components
+
+### com.dotmarketing.osgi.hooks.SamplePostContentHook AND com.dotmarketing.osgi.hooks.SamplePreContentHook
+
+Hooks classes that will override the contentletCount method to see how they work.
+
+### Activator
+
+This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
+Calls ContentletAPI.contentletCount() who will fire ours hooks methods.

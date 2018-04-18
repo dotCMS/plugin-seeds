@@ -23,7 +23,7 @@ jar {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
-                'Bundle-Description': 'dotCMS - dotCMS OSGI Party library example',
+                'Bundle-Description': 'dotCMS - OSGI 3rd Party library example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.external.Activator',
                 'Bundle-ClassPath': '.,libs/date4j.jar',
@@ -38,8 +38,8 @@ jar.finalizedBy 'fragmentJar'
 /////////////////////////
 
 ext {
-    bundleName = "dotCMS OSGI Party library fragment"
-    bundleDescription = "dotCMS - dotCMS OSGI Party library fragment"
+    bundleName = "OSGI 3rd Party library fragment"
+    bundleDescription = "dotCMS - OSGI 3rd Party library fragment"
     fragmentHost = "system.bundle; extension:=framework"
     bundleSymbolicName = "" //Auto generated based on the plugin jar
     bundleVersion = "" //Auto generated based on the plugin jar
