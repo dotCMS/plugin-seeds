@@ -1,13 +1,13 @@
 package com.dotmarketing.osgi.hooks;
 
-import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
-import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
-import org.osgi.framework.BundleContext;
 import com.dotmarketing.business.APILocator;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import com.dotmarketing.portlets.contentlet.business.ContentletAPI;
 import com.dotmarketing.util.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.osgi.framework.BundleContext;
 
 /**
  * Created by Jonathan Gamba
