@@ -1,7 +1,8 @@
 package com.dotmarketing.osgi.ruleengine.actionlet;
 
+import static com.dotcms.repackage.com.google.common.base.Preconditions.checkState;
+
 import com.dotcms.repackage.com.google.common.base.Preconditions;
-import com.dotcms.repackage.org.apache.commons.lang.StringUtils;
 import com.dotmarketing.portlets.rules.RuleComponentInstance;
 import com.dotmarketing.portlets.rules.actionlet.RuleActionlet;
 import com.dotmarketing.portlets.rules.model.ParameterModel;
@@ -9,16 +10,12 @@ import com.dotmarketing.portlets.rules.parameter.ParameterDefinition;
 import com.dotmarketing.portlets.rules.parameter.display.TextInput;
 import com.dotmarketing.portlets.rules.parameter.type.TextType;
 import com.dotmarketing.util.Logger;
-
+import com.dotmarketing.util.VelocityUtil;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.context.Context;
-
-import com.dotmarketing.util.VelocityUtil;
-
-import static com.dotcms.repackage.com.google.common.base.Preconditions.checkState;
 
 /**
  * This actionlet allow to execute some velocity code and return the result as a request attribute.
