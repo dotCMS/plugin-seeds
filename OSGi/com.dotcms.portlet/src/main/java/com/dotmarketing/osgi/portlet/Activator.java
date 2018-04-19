@@ -1,10 +1,10 @@
 package com.dotmarketing.osgi.portlet;
 
-import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
-import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
-import com.dotcms.repackage.org.apache.struts.action.ActionMapping;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.struts.action.ActionMapping;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends GenericBundleActivator {
