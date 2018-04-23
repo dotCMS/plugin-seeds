@@ -1,11 +1,6 @@
 # README
 
-This plugin enables the push publishing of static objects from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that is subscribed to an event `SingleStaticPublishEndpointSuccessEvent`, once this plugin is deployed on dotCMS as a dynamic plugin.
-
-For further information about dotCMS Dynamic Plugins and Push Publishing Listeners, please visit:
-
-* https://dotcms.com/docs/latest/osgi-plugins 
-* https://dotcms.com/docs/latest/push-publish-listeners-configuration
+This bundle plugin is an example of how to add Spring support to a bundle plugin, creates and registers a simple Spring Controller.
 
 ## How to build this example
 
@@ -30,7 +25,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin
+## How to create a bundle plugin with Spring support
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -63,21 +58,28 @@ This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
 As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
 
-## Important Notes:
 
-1. Be aware that you need to subscribe and stop the listener under Activator's start and stop method respectively.
-2. dotCMS needs to be installed on the sender under a Platform License in order to use the Static Publish feature. However, the receiver does not need to be a dotCMS instance.
-3. We use sshj project in this example to establish the connection between sender and receiver. This library relies on a Bouncy Castle dependency in order to secure all requests. Bouncy Castle needs to be verified against Java Security Framework, in order to do that Bouncy Castle jars can't be part of this osgi plugin (see link). So we will be using dotCMS own Bouncy Castle library for this purpose. [http://side-effects-bang.blogspot.com/2015/02/deploying-uberjars-that-use-bouncy.html](http://side-effects-bang.blogspot.com/2015/02/deploying-uberjars-that-use-bouncy.html)
+---
+## Components
 
-## How to Configure
+### com.dotmarketing.osgi.spring.ExampleController
 
-All information required by the sender to establish a secure connection with a remote server needs to be included in the file `src/main/resources/plugin.properties`. 
+Simple annotated Spring Controller.
 
-The following key properties are required:
+### example-servlet.xml
 
-* **key.file.path**: absolute path (in the sender) where the .pem certificate to be used for the connection is located
-* **ssh.user**: ssh user to be used to connect with the receiver
-* **hosts**: receiver's ip address
-* **remote.path**: absolute path where static content will be stored in the receiver
+Standard Spring configuration file where basically we enabled the support for anntotation-driven controllers.
 
-**Note:** The plugin needs to be built and redeployed as a dynamic plugin in dotCMS each time the `plugin.properties` file is modified
+### Activator
+
+This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
+Will manually register making use of the class DispatcherServlet our spring configuration file (example-servlet.xml).
+
+* PLEASE note the "publishBundleServices( context )" call, this call is MANDATORY (!) as it will allow us to share resources
+  between the bundle and the host container (dotcms) required to a fully Spring integration with dotcms.
+
+## Testing
+
+The Spring controller is registered under the url pattern "/spring" can be test it running and assuming your dotcms url is localhost:8080:
+    http://localhost:8080/app/spring/examplecontroller/
+    http://localhost:8080/app/spring/examplecontroller/Testing
