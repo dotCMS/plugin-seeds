@@ -1,14 +1,13 @@
 package com.dotcms.staticpublish;
 
-import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
-import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
 import com.dotcms.staticpublish.listener.SuccessEndpointsSubscriber;
 import com.dotcms.system.event.local.business.LocalSystemEventsAPI;
 import com.dotcms.system.event.local.type.staticpublish.SingleStaticPublishEndpointSuccessEvent;
 import com.dotmarketing.business.APILocator;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.osgi.framework.BundleContext;
 
 

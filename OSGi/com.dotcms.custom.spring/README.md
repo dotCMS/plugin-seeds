@@ -2,51 +2,64 @@
 
 This bundle plugin is an example of how to add Spring support to a bundle plugin, creates and registers a simple Spring Controller using a different Spring version that the one shipped with dotCMS in order to extend the reach of this example.
 
-### How to build this example
+## How to build this example
 
-To install all you need to do is build the JAR. to do this run 
-```
-./gradlew jar
-```
-This will build a jar in the build/libs directory
+To install all you need to do is build the JAR. to do this run
+`./gradlew jar`
 
-### To install this bundle:
+This will build two jars in the `build/libs` directory: a bundle fragment (in order to expose needed 3rd party libraries from dotCMS) and the plugin jar 
 
-Upload the bundle jar file using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
-	
-### To uninstall this bundle:
+* **To install this bundle:**
 
-Undeploy the bundle using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
+    Copy the bundle jar files inside the Felix OSGI container (*dotCMS/felix/load*).
+        
+    OR
+        
+    Upload the bundle jars files using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
 
+* **To uninstall this bundle:**
+    
+    Remove the bundle jars files from the Felix OSGI container (*dotCMS/felix/load*).
 
-### How to create a bundle plugin with Spring support
+    OR
 
-In order to create an OSGI plugin, you must create a *META-INF/MANIFEST* to be included in the OSGI jar.
+    Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
+
+## How to create a bundle plugin with Spring support
+
+In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
 The Gradle plugin uses BND to generate the Manifest. The main reason you need to alter the config is when you need to exclude a package you are including on your Bundle-ClassPath
 
-In this *MANIFEST* you must specify (see the included plugin as an example):
+If you are building the MANIFEST on your own or desire more info on it below is a description of what is required in this MANIFEST you must specify (see template plugin):
 
-* *Bundle-Name*: The name of your bundle
-* *Bundle-SymbolicName*: A short an unique name for the bundle
-* *Bundle-Activator*: Package and name of your Activator class (example: *com.dotmarketing.osgi.custom.spring.Activator*)
-* *Bundle-ClassPath*: The Bundle-ClassPath specifies where to load classes and jars from from the bundle.
-This is a comma separated list of elements to load (such as current folder,lib.jar,other.jar). (Example: ., lib/com.springsource.org.aopalliance-1.0.0.jar)
-* *Import-Package*: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
+```
+    Bundle-Name: The name of your bundle
+    Bundle-SymbolicName: A short an unique name for the bundle
+    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.custom.spring.Activator)
+    Bundle-ClassPath: The Bundle-ClassPath specifies where to load classes and jars from from the bundle.
+    Export-Package: Declares the packages that are visible outside the plugin. Any package not declared here has visibility only within the bundle.
+    Import-Package: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
+```
 
+## Beware (!)
 
-### Beware (!)
+In order to work inside the Apache Felix OSGI runtime, the import and export directive must be bidirectional, there are two ways to accomplish this:
 
-In order to work inside the Apache Felix OSGI runtime, the import and export directive must be bidirectional.
+* **Exported Packages**
 
-As of dotcms 2.5.2 if you do not start with a **dotCMS/WEB-INF/felix/osgi-extra.conf** ALL packages will be exported for you. So there is nothing for you to do
-
-The DotCMS must declare the set of packages that will be available to the OSGI plugins by changing the file: *dotCMS/WEB-INF/felix/osgi-extra.conf*.
+    The dotCMS must declare the set of packages that will be available to the OSGI plugins by changing the file: *dotCMS/WEB-INF/felix/osgi-extra.conf*.
 This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported Packages*).
 
-Only after that exported packages are defined in this list, a plugin can Import the packages to use them inside the OSGI blundle.
+    Only after that exported packages are defined in this list, a plugin can Import the packages to use them inside the OSGI blundle.
+    
+* **Fragment**
 
+    A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
+One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
+As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
 
+---
 ## Components
 
 ### com.dotmarketing.osgi.custom.spring.ExampleController
@@ -72,8 +85,7 @@ Will manually register making use of the class *DispatcherServlet* our spring co
 
 * PLEASE note the `publishBundleServices( context )` call, this call is MANDATORY (!) as it will allow us to share resources between the bundle, the host container (dotCMS) and the Spring context.
 
-________________________________________________________________________________________
-
+---
 ## Testing
 
 The Spring controller is registered under the url pattern **"/spring"** can be test it running and assuming your dotCMS url is *localhost:8080*:

@@ -1,9 +1,10 @@
 # README
 
-This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a specific subnet.  It takes either a single standard IP(v4) like `192.168.1.45` or a whole subnet using CIDR notation, e.g. `192.168.1.1/24`
-
-**Note:** This plugin requires to add in the startup.sh or dotStartup.sh the following JAVA_OPTS parameter.
-If you are using tomcat to retrieve the IP's with IPv4 format. `JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"`
+This bundle plugin is an example of how to create and add Portlets for use in the dotCMS' administrative console using an OSGI bundle plugin.
+This example includes the code to create three different types of Portlets, all of which are supported by dotCMS:
+* **Velocity Portlet**: a Portlet implementation that will display portlet content using a velocity file
+* **Jsp Portlet**: a Portlet implementation that will display portlet content using a jsp file
+* **Struts Portlet**: a Portlet implementation  that will call an Struts Action class that will use a jsp file in order to display portlet content.
 
 ## How to build this example
 
@@ -28,7 +29,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin
+## How to create a bundle plugin for Portlets
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -60,3 +61,43 @@ This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported
     A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
 As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
+
+---
+## Components
+
+### Resources:
+
+* **conf/** Folder (Folder that contains the configuration files for the Portlets definitions) - Both files in this folder are MANDATORY (!)
+    * **conf/portlet.xml** The standard JSR-286 portlet configuration file.
+    * **conf/liferay-portlet.xml** This file describes some optional Liferay-specific enhancements for JSR-286 portlets that are installed on a Liferay Portal server.
+
+* **ext/** Folder (Folder that contains the files used by the defined Portles)
+    * **ext/view.vtl** Velocity file used by the Velocity Portlet
+    * **ext/hello.jsp** Jsp file use it by the Jsp Portlet
+    * **ext/strutshelloworld/view.jsp** Used by the Struts Portlet and invoked inside the *HelloWorldAction*
+    * **ext/strutshelloworld/view_hello.jsp** Used by the Struts Portlet and invoked inside the *HelloWorldAction*
+
+### com.dotmarketing.osgi.portlet.HelloWorldAction
+
+Simple Action class that extends *com.dotmarketing.portal.struts.DotPortletAction*
+The *conf/portlet.xml* file has the definition for an *StrutsPortlet* and that definition has a reference to the mapping for the *HelloWorldAction*.
+
+### Activator
+
+This bundle activator extends *com.dotmarketing.osgi.GenericBundleActivator* and implements *BundleActivator.start()*.
+This activator have 2 main important fragments of code:
+* It will manually register an *ActionMapping* for our Struts action class *HelloWorldAction* that will be used by the StrutsPortlet we defined in the configuration files (*conf/*).
+* It will manually register the Portlets making use of the method *registerPortlets*.
+
+**PLEASE note** the *unregisterServices()* call on the *stop* method, this call is MANDATORY (!) as it will allow us to clean and remove the registered Portlets and related code (like the ActionMappings registered in Struts  ).
+
+### Multi language support
+
+The creation of the Portlets will generate the following language keys and use them as the title for the Portlets:
+* javax.portlet.title.EXT_HELLO_WORLD
+* javax.portlet.title.EXT_JSP_HELLO_WORLD
+* javax.portlet.title.EXT_STRUTS_HELLO_WORLD
+
+In order to add multilanguage values for those keys:
+*CMS Admin* -> *Language Variables* -> *Edit Default Language Variables* -> Add the values for the above keys
+  	

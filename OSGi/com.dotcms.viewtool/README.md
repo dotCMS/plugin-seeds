@@ -1,10 +1,5 @@
 # README
 
-This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a specific subnet.  It takes either a single standard IP(v4) like `192.168.1.45` or a whole subnet using CIDR notation, e.g. `192.168.1.1/24`
-
-**Note:** This plugin requires to add in the startup.sh or dotStartup.sh the following JAVA_OPTS parameter.
-If you are using tomcat to retrieve the IP's with IPv4 format. `JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"`
-
 ## How to build this example
 
 To install all you need to do is build the JAR. to do this run
@@ -28,7 +23,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin
+## How to add a ViewTool OSGI plugin
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -60,3 +55,19 @@ This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported
     A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
 As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
+
+---
+## Components
+
+### com.dotmarketing.osgi.viewtools.MyToolInfo
+ 
+For registering and initialization of our ViewTool implementation
+
+### com.dotmarketing.osgi.viewtools.MyViewTool
+
+ViewTool implementation
+
+### Activator
+
+This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
+This activator will allow you to register the MyToolInfo object using the GenericBundleActivator.registerViewToolService method

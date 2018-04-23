@@ -2,7 +2,6 @@ package com.dotmarketing.osgi.custom.spring;
 
 import com.dotmarketing.filters.Constants;
 import com.dotmarketing.util.VelocityUtil;
-import com.dotmarketing.velocity.VelocityServlet;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +42,7 @@ public class CustomView implements View {
             }
 
             // add the context to the request.attr where it will be picked up and used by the VelocityServlet
-            request.setAttribute( VelocityServlet.VELOCITY_CONTEXT, ctx );
+            request.setAttribute( com.dotcms.rendering.velocity.Constants.VELOCITY_CONTEXT, ctx );
             // override the page path
             request.setAttribute( Constants.CMS_FILTER_URI_OVERRIDE, pagePath );
 

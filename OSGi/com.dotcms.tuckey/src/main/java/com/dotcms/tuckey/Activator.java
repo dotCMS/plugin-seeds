@@ -1,14 +1,14 @@
 package com.dotcms.tuckey;
 
-import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
-import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
-import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.Condition;
-import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.NormalRule;
-import com.dotcms.repackage.org.tuckey.web.filters.urlrewrite.SetAttribute;
 import com.dotmarketing.filters.Constants;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.osgi.framework.BundleContext;
+import org.tuckey.web.filters.urlrewrite.Condition;
+import org.tuckey.web.filters.urlrewrite.NormalRule;
+import org.tuckey.web.filters.urlrewrite.SetAttribute;
 
 public class Activator extends GenericBundleActivator {
 

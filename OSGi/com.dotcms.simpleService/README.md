@@ -1,9 +1,6 @@
 # README
 
-This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a specific subnet.  It takes either a single standard IP(v4) like `192.168.1.45` or a whole subnet using CIDR notation, e.g. `192.168.1.1/24`
-
-**Note:** This plugin requires to add in the startup.sh or dotStartup.sh the following JAVA_OPTS parameter.
-If you are using tomcat to retrieve the IP's with IPv4 format. `JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"`
+This bundle plugin is an example of how to add a simple service class that can be use it by others bundles inside the Felix OSGI container (dotCMS/felix/load)
 
 ## How to build this example
 
@@ -28,7 +25,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin
+## How to create a bundle plugin with services
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -60,3 +57,16 @@ This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported
     A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
 One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
 As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
+
+---
+## Components
+
+### Exposed service
+
+The exposed service for this example will be a simple Interface class with it implementation (com.dotmarketing.osgi.service.HelloWorld AND com.dotmarketing.osgi.service.HelloWorldService).
+
+### Activator
+
+This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
+Registers an instance of a our test service using the bundle context; and attaches properties to the service that can be queried
+when performing a service look-up.
