@@ -4,6 +4,8 @@ This bundle plugin is an example of how to use services provide by other bundles
 
 ## How to build this example
 
+#### Note: This plugin depends on the com.dotcms.simpleService example as uses the com.dotmarketing.osgi.service.HelloWorld service registered on that plugin.
+
 To install all you need to do is build the JAR. to do this run
 `./gradlew jar`
 

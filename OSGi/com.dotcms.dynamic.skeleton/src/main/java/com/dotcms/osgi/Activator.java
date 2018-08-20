@@ -1,7 +1,7 @@
 package com.dotcms.osgi;
 
-import com.dotcms.repackage.org.apache.logging.log4j.LogManager;
-import com.dotcms.repackage.org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import com.dotmarketing.loggers.Log4jUtil;
 import com.dotmarketing.osgi.GenericBundleActivator;
 import org.osgi.framework.BundleContext;
