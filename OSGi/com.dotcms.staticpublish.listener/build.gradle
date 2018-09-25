@@ -42,6 +42,13 @@ jar {
                     libs/slf4j-simple-1.7.7.jar,
                     libs/sshj-0.23.0.jar,
                 ''',
+                'Export-Package':'''
+                    org.bouncycastle.jce.provider.*,
+                    org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi.*,
+                    org.bouncycastle.jcajce.provider.digest.*,
+                    org.bouncycastle.jcajce.provider.asymmetric.ec.KeyAgreementSpi.*,
+                    org.bouncycastle.jcajce.provider.asymmetric.*
+                ''',
                 'Import-Package': '*;version=0'
         )
     }
