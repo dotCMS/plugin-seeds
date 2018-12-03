@@ -25,7 +25,7 @@ This will build two jars in the `build/libs` directory: a bundle fragment (in or
 
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
 
-## How to create a bundle plugin using services and registering servlets and filters
+## How to create a bundle plugin that uses WebInterceptors
 
 In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
 This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
@@ -36,7 +36,7 @@ If you are building the MANIFEST on your own or desire more info on it below is 
 ```
     Bundle-Name: The name of your bundle
     Bundle-SymbolicName: A short an unique name for the bundle
-    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.override.Activator)
+    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.webinterceptors.Activator)
     Export-Package: Declares the packages that are visible outside the plugin. Any package not declared here has visibility only within the bundle.
     Import-Package: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
 ```
@@ -73,9 +73,8 @@ fake attributes to the request and the response is gonna add the cors origin hea
 
 ### Activator
 
-This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
-Gets a reference for the HelloWorldService via HelloWorld interface (com.dotcms.service bundle plugin - Please refer to INSTALL.txt (!)) and register
-our HelloWorldServlet servlet and the TestFilter filter.
+This bundle activator extends from `com.dotmarketing.osgi.GenericBundleActivator` and implements BundleActivator.start().
+Registers a `HelloWorldServlet` and a WebInterceptor on the `AutoLoginFilter`
 
 ## Testing
 

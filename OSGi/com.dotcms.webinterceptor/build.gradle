@@ -10,8 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.1') { transitive = true }
-    //compile fileTree(dir: '../../lib', include: ['*.jar'])
+    compile('com.dotcms:dotcms:5.0.3') { transitive = true }
 }
 
 import java.util.jar.*

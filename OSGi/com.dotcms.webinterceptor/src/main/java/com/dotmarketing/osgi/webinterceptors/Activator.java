@@ -36,8 +36,6 @@ public class Activator extends GenericBundleActivator {
                 //Registering a simple test servlet
                 simpleServlet = new HelloWorldServlet( );
                 httpService.registerServlet( "/helloworld", simpleServlet, null, null );
-
-                //Registering a simple test filter
             } catch ( Exception e ) {
                 e.printStackTrace();
             }
