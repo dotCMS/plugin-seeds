@@ -84,6 +84,6 @@ The HelloWorldServlet is registered under the url pattern "/helloworld" can be t
 
 This will hit the servlet and prints the fake attributes
 
-     http://localhost:8080/app/helloworld?action=break
+    http://localhost:8080/app/helloworld?action=break
 
 This won't hit the servlet and returns a bad request
