@@ -71,3 +71,9 @@ ViewTool implementation
 
 This bundle activator extends from com.dotmarketing.osgi.GenericBundleActivator and implements BundleActivator.start().
 This activator will allow you to register the MyToolInfo object using the GenericBundleActivator.registerViewToolService method
+
+### How to test
+
+You can go to any container, template, etc and call for instance:
+
+$osgi.getHelloMessage()
