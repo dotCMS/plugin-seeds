@@ -1,8 +1,24 @@
-plugins {
-    id 'biz.aQute.bnd.builder' version '3.3.0'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.0.0'
+    }
 }
 
-sourceCompatibility = '1.8'
+
+apply plugin: 'java'
+apply plugin: 'biz.aQute.bnd.builder'
+
+// Compile Java.
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+// Compile Java.
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
 version = '0.2'
 
 repositories {
@@ -21,7 +37,7 @@ import java.util.jar.*
 /////////////////////////
 jar {
     manifest {
-        attributes (
+        attributes(
                 'Bundle-Vendor': 'dotCMS',
                 'Bundle-Description': 'dotCMS - OSGI 3rd Party library example',
                 'Bundle-DocURL': 'https://dotcms.com/',
@@ -31,7 +47,8 @@ jar {
         )
     }
 }
-jar.finalizedBy 'fragmentJar'
+
+//jar.finalizedBy 'fragmentJar'
 
 /////////////////////////
 //Fragment jar
@@ -61,8 +78,9 @@ ext.fixVersionNumber = {importValue ->
  * Reads the Manifest file of the just created plugin jar in order to get the required info
  * to automatically create the fragment jar.
  */
-task readManifesttAttributes {
+task readManifestAttributes {
     doFirst {
+        println "Running task readManifesttAttributes"
         File file = configurations.baseline.singleFile
         JarFile jar = new JarFile(file)
         Attributes manifest = jar.getManifest().getMainAttributes()
@@ -76,29 +94,45 @@ task readManifesttAttributes {
 }
 task fragmentJar(type: Jar) {
 
-    doFirst {
-        //Setting the fragment jar name
-        baseName = project.name
-        archiveName = "${baseName}.fragment-${version}.jar"
-        importPackage = fixVersionNumber(importPackage)
+    if (gradle.startParameter.taskNames.contains("fragmentJar")) {
 
-        manifest {
-            attributes (
-                    'Bundle-Name': "${bundleName}",
-                    'Bundle-Description': "${bundleDescription}",
-                    'Bundle-Vendor': "${bundleVendor}",
-                    'Bundle-Version': "${version}",
-                    'Bundle-SymbolicName': "${baseName}.fragment",
-                    'Bundle-ManifestVersion': "${bundleManifestVersion}",
-                    'Bundle-DocURL': "${bundleDocURL}",
-                    'Fragment-Host': "${fragmentHost}",
-                    'Export-Package': "${importPackage}"
-            )
+        File file = configurations.baseline.singleFile
+        println "file ${file.getPath()}"
+        JarFile jar = new JarFile(file)
+
+        def projectName = project.name
+        def jarName = "${projectName}.fragment"
+        archivesBaseName = jarName
+
+        println "running fragmentJar: archivesBaseName ${archivesBaseName}, archiveFileName ${archiveFileName.get()}"
+
+        doFirst {
+
+            Attributes coreManifest = jar.getManifest().getMainAttributes()
+            bundleSymbolicName = "${coreManifest.getValue('Bundle-SymbolicName')}"
+            bundleVersion = "${coreManifest.getValue('Bundle-Version')}"
+            importPackage = "${coreManifest.getValue('Import-Package')}"
+            bundleManifestVersion = "${coreManifest.getValue('Bundle-ManifestVersion')}"
+            bundleDocURL = "${coreManifest.getValue('Bundle-DocURL')}"
+            bundleVendor = "${coreManifest.getValue('Bundle-Vendor')}"
+
+            //Setting the fragment jar name
+            importPackage = fixVersionNumber(importPackage)
+            manifest {
+                attributes(
+                        'Bundle-Name': "${bundleName}",
+                        'Bundle-Description': "${bundleDescription}",
+                        'Bundle-Vendor': "${bundleVendor}",
+                        'Bundle-Version': "${version}",
+                        'Bundle-SymbolicName': "${archivesBaseName}",
+                        'Bundle-ManifestVersion': "${bundleManifestVersion}",
+                        'Bundle-DocURL': "${bundleDocURL}",
+                        'Fragment-Host': "${fragmentHost}",
+                        'Export-Package': "${importPackage}"
+                )
+            }
         }
     }
 }
-fragmentJar.dependsOn 'readManifesttAttributes'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
-}
+//fragmentJar.dependsOn 'readManifestAttributes'
