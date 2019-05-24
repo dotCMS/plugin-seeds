@@ -1,8 +1,11 @@
-plugins {
-    id 'biz.aQute.bnd.builder' version '3.3.0'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.0.0'
+    }
 }
-
-sourceCompatibility = '1.8'
 
 group 'com.dotcms.aop'
 version '0.2'
@@ -15,15 +18,19 @@ repositories {
 }
 
 apply plugin: 'java'
+apply plugin: 'biz.aQute.bnd.builder'
 apply plugin: 'application'
 apply plugin: 'osgi'
 apply plugin: 'war'
 apply plugin: 'eclipse'
 
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
 compileJava.enabled = false;
 
 project.ext {
-    aspectjVersion = '1.8.10'
+    aspectjVersion = '1.9.3'
 }
 
 configurations {
@@ -35,14 +42,15 @@ configurations {
 
 task compileAjc(overwrite: true) {
 
+    println "output dir: " + sourceSets.main.output.classesDirs.singleFile
     // Declare the output directory to enable uptodate checks
-    outputs.dir sourceSets.main.output.classesDir
+    outputs.dir sourceSets.main.output.classesDirs.singleFile
 
     doLast{
         // Resolve the AspectJ compiler via dependencies of the ajc configuration
         ant.taskdef( resource:"org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: configurations.ajc.asPath)
         ant.iajc(source:"1.8", target:"1.8",
-                destDir:sourceSets.main.output.classesDir,
+                destDir:sourceSets.main.output.classesDirs.singleFile,
                 maxmem:"512m",
                 fork:"true",
                 // Jars containing aspects to be woven should be declared in the aspects configuration
@@ -70,8 +78,8 @@ processResources.dependsOn(compileAjc)
 
 dependencies {
 
-    ajc     "org.aspectj:aspectjtools:1.8.10"
-    providedCompile "org.aspectj:aspectjrt:1.8.10"
+    ajc     "org.aspectj:aspectjtools:1.9.2"
+    providedCompile "org.aspectj:aspectjrt:1.9.2"
     providedCompile (group: 'com.dotcms', name: 'dotcms', version: '5.1.5'){
         transitive = true
     }
@@ -84,19 +92,23 @@ import java.util.jar.*
 /////////////////////////
 //Plugin jar
 /////////////////////////
+
 jar {
+
     manifest {
-        name = 'Osgi AOP class'
-        instruction 'Bundle-Vendor', 'dotcms'
-        instruction 'Bundle-Description', 'dotCMS - Osgi AOP class example'
-        instruction 'Bundle-DocURL', 'http://www.dotcms.com'
-        instruction 'Bundle-Activator', 'com.dotcms.plugin.aop.Activator'
-        instruction 'Import-Package', 'com.dotcms.plugin.aop.rest.*,' +
-                '*;version=0'
+        attributes (
+                'Bundle-Vendor': 'dotCMS',
+                'Bundle-Description': 'dotCMS - OSGI AOP example',
+                'Bundle-DocURL': 'https://dotcms.com/',
+                'Bundle-Activator': 'com.dotcms.plugin.aop.Activator',
+                'Import-Package': 'com.dotcms.plugin.aop.rest.*,' +
+                        '*;version=0'
+        )
     }
 }
 
-jar.finalizedBy 'fragmentJar'
+
+//jar.finalizedBy 'fragmentJar'
 
 /////////////////////////
 //Fragment jar
@@ -141,29 +153,45 @@ task readManifesttAttributes {
 }
 task fragmentJar(type: Jar) {
 
-    doFirst {
-        //Setting the fragment jar name
-        baseName = project.name
-        archiveName = "${baseName}.fragment-${version}.jar"
-        importPackage = fixVersionNumber(importPackage)
+    if (gradle.startParameter.taskNames.contains("fragmentJar")) {
 
-        manifest {
-            attributes (
-                    'Bundle-Name': "${bundleName}",
-                    'Bundle-Description': "${bundleDescription}",
-                    'Bundle-Vendor': "${bundleVendor}",
-                    'Bundle-Version': "${version}",
-                    'Bundle-SymbolicName': "${baseName}.fragment",
-                    'Bundle-ManifestVersion': "${bundleManifestVersion}",
-                    'Bundle-DocURL': "${bundleDocURL}",
-                    'Fragment-Host': "${fragmentHost}",
-                    'Export-Package': "${importPackage}"
-            )
+        File file = configurations.baseline.singleFile
+        println "file ${file.getPath()}"
+        JarFile jar = new JarFile(file)
+
+        def projectName = project.name
+        def jarName = "${projectName}.fragment"
+        archivesBaseName = jarName
+
+        println "running fragmentJar: archivesBaseName ${archivesBaseName}, archiveFileName ${archiveFileName.get()}"
+
+        doFirst {
+
+            Attributes coreManifest = jar.getManifest().getMainAttributes()
+            bundleSymbolicName = "${coreManifest.getValue('Bundle-SymbolicName')}"
+            bundleVersion = "${coreManifest.getValue('Bundle-Version')}"
+            importPackage = "${coreManifest.getValue('Import-Package')}"
+            bundleManifestVersion = "${coreManifest.getValue('Bundle-ManifestVersion')}"
+            bundleDocURL = "${coreManifest.getValue('Bundle-DocURL')}"
+            bundleVendor = "${coreManifest.getValue('Bundle-Vendor')}"
+
+            //Setting the fragment jar name
+            importPackage = fixVersionNumber(importPackage)
+            manifest {
+                attributes(
+                        'Bundle-Name': "${bundleName}",
+                        'Bundle-Description': "${bundleDescription}",
+                        'Bundle-Vendor': "${bundleVendor}",
+                        'Bundle-Version': "${version}",
+                        'Bundle-SymbolicName': "${archivesBaseName}",
+                        'Bundle-ManifestVersion': "${bundleManifestVersion}",
+                        'Bundle-DocURL': "${bundleDocURL}",
+                        'Fragment-Host': "${fragmentHost}",
+                        'Export-Package': "${importPackage}"
+                )
+            }
         }
     }
 }
-fragmentJar.dependsOn 'readManifesttAttributes'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
-}
+//fragmentJar.dependsOn 'readManifestAttributes'

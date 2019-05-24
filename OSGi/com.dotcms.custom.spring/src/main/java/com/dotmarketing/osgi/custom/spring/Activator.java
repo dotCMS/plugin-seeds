@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /**
@@ -60,8 +61,7 @@ public class Activator extends GenericBundleActivator {
                  */
                 Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
 
-                DispatcherServlet dispatcherServlet = new DispatcherServlet();
-                dispatcherServlet.setContextConfigLocation( "spring/example-servlet.xml" );
+                DispatcherServlet dispatcherServlet = getDispatcherServlet("spring/example-servlet.xml");
                 httpService.registerServlet("/spring", dispatcherServlet, null, null);
             } catch ( Exception e ) {
                 e.printStackTrace();
@@ -71,6 +71,14 @@ public class Activator extends GenericBundleActivator {
             }
             CMSFilter.addExclude( "/app/spring" );
         }
+    }
+
+    private DispatcherServlet getDispatcherServlet(final String location) {
+
+        //final CustomXmlWebApplicationContext context = new CustomXmlWebApplicationContext();
+        final XmlWebApplicationContext context = new XmlWebApplicationContext();
+        context.setConfigLocation(location);
+        return  new DispatcherServlet(context);
     }
 
     public void stop ( BundleContext context ) throws Exception {
