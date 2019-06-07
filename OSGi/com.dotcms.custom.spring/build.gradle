@@ -14,7 +14,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.1.5') { transitive = true }
+    compile('com.dotcms:dotcms:5.1.6') { transitive = true }
     //Resolve dependencies. These jars can be downloaded from our Maven Repo
     //In case you want to create a Controller using other Spring version,
     //just change the version Attribute.
@@ -69,6 +69,7 @@ jar {
                     javax.servlet.jsp.*;resolution:=optional,
                     javax.servlet.annotation;version=0,
                     javax.servlet.http;version=0,
+                    javax.naming;version=0,
                     org.apache.velocity.*,					
                     com.dotmarketing.osgi.*,
                     com.dotmarketing.util.*;
