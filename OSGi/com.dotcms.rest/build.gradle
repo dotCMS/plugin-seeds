@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.1.6') { transitive = true }
+    //compile('com.dotcms:dotcms:5.1.6') { transitive = true }
+    compile fileTree('/Users/jsanca/gitsources/dotcms-master/tomcat8/webapps/ROOT/WEB-INF/lib')
 }
 
 import java.util.jar.*
