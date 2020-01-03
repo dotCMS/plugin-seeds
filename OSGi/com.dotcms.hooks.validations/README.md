@@ -1,15 +1,21 @@
 # README
 
-This bundle plugin is an example of how to add dotcms content hooks via OSGi. Content hooks work like interceptors and can be called before content has been modified (pre-hooks) or after the content has been checked in (post-hooks).
+This bundle plugin is an example of how to add dotcms content hooks via OSGi. 
+Content hooks works like interceptors and can be called before content has been modified (pre-hooks) or after the content has been checked in (post-hooks).
 
-Example use cases:  
+This particular example works such as blueprint for a prehook over the validateContentlet method (on the ContentletAPI), you can use this example as a reference in order to extends by type or types 
+the custom validations via OSGI plugin 
 
-* To apply extra or richer validation on a content object before checkin.
-* To modify or auto-assign values to specific fields on a content object on checkin
-* To perform an action once a content object has been checked in, i.e. synchronize content that has been checked in with a 3rd party system
+In the example the hook is called ValidatorPreContentHook it basically use a set of ValidatorStrategies to do the validations, you can see in the 
+Activator how three Validator are being passed to the Hook instance.
 
+ValidatorStrategy
+This interface encapsulates the signature for a validator, it basically has a test that will let it know to the hook if the validator could be or not applied to the contentlet, usually we will ask for a 
+content type variable or base content type here, if the test returns true the hook will invokes the applyValidation in order to do the actual validation.
 
-To see all the methods that can be overridden, see the interfaces:
+In our example we have three of them, all are doing similar things, basically make a test over the title field of each contentlet, asking for specific words such as ('generic', 'base') or if starts with a digit. 
+You can use them just as a reference to create your own ones or just modified them to align with your validations needs. 
+
 
 ## How to build this example
 

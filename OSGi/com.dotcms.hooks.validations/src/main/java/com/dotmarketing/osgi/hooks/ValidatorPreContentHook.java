@@ -8,30 +8,24 @@ import com.dotmarketing.portlets.contentlet.model.Contentlet;
 import com.dotmarketing.portlets.structure.model.ContentletRelationships;
 import org.apache.commons.collections.map.HashedMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
  * This hook does the validation for diff content types
+ * @author jsanca
  */
 public class ValidatorPreContentHook implements ContentletAPIPreHook {
 
-    public final Map<ContentType, List<Validator>> validatorMap = new HashedMap();
+    public final Set<ValidatorStrategy> validatorSet = new LinkedHashSet<>();
 
     /**
      * Adds a validators
      * @param validators
      */
-    public void addValidator (final Validator... validators) {
+    public void addValidator (final ValidatorStrategy... validators) {
 
-        for (final Validator validator: validators) {
-
-            final ContentType type = validator.contentType();
-            this.validatorMap.computeIfAbsent(type, k -> new ArrayList<>()).add(validator);
-        }
+        this.validatorSet.addAll(Arrays.asList(validators));
     }
 
 
@@ -39,29 +33,19 @@ public class ValidatorPreContentHook implements ContentletAPIPreHook {
         super();
     }
 
-    /*@Override
-	public boolean checkin(Contentlet currentContentlet, ContentletRelationships relationshipsData, List<Category> cats, List<Permission> selectedPermissions, User user,	boolean respectFrontendRoles) {
-
-        Logger.info(this, "+++++++++++++++++++++++++++++++++++++++++++++++" );
-        Logger.info(this, "INSIDE SamplePreContentHook.checkin()" );
-        Logger.info(this, "+++++++++++++++++++++++++++++++++++++++++++++++" );
-
-        return true;
-	}*/
 
 	@Override
     public boolean validateContentlet(final Contentlet contentlet, final ContentletRelationships contentRelationships,
                                    final List<Category> categories) throws DotContentletValidationException {
 
+        for (final ValidatorStrategy validator : this.validatorSet) {
 
-        final ContentType type           = contentlet.getContentType();
-        final List<Validator> validators = this.validatorMap.getOrDefault(type, Collections.emptyList());
-        for (final Validator validator : validators) {
+            if (validator.test(contentlet, contentRelationships, categories)) {
 
-            validator.validate(contentlet, contentRelationships, categories);
+                validator.applyValidation(contentlet, contentRelationships, categories);
+            }
         }
 
         return true;
     }
-
 }

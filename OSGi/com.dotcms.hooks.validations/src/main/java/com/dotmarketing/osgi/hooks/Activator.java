@@ -16,7 +16,7 @@ public class Activator extends GenericBundleActivator {
     private LoggerContext pluginLoggerContext;
 
     @SuppressWarnings ("unchecked")
-    public void start ( BundleContext context ) throws Exception {
+    public void start (final BundleContext context ) throws Exception {
 
         //Initializing log4j...
         LoggerContext dotcmsLoggerContext = Log4jUtil.getLoggerContext();
@@ -33,11 +33,12 @@ public class Activator extends GenericBundleActivator {
         final ValidatorPreContentHook preContentHook = (ValidatorPreContentHook) Class.forName(
                 ValidatorPreContentHook.class.getName()).newInstance();
 
-        preContentHook.addValidator(new GenericTitleContentletValidator(), new NumericTitleContentletValidator());
+        preContentHook.addValidator(new GenericTitleContentletValidatorStrategy(),
+                new NumericTitleContentletValidatorStrategy(), new BaseTitleContentletValidatorStrategy());
         addPreHook(preContentHook);
     }
 
-    public void stop ( BundleContext context ) throws Exception {
+    public void stop (final BundleContext context ) throws Exception {
 
         unregisterServices( context );
 
