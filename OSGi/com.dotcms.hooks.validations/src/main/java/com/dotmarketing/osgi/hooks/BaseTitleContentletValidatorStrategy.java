@@ -15,6 +15,14 @@ import java.util.List;
  */
 public class BaseTitleContentletValidatorStrategy implements ValidatorStrategy {
 
+    /**
+     * This method will be called in order to see if the {@link ValidatorStrategy} can be apply to the arguments
+     * in our case if the contentlet has content base content type, applies
+     * @param contentlet
+     * @param contentRelationships
+     * @param categories
+     * @return boolean returns true if the strategy can be apply
+     */
     @Override
     public boolean test(final Contentlet contentlet,
                         final ContentletRelationships contentRelationships,
