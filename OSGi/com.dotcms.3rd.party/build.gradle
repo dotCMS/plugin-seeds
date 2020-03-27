@@ -3,7 +3,7 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.2'
+version = '0.3'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
@@ -26,12 +26,30 @@ jar {
                 'Bundle-Description': 'dotCMS - OSGI 3rd Party library example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.external.Activator',
-                'Bundle-ClassPath': '.,libs/date4j.jar',
+                'Bundle-ClassPath' : "${classPathLibraries()}",
                 'Import-Package': '!hirondelle.date4j.*,*;version=0'
         )
     }
 }
 jar.finalizedBy 'fragmentJar'
+
+/**
+ * Searches for jars inside the src/main/resources/libs folder, the returned list is used for the
+ * Bundle-ClassPath attribute.
+ * @return String with the list of jars inside the src/main/resources/libs folder or empty if the
+ * folder does not exist or it is empty.
+ */
+def classPathLibraries() {
+
+    def bundleClassPath = "";
+    fileTree("src/main/resources/libs").filter { it.isFile() }.each { bundleClassPath += "libs/" + it.name + "," }
+
+    if (bundleClassPath != "") {
+        bundleClassPath = '.,' + bundleClassPath
+    }
+
+    return bundleClassPath
+}
 
 /////////////////////////
 //Fragment jar
