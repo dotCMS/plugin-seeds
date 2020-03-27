@@ -3,7 +3,7 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.2'
+version = '0.3'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
@@ -43,26 +43,7 @@ jar {
                 'Bundle-Description': 'dotCMS - Spring OSGi Example providing its own Spring for dotcms',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.custom.spring.Activator',
-                'Bundle-ClassPath' :'''
-                    .,
-                    libs/commons-io-1.3.2.jar,
-                    libs/commons-lang3-3.3.2.jar,
-                    libs/sax-2.0.1.jar,
-                    libs/jcl-over-slf4j-1.7.1.jar,
-                    libs/serializer-2.7.2.jar,
-                    libs/slf4j-api-1.7.7.jar,
-                    libs/slf4j-simple-1.7.7.jar,
-                    libs/spring-aop-4.3.9.RELEASE.jar,
-                    libs/spring-beans-4.3.9.RELEASE.jar,
-                    libs/spring-context-4.3.9.RELEASE.jar,
-                    libs/spring-core-4.3.9.RELEASE.jar,
-                    libs/spring-expression-4.3.9.RELEASE.jar,
-                    libs/spring-web-4.3.9.RELEASE.jar,
-                    libs/spring-webmvc-4.3.9.RELEASE.jar,
-                    libs/xalan-2.7.2.jar,
-                    libs/xml-apis-1.4.01.jar,
-                    libs/xercesImpl-2.11.0.jar
-                ''',
+                'Bundle-ClassPath' : "${classPathLibraries()}",
                 'Import-Package': '''
                     bsh;resolution:=optional,
                     javax.servlet;version=0,
@@ -92,6 +73,24 @@ task copyToLib(type: Copy) {
 
 jar.dependsOn copyToLib
 jar.finalizedBy 'fragmentJar'
+
+/**
+ * Searches for jars inside the src/main/resources/libs folder, the returned list is used for the
+ * Bundle-ClassPath attribute.
+ * @return String with the list of jars inside the src/main/resources/libs folder or empty if the
+ * folder does not exist or it is empty.
+ */
+def classPathLibraries() {
+
+    def bundleClassPath = "";
+    fileTree("src/main/resources/libs").filter { it.isFile() }.each { bundleClassPath += "libs/" + it.name + "," }
+
+    if (bundleClassPath != "") {
+        bundleClassPath = '.,' + bundleClassPath
+    }
+
+    return bundleClassPath
+}
 
 /////////////////////////
 //Fragment jar
