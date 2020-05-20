@@ -15,7 +15,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.2.8') { transitive = true }
+    compile('com.dotcms:dotcms:5.3.0') { transitive = true }
 
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
