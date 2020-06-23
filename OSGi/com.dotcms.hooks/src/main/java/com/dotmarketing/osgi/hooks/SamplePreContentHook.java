@@ -7,6 +7,7 @@ import com.dotmarketing.portlets.contentlet.model.Contentlet;
 import com.dotmarketing.portlets.structure.model.ContentletRelationships;
 import com.dotmarketing.portlets.structure.model.ContentletRelationships.ContentletRelationshipRecords;
 import com.dotmarketing.portlets.categories.model.Category;
+import com.dotmarketing.portlets.contentlet.model.ContentletDependencies;
 import com.liferay.portal.model.User;
 
 import java.util.List;
@@ -33,13 +34,14 @@ public class SamplePreContentHook extends ContentletAPIPreHookAbstractImp {
     }
 
     @Override
-	public boolean checkin(Contentlet currentContentlet, ContentletRelationships relationshipsData, List<Category> cats, List<Permission> selectedPermissions, User user,	boolean respectFrontendRoles) {
+    public boolean checkin(Contentlet contentlet, ContentletDependencies contentletDependencies) {
 
         Logger.info(this, "+++++++++++++++++++++++++++++++++++++++++++++++" );
         Logger.info(this, "INSIDE SamplePreContentHook.checkin()" );
         Logger.info(this, "+++++++++++++++++++++++++++++++++++++++++++++++" );
 
-        return super.checkin(currentContentlet, relationshipsData, cats,selectedPermissions, user, respectFrontendRoles);
-	}
+        return super.checkin(contentlet, contentletDependencies);
+
+    }
 
 }
