@@ -23,7 +23,7 @@ dependencies {
     // include all jars within the resource libs
     compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
     // Using all jar from artifactory part of the dotcms group
-    compile('com.dotcms:dotcms:5.3.4.1') { transitive = true }
+    compile('com.dotcms:dotcms:5.3.5') { transitive = true }
 }
 
 import java.util.jar.*
@@ -117,4 +117,5 @@ fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
+}
 }
