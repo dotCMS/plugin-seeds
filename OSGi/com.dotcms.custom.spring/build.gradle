@@ -14,7 +14,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.3.6.1') { transitive = true }
+    compile('com.dotcms:dotcms:5.3.7') { transitive = true }
     //Resolve dependencies. These jars can be downloaded from our Maven Repo
     //In case you want to create a Controller using other Spring version,
     //just change the version Attribute.
@@ -161,5 +161,6 @@ fragmentJar.dependsOn 'readManifesttAttributes'
 tasks.copyToLib.execute()
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
+}
 }
 }

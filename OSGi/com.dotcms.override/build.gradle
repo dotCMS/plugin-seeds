@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.3.6.1') { transitive = true }
+    compile('com.dotcms:dotcms:5.3.7') { transitive = true }
 }
 
 import java.util.jar.*
@@ -100,5 +100,6 @@ fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
+}
 }
 }
