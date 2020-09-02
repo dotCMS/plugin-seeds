@@ -35,5 +35,3 @@ libsDirName = file("$rootDir/build/jar")
 task wrapper(type: Wrapper) {
     gradleVersion = '3.1'
 }
-}
-}
