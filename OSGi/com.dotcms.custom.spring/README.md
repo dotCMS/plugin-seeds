@@ -1,4 +1,5 @@
 # README
+
 ### This plugin uses the HTTP Servlet Service that is no longer supported in dotCMS as of version 5.1.6.  The code needs to be updated to use a Web Inteceptor rather than rely on registering a servlet as a spring controller.
 
 This bundle plugin is an example of how to add Spring support to a bundle plugin, creates and registers a simple Spring Controller using a different Spring version that the one shipped with dotCMS in order to extend the reach of this example.
