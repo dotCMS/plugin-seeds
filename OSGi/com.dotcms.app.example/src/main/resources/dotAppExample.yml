@@ -1,0 +1,50 @@
+---
+name: "dotCMS Example App"
+description: "This App is just an example of what you can do to create a new App using an OSGI plugin"
+iconUrl: "https://avatars3.githubusercontent.com/u/1005263?s=400&u=dd87be9aba0f44feb1b82cab52a5b7fffe5119e3&v=4"
+allowExtraParameters: true
+params:
+  checkbox:
+    label: "A checkbox"
+    value: "false"
+    hidden: false
+    type: "BOOL"
+    hint: "Check this app"
+    required: true
+    
+  variableOne:
+    label: "A text box"
+    value: "this is variable 1"
+    hidden: false
+    type: "STRING"
+    hint: "This string is not hidden from the user"
+    required: true
+    
+  variableTwo:
+    label: "Secret Variable"
+    value: "this is variable 2"
+    hidden: true
+    type: "STRING"
+    hint: "This variable is hidden after the user saves it"
+    required: true
+
+  selectVariable:
+    hidden: false
+    type: "SELECT"
+    label: "A select box"
+    hint: "You can select what ever you want"
+    required: true
+    value:
+      -
+        label: "First Selection"
+        value: "first"
+        selected: true
+      -
+        label: "Second Selection"
+        value: "second"
+      -
+        label: "Third Selection"
+        value: "Third"
+
+
+
