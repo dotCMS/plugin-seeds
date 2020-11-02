@@ -1,6 +1,7 @@
-
-README
+# dotCMS Example App
 ------
+![Screen Shot 2020-11-02 at 12 43 55 PM](https://user-images.githubusercontent.com/934364/97900775-26ee6180-1d09-11eb-85f5-4a2724202b13.png)
+
 
 This bundle plugin an OSGI example of how to create and use custom Apps built for dotCMS.  dotCMS Apps provide a secure store for plugin configuration and gives a dotCMS user the ability to configure custom dotCMS functionality.  While this example is simple, Apps can be combined with osgi based custom REST endpoints, portlets, workflows, content hooks and servlets/filters to provide advanced and custom functionality.
 
