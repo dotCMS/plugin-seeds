@@ -9,12 +9,10 @@ This plugin adds a new dotAppExample.yml to the dotCMS app defintion folder.  It
 
 Secrets and config stored in Apps can be accessed using code as displayed below - which will return the App configuration of the current host, if available, or fall back and return the app configuration for the `SYSTEM_HOST`, if available. In order to access the App.getSecrets, the user must be a CMS_Admin or have access to the App portlet.
 
-```
+```java
         
         final Host host = WebAPILocator.getHostWebAPI().getCurrentHostNoThrow(request);
-
         Optional<AppSecrets> appSecrets = APILocator.getAppsAPI().getSecrets(AppKeys.APP_KEY, true, host, APILocator.systemUser());
-
         return appSecrets
         
 ```
