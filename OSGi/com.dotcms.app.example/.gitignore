@@ -1,0 +1,7 @@
+/bin/
+/build/
+/.settings/
+/.gradle/
+src/main/resources/libs/
+src/main/resources/libs
+src/main/resources/GeoIP2-City.mmdb

@@ -3,15 +3,16 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.2'
+version = '0.3'
 
 repositories {
-    maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+    maven { url "https://repo.dotcms.com/artifactory/libs-release" }
 }
 
 dependencies {
-    compile fileTree(dir: '../com.dotcms.simpleService/build/libs/', include: '*.jar')//As this example depends on the com.dotcms.simpleService example
-    compile('com.dotcms:dotcms:5.3.8') { transitive = true }
+    compile('com.dotcms:dotcms:20.10.1') { transitive = true }
+    
+    testCompile group: 'junit', name: 'junit-dep', version: '4.10'
 }
 
 import java.util.jar.*
@@ -23,9 +24,9 @@ jar {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
-                'Bundle-Description': 'dotCMS - Osgi Servlet example',
+                'Bundle-Description': 'dotCMS - App and Secrets Example',
                 'Bundle-DocURL': 'https://dotcms.com/',
-                'Bundle-Activator': 'com.dotmarketing.osgi.servlet.Activator',
+                'Bundle-Activator': 'com.dotcms.osgi.app.Activator',
                 'Import-Package': '*;version=0'
         )
     }
@@ -37,8 +38,8 @@ jar.finalizedBy 'fragmentJar'
 /////////////////////////
 
 ext {
-    bundleName = "Osgi Servlet example fragment"
-    bundleDescription = "dotCMS - Osgi Servlet example fragment"
+    bundleName = "dotCMS - App fragment"
+    bundleDescription = "dotCMS - App fragment"
     fragmentHost = "system.bundle; extension:=framework"
     bundleSymbolicName = "" //Auto generated based on the plugin jar
     bundleVersion = "" //Auto generated based on the plugin jar

@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.3.8') { transitive = true }
+    compile('com.dotcms:dotcms:20.10.1') { transitive = true }
 }
 
 import java.util.jar.*
