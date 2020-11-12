@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:20.10.1') { transitive = true }
+    compile('com.dotcms:dotcms:20.10.1')
 }
 
 import java.util.jar.*
@@ -22,7 +22,7 @@ jar {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
-                'Bundle-Description': 'dotCMS - Dinamyc Quartz Jobs example',
+                'Bundle-Description': 'dotCMS - Dynamic Quartz Jobs example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.job.Activator',
                 'Import-Package': '*;version=0'
@@ -36,8 +36,8 @@ jar.finalizedBy 'fragmentJar'
 /////////////////////////
 
 ext {
-    bundleName = "Dinamyc Quartz Jobs example fragment"
-    bundleDescription = "dotCMS - Dinamyc Quartz Jobs example fragment"
+    bundleName = "Dynamic Quartz Jobs example fragment"
+    bundleDescription = "dotCMS - Dynamic Quartz Jobs example fragment"
     fragmentHost = "system.bundle; extension:=framework"
     bundleSymbolicName = "" //Auto generated based on the plugin jar
     bundleVersion = "" //Auto generated based on the plugin jar
