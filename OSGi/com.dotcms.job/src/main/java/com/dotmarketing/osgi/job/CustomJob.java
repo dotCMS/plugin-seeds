@@ -14,22 +14,22 @@ public class CustomJob implements Job {
     @Override
     public void execute ( JobExecutionContext context ) throws JobExecutionException {
 
-        Logger.info( this, "------------------------------------------" );
-        Logger.info( this, "Start custom job" );
-        Logger.info( this, "" );
+        Logger.info( this.getClass().getName(), "------------------------------------------" );
+        Logger.info( this.getClass().getName(), "Start custom job" );
+        Logger.info( this.getClass().getName(), "" );
 
-        Logger.info( this, "param1: " + context.getJobDetail().getJobDataMap().get( "param1" ) );
-        Logger.info( this, "param2: " + context.getJobDetail().getJobDataMap().get( "param2" ) );
+        Logger.info( this.getClass().getName(), "param1: " + context.getJobDetail().getJobDataMap().get( "param1" ) );
+        Logger.info( this.getClass().getName(), "param2: " + context.getJobDetail().getJobDataMap().get( "param2" ) );
 
-        Logger.info( this, "" );
+        Logger.info( this.getClass().getName(), "" );
 
         TestClass testClass = new TestClass();
         testClass.printA();
         testClass.printB();
 
-        Logger.info( this, "" );
-        Logger.info( this, "Finish custom job (osgi version)." );
-        Logger.info( this, "------------------------------------------" );
+        Logger.info( this.getClass().getName(), "" );
+        Logger.info( this.getClass().getName(), "Finish custom job (osgi version)." );
+        Logger.info( this.getClass().getName(), "------------------------------------------" );
     }
 
 }

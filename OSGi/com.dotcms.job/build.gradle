@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:5.3.8') { transitive = true }
+    compile('com.dotcms:dotcms:20.10.1') { transitive = true }
 }
 
 import java.util.jar.*
@@ -25,7 +25,6 @@ jar {
                 'Bundle-Description': 'dotCMS - Dinamyc Quartz Jobs example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.job.Activator',
-                'Override-Classes': 'com.dotmarketing.osgi.job.TestClass',
                 'Import-Package': '*;version=0'
         )
     }
