@@ -16,7 +16,7 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     compileOnly fileTree(dir: 'lib', include: '*.jar')
-    compileOnly (group: 'com.dotcms', name: 'dotcms', version: '20.10.1'){
+    compileOnly (group: 'com.dotcms', name: 'dotcms', version: '20.11'){
         transitive = true
     }
 }
@@ -34,4 +34,5 @@ libsDirName = file("$rootDir/build/jar")
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.1'
+}
 }

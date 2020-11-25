@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:20.10.1')
+    compile('com.dotcms:dotcms:20.11')
 }
 
 import java.util.jar.*
@@ -99,4 +99,5 @@ fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
+}
 }

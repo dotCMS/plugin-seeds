@@ -15,7 +15,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:20.10.1') { transitive = true }
+    compile('com.dotcms:dotcms:20.11') { transitive = true }
 
     testCompile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.hamcrest:hamcrest-all:1.3'
@@ -126,4 +126,5 @@ fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2'
+}
 }
