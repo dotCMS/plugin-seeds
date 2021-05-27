@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:21.02.2') { transitive = true }
+    compile('com.dotcms:dotcms:21.05') { transitive = true }
 }
 
 import java.util.jar.*
@@ -98,5 +98,5 @@ task fragmentJar(type: Jar) {
 fragmentJar.dependsOn 'readManifesttAttributes'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
+    gradleVersion = '4.10.2'
 }
