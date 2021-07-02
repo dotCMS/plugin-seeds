@@ -74,10 +74,10 @@ dependencies {
 
     ajc     "org.aspectj:aspectjtools:1.8.10"
     providedCompile "org.aspectj:aspectjrt:1.8.10"
-    providedCompile (group: 'com.dotcms', name: 'dotcms', version: '21.05'){
+    providedCompile (group: 'com.dotcms', name: 'dotcms', version: '21.06'){
         transitive = true
     }
-    aspects (group: 'com.dotcms', name: 'dotcms', version: '21.05')
+    aspects (group: 'com.dotcms', name: 'dotcms', version: '21.06')
 
     providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 }
