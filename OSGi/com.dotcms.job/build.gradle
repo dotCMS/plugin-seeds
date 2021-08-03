@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:21.07')
+    compile('com.dotcms:dotcms:21.08')
 }
 
 import java.util.jar.*
