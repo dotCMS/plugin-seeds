@@ -1,16 +1,17 @@
 plugins {
-    id 'biz.aQute.bnd.builder' version '3.3.0'
+    id 'biz.aQute.bnd.builder' version '3.5.0'
 }
 
 sourceCompatibility = '1.8'
 version = '0.2'
 
 repositories {
-    maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+    maven { url "https://repo.dotcms.com/artifactory/libs-release" }
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:21.09') { transitive = true }
+    compileOnly('com.dotcms:dotcms:21.09') { transitive = true }
+    annotationProcessor 'com.dotcms:dotcms:21.09'
 }
 
 import java.util.jar.*
@@ -98,6 +99,6 @@ task fragmentJar(type: Jar) {
 }
 fragmentJar.dependsOn 'readManifesttAttributes'
 
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = '4.10.2'
 }
