@@ -16,7 +16,7 @@ repositories {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     compileOnly fileTree(dir: 'lib', include: '*.jar')
-    compileOnly (group: 'com.dotcms', name: 'dotcms', version: '21.10'){
+    compileOnly (group: 'com.dotcms', name: 'dotcms', version: '21.11'){
         transitive = true
     }
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
