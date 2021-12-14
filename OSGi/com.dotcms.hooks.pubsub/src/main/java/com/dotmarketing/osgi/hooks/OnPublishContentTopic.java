@@ -21,7 +21,7 @@ import java.util.function.Consumer;
  */
 public class OnPublishContentTopic implements DotPubSubTopic {
 
-    private static final String PUBLISH_CONTENT_TOPIC     = "dotpublishcontent_topic";
+    public static final String PUBLISH_CONTENT_TOPIC     = "dotpublishcontent_topic";
 
     private static long bytesSent, bytesReceived, messagesSent, messagesReceived = 0;
 

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class PublishContentPostContentHook extends ContentletAPIPostHookAbstractImp {
 
-    private final static  String TOPIC_NAME = "dotCMSPublishContent";
+    private final static  String TOPIC_NAME = OnPublishContentTopic.PUBLISH_CONTENT_TOPIC;
     private final DotPubSubProvider     pubsub;
     private final OnPublishContentTopic onPublishContentTopic;
 
