@@ -1,17 +1,15 @@
 package com.dotmarketing.osgi.webinterceptors;
 
-import com.dotcms.filters.interceptor.Result;
-import com.dotcms.filters.interceptor.WebInterceptor;
-import com.dotmarketing.util.UtilMethods;
-
+import static com.dotcms.util.CollectionsUtils.map;
+import java.io.IOException;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.IOException;
-import java.util.Map;
-
-import static com.dotcms.util.CollectionsUtils.map;
+import com.dotcms.filters.interceptor.Result;
+import com.dotcms.filters.interceptor.WebInterceptor;
+import com.dotmarketing.util.UtilMethods;
 
 /**
  * This web interceptor adds the access control allow origin in addition to overrides the request and response
