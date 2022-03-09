@@ -22,7 +22,6 @@ This will transparently rewrite the request from `/app/helloworld` to `/`.  It w
 * https://localhost:8443/app/helloworld?action=redirect
 This will send a 302 redirect to the user's browser, redirecting them to `/` 
 
-
 ### WrappingWebInterceptor - Wrapping the request and response and sending it on in the chain.
 
 The second, called `WrappingWebInterceptor`, responds to all requests, e.g. `/*` and  will wrap the incoming request and response and add request.attributes to the request and specific headers to the response.  You can hit the endpoint and it should print the fake attributes.  It will also "pass" the request on to be processed.  You can see this in action by curling any page or request to the system and checking the included headers:
