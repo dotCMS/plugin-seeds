@@ -1,5 +1,0 @@
-<tool>
-	<key>helloWorld</key>
-	<scope>application</scope>
-	<class>com.dotcms.viewtool.HelloViewTool</class>
-</tool>
