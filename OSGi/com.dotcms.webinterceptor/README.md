@@ -1,89 +1,54 @@
 # README
 
-This bundle plugin is an example of how to use web interceptor to filtering the request and wrapping the request and response for upon stages
+This bundle plugin is an example of how to use WebInterceptors.  WebInterceptors respond to one or more URIs (they accept * at the end of their pattern) and can be used to:
+
+* Act as a `javax.servlet.Filter`
+* Wrap the incoming request and the outgoing response to provide headers, or custom functionality
+* Act as a `javax.servlet.Servlet`, responding to specific URIs
+
+There are 2 WebInterceptors in this example.  
+
+The first, called `WrappingWebInterceptor`, responds to all requests, e.g. `/*` and  will wrap the incoming request and response and add request.attributes to the request and specific headers to the response.  You can hit the endpoint and it should print the fake attributes.  It will also "pass" the request on to be processed.  You can see this in action by curling any page or request to the system and checking the included headers:
+```
+curl --head -k https://127.0.0.1:8443/app/helloworld
+
+HTTP/1.1 200
+Strict-Transport-Security: max-age=3600;includeSubDomains
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Access-Control-Allow-Origin: http://dotcms.webinterceptor.com  <------------------------------
+X-WEBINTERCEPTOR: WrappingWebInterceptor                       <------------------------------
+Transfer-Encoding: chunked
+Date: Wed, 09 Mar 2022 14:50:55 GMT
+
+```
+The second, called PreWebInterceptor, only responses to the url pattern `/app/helloworld`.   You can test it by hitting `https://localhost:8443/app/helloworld`
+
+If it is installed correctly, it will print a hello message.  It takes an "action" parameter.
+    
+* https://localhost:8443/app/helloworld?action=break
+this will throw a 400 response and stop processing
+
+* https://localhost:8443/app/helloworld?action=rewrite
+This will transparently rewrite the request from `/app/helloworld` to `/`.  It will not redirect the user's browser.
+
+* https://localhost:8443/app/helloworld?action=redirect
+This will send a 302 redirect to the user's browser, redirecting them to `/` 
+
+
 
 ## How to build this example
 
 To install all you need to do is build the JAR. to do this run
-`./gradlew jar`
+`./gradlew clean jar`
 
 This will build two jars in the `build/libs` directory: a bundle fragment (in order to expose needed 3rd party libraries from dotCMS) and the plugin jar 
 
 * **To install this bundle:**
 
-    Copy the bundle jar files inside the Felix OSGI container (*dotCMS/felix/load*).
-        
-    OR
-        
     Upload the bundle jars files using the dotCMS UI (*CMS Admin->Dynamic Plugins->Upload Plugin*).
 
 * **To uninstall this bundle:**
     
-    Remove the bundle jars files from the Felix OSGI container (*dotCMS/felix/load*).
-
-    OR
-
     Undeploy the bundle jars using the dotCMS UI (*CMS Admin->Dynamic Plugins->Undeploy*).
-
-## How to create a bundle plugin that uses WebInterceptors
-
-In order to create this OSGI plugin, you must create a `META-INF/MANIFEST` to be inserted into OSGI jar.
-This file is being created for you by Gradle. If you need you can alter our config for this but in general our out of the box config should work.
-The Gradle plugin uses BND to generate the Manifest. The main reason you need to alter the config is when you need to exclude a package you are including on your Bundle-ClassPath
-
-If you are building the MANIFEST on your own or desire more info on it below is a description of what is required in this MANIFEST you must specify (see template plugin):
-
-```
-    Bundle-Name: The name of your bundle
-    Bundle-SymbolicName: A short an unique name for the bundle
-    Bundle-Activator: Package and name of your Activator class (example: com.dotmarketing.osgi.webinterceptors.Activator)
-    Export-Package: Declares the packages that are visible outside the plugin. Any package not declared here has visibility only within the bundle.
-    Import-Package: This is a comma separated list of the names of packages to import. In this list there must be the packages that you are using inside your osgi bundle plugin and are exported and exposed by the dotCMS runtime.
-```
-
-## Beware (!)
-
-In order to work inside the Apache Felix OSGI runtime, the import and export directive must be bidirectional, there are two ways to accomplish this:
-
-* **Exported Packages**
-
-    The dotCMS must declare the set of packages that will be available to the OSGI plugins by changing the file: *dotCMS/WEB-INF/felix/osgi-extra.conf*.
-This is possible also using the dotCMS UI (*CMS Admin->Dynamic Plugins->Exported Packages*).
-
-    Only after that exported packages are defined in this list, a plugin can Import the packages to use them inside the OSGI blundle.
-    
-* **Fragment**
-
-    A Bundle fragment, is a bundle whose contents are made available to another bundles exporting 3rd party libraries from dotCMS.
-One notable difference is that fragments do not participate in the lifecycle of the bundle, and therefore cannot have an Bundle-Activator.
-As it not contain a Bundle-Activator a fragment cannot be started so after deploy it will have its state as Resolved and NOT as Active as a normal bundle plugin.
-
----
-## Components
-
-### com.dotmarketing.osgi.webinterceptors.HelloWorldServlet
-
-Simple and standard implementation of a HttpServlet that will use
-the HelloWorld service provide by the com.dotcms.service bundle plugin (Please refer to INSTALL.txt (!)).
-
-### com.dotmarketing.osgi.webinterceptors.PreWebInterceptor
-
-This interceptor will accept two parameters: "wrap" and "break", the first will create a request and response wrappers, the request will add some 
-fake attributes to the request and the response is gonna add the cors origin headers based on the origin header 
-
-### Activator
-
-This bundle activator extends from `com.dotmarketing.osgi.GenericBundleActivator` and implements BundleActivator.start().
-Registers a `HelloWorldServlet` and a WebInterceptor on the `AutoLoginFilter`
-
-## Testing
-
-The HelloWorldServlet is registered under the url pattern "/helloworld" can be test it running and assuming your dotcms url is localhost:8080:
-    
-    http://localhost:8080/app/helloworld?action=wrap
-
-This will hit the servlet and prints the fake attributes
-
-    http://localhost:8080/app/helloworld?action=break
-
-This won't hit the servlet and returns a bad request
