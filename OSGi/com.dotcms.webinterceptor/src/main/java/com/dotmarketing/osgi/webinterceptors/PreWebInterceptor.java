@@ -27,7 +27,7 @@ public class PreWebInterceptor implements WebInterceptor {
         switch (action) {
             case "break":
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getOutputStream().println("Breaking the PreWebInterceptor, bad request");
+                response.getOutputStream().println("Breaking the PreWebInterceptor and sending 400 error code - bad request");
                 return Result.SKIP_NO_CHAIN;
                 
             case "rewrite":
