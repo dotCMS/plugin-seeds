@@ -16,4 +16,4 @@ cd plugin-seeds
 ```
 
 ### dotCMS Plugin Documentation:
-[Plugins](https://dotcms.com/docs/latest/osgi-plugins)
+[Plugins](https://dotcms.com/docs/latest/plugins)
