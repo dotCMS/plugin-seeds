@@ -1,6 +1,6 @@
 # README
 
-This plugin is an example of how you can add custom validation to any content save using a WorkFlowActionlet.  The plugin supplies a new WorkflowActionlet called "Content Validation Actionlet Example" that can be added to any workflow task.  The validation it uses is simple - it will not let you save a piece of content with "nosave" it its title, nor will it allow you to publish a piece of content with "nopublish" in its title. 
+This plugin is an example of how you can add custom validation to content using a WorkFlowActionlet.  The plugin supplies a new WorkflowActionlet called "Content Validation Actionlet Example" that can be added to workflow tasks.  The validation it uses is simple and intended as an example - it will not let you save a piece of content with "nosave" it its title, nor will it allow you to publish a piece of content with "nopublish" in its title. 
 
 ## How to build this example
 
