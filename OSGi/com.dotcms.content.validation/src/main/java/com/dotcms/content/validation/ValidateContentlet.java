@@ -1,8 +1,10 @@
 package com.dotcms.content.validation;
 
 
+import com.dotcms.contenttype.model.field.CategoryField;
 import com.dotmarketing.portlets.contentlet.business.DotContentletValidationException;
 import com.dotmarketing.portlets.contentlet.model.Contentlet;
+import com.dotmarketing.portlets.contentlet.model.ContentletDependencies;
 import com.dotmarketing.portlets.workflows.actionlet.PublishContentActionlet;
 import com.dotmarketing.portlets.workflows.actionlet.SaveContentActionlet;
 import com.dotmarketing.portlets.workflows.actionlet.WorkFlowActionlet;
@@ -44,6 +46,13 @@ public class ValidateContentlet extends WorkFlowActionlet {
         Contentlet content = processor.getContentlet();
         List<WorkflowActionClass> actions =processor.getActionClasses();
         
+        ContentletDependencies deps = processor.getContentletDependencies();
+        
+        
+        if(hasCategoryField(content) && (deps.getCategories()==null || deps.getCategories().isEmpty())) {
+            throw new DotContentletValidationException("You need to include a category when saving this content");
+            
+        }
         
         if(content.validateMe() && isSaving(actions) && content.getTitle().toLowerCase().contains("nosave")) {
             throw new DotContentletValidationException("You cannot save a contentlet with `nosave` in its title");
@@ -76,6 +85,8 @@ public class ValidateContentlet extends WorkFlowActionlet {
     private boolean isPublishing(final List<WorkflowActionClass> actions) {
         return actions.stream().anyMatch(wac -> wac.getActionlet() instanceof PublishContentActionlet);
     }
-
+    private boolean hasCategoryField(final Contentlet contentlet) {
+        return ! contentlet.getContentType().fields(CategoryField.class).isEmpty();
+    }
 
 }
