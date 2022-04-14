@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:./OSGi/com.dotcms.pushpublish.listener/build.gradle')
+    compile('com.dotcms:dotcms:22.03') 
 }
 
 import java.util.jar.*
