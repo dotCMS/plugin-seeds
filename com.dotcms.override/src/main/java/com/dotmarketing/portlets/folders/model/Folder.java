@@ -26,9 +26,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class Folder extends Inode implements Serializable, Permissionable, Treeable, Ruleable, Parentable {
 
+public class Folder extends Inode implements Serializable, Permissionable, Treeable, Ruleable,
+		Parentable, ManifestItem {
     private static final long serialVersionUID = 1L;
 
     public static final String SYSTEM_FOLDER = "SYSTEM_FOLDER";
