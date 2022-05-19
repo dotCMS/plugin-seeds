@@ -25,7 +25,6 @@ jar {
                 'Bundle-Description': 'dotCMS - Override class example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.override.Activator',
-                'Override-Classes': 'com.dotmarketing.portlets.folders.model.Folder',
                 'Import-Package': '!com.dotmarketing.portlets.folders.model,*;version=0'
         )
     }
