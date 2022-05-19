@@ -1,21 +1,20 @@
 package com.dotmarketing.portlets.folders.model;
 
+import static com.dotcms.util.CollectionsUtils.map;
+
 import com.dotcms.api.tree.Parentable;
 import com.dotcms.publisher.util.PusheableAsset;
 import com.dotcms.publishing.manifest.ManifestItem;
+import com.dotcms.publishing.manifest.ManifestItem.ManifestInfo;
+import com.dotcms.repackage.net.sf.hibernate.sql.Template;
 import com.dotmarketing.beans.Host;
 import com.dotmarketing.beans.Identifier;
-import com.dotmarketing.business.APILocator;
-import com.dotmarketing.business.DotStateException;
-import com.dotmarketing.business.PermissionAPI;
-import com.dotmarketing.business.PermissionSummary;
-import com.dotmarketing.business.Permissionable;
-import com.dotmarketing.business.RelatedPermissionableGroup;
-import com.dotmarketing.business.Ruleable;
-import com.dotmarketing.business.Treeable;
+import com.dotmarketing.beans.Inode;
+import com.dotmarketing.business.*;
 import com.dotmarketing.exception.DotDataException;
 import com.dotmarketing.exception.DotRuntimeException;
 import com.dotmarketing.exception.DotSecurityException;
+import com.dotmarketing.portlets.containers.model.Container;
 import com.dotmarketing.portlets.folders.business.FolderAPI;
 import com.dotmarketing.portlets.folders.struts.FolderForm;
 import com.dotmarketing.util.InodeUtils;
@@ -23,28 +22,26 @@ import com.dotmarketing.util.Logger;
 import com.dotmarketing.util.UtilMethods;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.liferay.portal.model.User;
-import com.liferay.util.StringPool;
 import io.vavr.control.Try;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
+public class Folder extends Inode implements Serializable, Permissionable, Treeable, Ruleable,
         Parentable, ManifestItem {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SYSTEM_FOLDER = "SYSTEM_FOLDER";
 
-    private String identifier;
-
     /** nullable persistent field */
     private String name;
+
 
     /** nullable persistent field */
     private int sortOrder;
@@ -55,9 +52,6 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
     /** nullable persistent field */
     private String hostId = "";
 
-    public static final String FOLDER_TYPE = "folder";
-
-    private String type;
 
     private String title;
     /** default constructor */
@@ -67,54 +61,6 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
     private String defaultFileType;
 
     private Date modDate;
-
-    private String owner;
-
-    private Date iDate;
-
-    private String inode;
-
-    private String path;
-
-    @Override
-    public String getOwner() {
-        return owner;
-    }
-
-    @Override
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public Date getIDate() {
-        return iDate;
-    }
-
-    public void setIDate(Date iDate) {
-        this.iDate = iDate;
-    }
-
-    public void setInode(String inode) {
-        this.inode = inode;
-    }
-
-    @Override
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    /**
-     * Returns the type.
-     *
-     * @return String
-     */
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
 
     @JsonIgnore
@@ -132,8 +78,8 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
 
 
     public Folder() {
+        this.setType("folder");
         modDate = new Date();
-        type = FOLDER_TYPE;
     }
 
     /**
@@ -169,6 +115,14 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
      */
     public int getSortOrder() {
         return sortOrder;
+    }
+
+    /**
+     * Sets the inode.
+     * @param inode The inode to set
+     */
+    public void setInode(String inode) {
+        this.inode = inode;
     }
 
     /**
@@ -287,22 +241,17 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
     }
 
     public Map<String, Object> getMap() throws DotStateException, DotDataException, DotSecurityException {
-        final Map<String, Object> map = new HashMap<>();
-        map.put("inode", this.identifier);
-        map.put("type", FOLDER_TYPE);
-        map.put("identifier", this.identifier);
-        map.put("owner", this.owner);
-        map.put("iDate", iDate);
-        map.put("filesMasks", this.filesMasks);
-        map.put("name", this.name);
-        map.put("title", this.title);
-        map.put("hostId", this.hostId);
-        map.put("showOnMenu", this.showOnMenu);
-        map.put("sortOrder", this.sortOrder);
-        map.put("defaultFileType", this.defaultFileType);
-        map.put("path", this.getPath());
-        map.put("modDate", this.getModDate());
-        return map;
+        Map<String, Object> retMap = super.getMap();
+        retMap.put("filesMasks", this.filesMasks);
+        retMap.put("name", this.name);
+        retMap.put("title", this.title);
+        retMap.put("hostId", this.hostId);
+        retMap.put("showOnMenu", this.showOnMenu);
+        retMap.put("sortOrder", this.sortOrder);
+        retMap.put("defaultFileType", this.defaultFileType);
+        retMap.put("path", this.getPath());
+        retMap.put("modDate", this.getModDate());
+        return retMap;
     }
 
     //Methods from permissionable and parent permissionable
@@ -315,11 +264,6 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
         accepted.add(new PermissionSummary("publish", "publish-permission-description", PermissionAPI.PERMISSION_PUBLISH));
         accepted.add(new PermissionSummary("edit-permissions", "edit-permissions-permission-description", PermissionAPI.PERMISSION_EDIT_PERMISSIONS));
         return accepted;
-    }
-
-    @Override
-    public String getPermissionId() {
-        return getInode();
     }
 
     @Override
@@ -351,21 +295,16 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
         }
     }
 
-    public List<RelatedPermissionableGroup> permissionDependencies(
-            int requiredPermission) {
-        return null;
-    }
-
-    public String getPermissionType() {
-        return this.getClass().getCanonicalName();
-    }
-
     public String getPath() {
-        if (UtilMethods.isSet(this.path)){
-            return this.path;
-        }
 
         Identifier id = null;
+
+        //TODO: New code in this class!
+        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
+        Logger.info( this, "Modified Code, this class was redefined." );
+        Logger.info( this, "Yeah Jsanca. YupYup" );
+        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
+        //TODO: New code in this class!
 
         try {
             id = APILocator.getIdentifierAPI().find(this.getIdentifier());
@@ -375,21 +314,7 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
             Logger.debug(this, " This is usually not a problem as it is usually just the identifier not being found" +  e.getMessage(), e);
         }
 
-        //TODO: New code in this class!
-        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
-        Logger.info( this, "Modified Code, this class was redefined." );
-        Logger.info( this, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" );
-        //TODO: New code in this class!
-
-        if (null != id){
-            this.path = id.getPath();
-        }
-
-        return this.path;
-    }
-
-    public void setPath(final String path) {
-        this.path = path;
+        return id!=null?id.getPath():null;
     }
 
     public boolean equals(Object o){
@@ -410,7 +335,7 @@ public class Folder implements Serializable, Permissionable, Treeable, Ruleable,
                 return false;
             if(!this.title.equals(((Folder) o).title))
                 return false;
-            if((this.filesMasks == null && ((Folder) o).filesMasks != null && ((Folder)o).filesMasks != StringPool.BLANK)
+            if((this.filesMasks == null && ((Folder) o).filesMasks != null && ((Folder)o).filesMasks != "")
                     || (this.filesMasks != null && !this.filesMasks.equals(((Folder) o).filesMasks)))
                 return false;
         }else if(o instanceof FolderForm){

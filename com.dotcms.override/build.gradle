@@ -3,14 +3,14 @@ plugins {
 }
 
 sourceCompatibility = '1.8'
-version = '0.2'
+version = '0.2.1'
 
 repositories {
     maven { url "http://repo.dotcms.com/artifactory/libs-release" }
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:22.03.1') { transitive = true }
+    compile('com.dotcms:dotcms:22.03') { transitive = true }
 }
 
 import java.util.jar.*
@@ -25,7 +25,6 @@ jar {
                 'Bundle-Description': 'dotCMS - Override class example',
                 'Bundle-DocURL': 'https://dotcms.com/',
                 'Bundle-Activator': 'com.dotmarketing.osgi.override.Activator',
-                'Override-Classes': 'com.dotmarketing.portlets.folders.model.Folder',
                 'Import-Package': '!com.dotmarketing.portlets.folders.model,*;version=0'
         )
     }
