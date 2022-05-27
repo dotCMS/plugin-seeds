@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <bean id="securityLoggerServiceAPI" class="com.dotcms.api.spring.factory.SecurityLoggerServiceAPIFactoryBean"/>
+    <bean id="companyAPI" class="com.dotcms.api.spring.factory.CompanyAPIFactoryBean"/>
+    <bean id="webSocketContainerAPI" class="com.dotcms.api.spring.factory.WebSocketContainerAPIFactoryBean"/>
+    <bean id="permissionAPI" class="com.dotcms.api.spring.factory.PermissionAPIFactoryBean"/>
+    <bean id="roleAPI" class="com.dotcms.api.spring.factory.RoleAPIFactoryBean"/>
+    <bean id="mailAPI" class="com.dotcms.api.spring.factory.MailAPIFactoryBean"/>
+    <bean id="loginAsAPI" class="com.dotcms.api.spring.factory.LoginAsAPIFactoryBean"/>
+    <bean id="eventAPI" class="com.dotcms.api.spring.factory.EventAPIFactoryBean"/>
+    <bean id="categoryAPI" class="com.dotcms.api.spring.factory.CategoryAPIFactoryBean"/>
+    <bean id="templateAPI" class="com.dotcms.api.spring.factory.TemplateAPIFactoryBean"/>
+    <bean id="contentletAPI" class="com.dotcms.api.spring.factory.ContentletAPIFactoryBean"/>
+    <bean id="focalPointAPI" class="com.dotcms.api.spring.factory.FocalPointAPIFactoryBean"/>
+    <bean id="relationshipAPI" class="com.dotcms.api.spring.factory.RelationshipAPIFactoryBean"/>
+    <bean id="portletAPI" class="com.dotcms.api.spring.factory.PortletAPIFactoryBean"/>
+    <bean id="widgetAPI" class="com.dotcms.api.spring.factory.WidgetAPIFactoryBean"/>
+    <bean id="formAPI" class="com.dotcms.api.spring.factory.FormAPIFactoryBean"/>
+    <bean id="pluginAPI" class="com.dotcms.api.spring.factory.PluginAPIFactoryBean"/>
+    <bean id="languageAPI" class="com.dotcms.api.spring.factory.LanguageAPIFactoryBean"/>
+    <bean id="reindexQueueAPI" class="com.dotcms.api.spring.factory.ReindexQueueAPIFactoryBean"/>
+    <bean id="folderAPI" class="com.dotcms.api.spring.factory.FolderAPIFactoryBean"/>
+    <bean id="hostAPI" class="com.dotcms.api.spring.factory.HostAPIFactoryBean"/>
+    <bean id="containerAPI" class="com.dotcms.api.spring.factory.ContainerAPIFactoryBean"/>
+    <bean id="layoutAPI" class="com.dotcms.api.spring.factory.LayoutAPIFactoryBean"/>
+    <bean id="hostVariableAPI" class="com.dotcms.api.spring.factory.HostVariableAPIFactoryBean"/>
+    <bean id="menuLinkAPI" class="com.dotcms.api.spring.factory.MenuLinkAPIFactoryBean"/>
+    <bean id="dashboardAPI" class="com.dotcms.api.spring.factory.DashboardAPIFactoryBean"/>
+    <bean id="siteSearchAPI" class="com.dotcms.api.spring.factory.SiteSearchAPIFactoryBean"/>
+    <bean id="fileAssetAPI" class="com.dotcms.api.spring.factory.FileAssetAPIFactoryBean"/>
+    <bean id="fileStorageAPI" class="com.dotcms.api.spring.factory.FileStorageAPIFactoryBean"/>
+    <bean id="fileMetadataAPI" class="com.dotcms.api.spring.factory.FileMetadataAPIFactoryBean"/>
+    <bean id="versionableAPI" class="com.dotcms.api.spring.factory.VersionableAPIFactoryBean"/>
+    <bean id="workflowAPI" class="com.dotcms.api.spring.factory.WorkflowAPIFactoryBean"/>
+    <bean id="cacheProviderAPI" class="com.dotcms.api.spring.factory.CacheProviderAPIFactoryBean"/>
+    <bean id="tagAPI" class="com.dotcms.api.spring.factory.TagAPIFactoryBean"/>
+    <bean id="loginServiceAPI" class="com.dotcms.api.spring.factory.LoginServiceAPIFactoryBean"/>
+    <bean id="indiciesAPI" class="com.dotcms.api.spring.factory.IndiciesAPIFactoryBean"/>
+    <bean id="contentletIndexAPI" class="com.dotcms.api.spring.factory.ContentletIndexAPIFactoryBean"/>
+    <bean id="esIndexAPI" class="com.dotcms.api.spring.factory.ESIndexAPIFactoryBean"/>
+    <bean id="publisherAPI" class="com.dotcms.api.spring.factory.PublisherAPIFactoryBean"/>
+    <bean id="linkCheckerAPI" class="com.dotcms.api.spring.factory.LinkCheckerAPIFactoryBean"/>
+    <bean id="publishingEndPointAPI" class="com.dotcms.api.spring.factory.PublishingEndPointAPIFactoryBean"/>
+    <bean id="siteSearchAuditAPI" class="com.dotcms.api.spring.factory.SiteSearchAuditAPIFactoryBean"/>
+    <bean id="environmentAPI" class="com.dotcms.api.spring.factory.EnvironmentAPIFactoryBean"/>
+    <bean id="bundleAPI" class="com.dotcms.api.spring.factory.BundleAPIFactoryBean"/>
+    <bean id="browserAPI" class="com.dotcms.api.spring.factory.BrowserAPIFactoryBean"/>
+    <bean id="tempFileAPI" class="com.dotcms.api.spring.factory.TempFileAPIFactoryBean"/>
+    <bean id="pushedAssetsAPI" class="com.dotcms.api.spring.factory.PushedAssetsAPIFactoryBean"/>
+    <bean id="shortyIdAPI" class="com.dotcms.api.spring.factory.ShortyIdAPIFactoryBean"/>
+    <bean id="serverAPI" class="com.dotcms.api.spring.factory.ServerAPIFactoryBean"/>
+    <bean id="notificationAPI" class="com.dotcms.api.spring.factory.NotificationAPIFactoryBean"/>
+    <bean id="htmlPageAssetAPI" class="com.dotcms.api.spring.factory.HTMLPageAssetAPIFactoryBean"/>
+    <bean id="personaAPI" class="com.dotcms.api.spring.factory.PersonaAPIFactoryBean"/>
+    <bean id="serverActionAPI" class="com.dotcms.api.spring.factory.ServerActionAPIFactoryBean"/>
+    <bean id="esSeachAPI" class="com.dotcms.api.spring.factory.ESSeachAPIFactoryBean"/>
+    <bean id="rulesAPI" class="com.dotcms.api.spring.factory.RulesAPIFactoryBean"/>
+    <bean id="visitorAPI" class="com.dotcms.api.spring.factory.VisitorAPIFactoryBean"/>
+    <bean id="contentTypeAPI" class="com.dotcms.api.spring.factory.ContentTypeAPIFactoryBean"/>
+    <bean id="multiTreeAPI" class="com.dotcms.api.spring.factory.MultiTreeAPIFactoryBean"/>
+    <bean id="fieldAPIFactoryBean" class="com.dotcms.api.spring.factory.FieldAPIFactoryBean"/>
+    <bean id="graphqlAPI" class="com.dotcms.api.spring.factory.GraphqlAPIFactoryBean"/>
+    <bean id="treeableAPI" class="com.dotcms.api.spring.factory.TreeableAPIFactoryBean"/>
+    <bean id="systemEventsAPI" class="com.dotcms.api.spring.factory.SystemEventsAPIFactoryBean"/>
+    <bean id="fileWatcherAPI" class="com.dotcms.api.spring.factory.FileWatcherAPIFactoryBean"/>
+    <bean id="vanityUrlAPI" class="com.dotcms.api.spring.factory.VanityUrlAPIFactoryBean"/>
+    <bean id="keyValueAPI" class="com.dotcms.api.spring.factory.KeyValueAPIFactoryBean"/>
+    <bean id="localSystemEventsAPI" class="com.dotcms.api.spring.factory.LocalSystemEventsAPIFactoryBean"/>
+    <bean id="languageVariableAPI" class="com.dotcms.api.spring.factory.LanguageVariableAPIFactoryBean"/>
+    <bean id="htmlPageAssetRenderedAPI" class="com.dotcms.api.spring.factory.HTMLPageAssetRenderedAPIFactoryBean"/>
+    <bean id="themeAPI" class="com.dotcms.api.spring.factory.ThemeAPIFactoryBean"/>
+    <bean id="apiTokenAPI" class="com.dotcms.api.spring.factory.ApiTokenAPIFactoryBean"/>
+    <bean id="urlMapAPI" class="com.dotcms.api.spring.factory.URLMapAPIFactoryBean"/>
+    <bean id="contentTypeFieldLayoutAPI" class="com.dotcms.api.spring.factory.ContentTypeFieldLayoutAPIFactoryBean"/>
+    <bean id="publishAuditAPI" class="com.dotcms.api.spring.factory.PublishAuditAPIFactoryBean"/>
+    <bean id="appsAPI" class="com.dotcms.api.spring.factory.AppsAPIFactoryBean"/>
+    <bean id="dotAssetAPI" class="com.dotcms.api.spring.factory.DotAssetAPIFactoryBean"/>
+    <bean id="deviceAPI" class="com.dotcms.api.spring.factory.DeviceAPIFactoryBean"/>
+    <bean id="deterministicIdentifierAPI" class="com.dotcms.api.spring.factory.DeterministicIdentifierAPIFactoryBean"/>
+    <bean id="contentletJsonAPI" class="com.dotcms.api.spring.factory.ContentletJsonAPIFactoryBean"/>
+    <bean id="userAPI" class="com.dotcms.api.spring.factory.UserAPIFactoryBean"/>
+
+</beans>
