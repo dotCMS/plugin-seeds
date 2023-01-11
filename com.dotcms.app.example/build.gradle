@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:22.05') { transitive = true }
+    compile('com.dotcms:dotcms:23.01') { transitive = true }
     
     testCompile group: 'junit', name: 'junit-dep', version: '4.10'
 }
