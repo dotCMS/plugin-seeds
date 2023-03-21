@@ -24,6 +24,7 @@ import net.schmizz.sshj.sftp.SFTPClient;
 import net.schmizz.sshj.sftp.SFTPException;
 import net.schmizz.sshj.userauth.keyprovider.PKCS8KeyFile;
 import net.schmizz.sshj.userauth.method.AuthPublickey;
+import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
 public class StaticPublisher {
     private List<String> hosts;
@@ -59,17 +60,22 @@ public class StaticPublisher {
 
         try {
             ssh.loadKnownHosts();
+            ssh.addHostKeyVerifier(new PromiscuousVerifier());
             this.currentStatusHistory = publishAuditAPI.getPublishAuditStatus(config.getId()).getStatusPojo();
 
             for (String host : hosts) {
                 //publisherEndPointAPI.
                 try {
-                    ssh.connect(host);
+                    Logger.info(this, "Connecting to ssh..");
+                    ssh.connect(host,Integer.parseInt(PluginProperties.getProperty("host.port","22")));
+                    Logger.info(this, "Connected to ssh..");
+                    Logger.info(this, "Auth to ssh..");
                     ssh.auth(getUsername(), getAuthPublickey());
 
-                    Logger.info(this, "Remote Bundle Path: ");
+                    Logger.info(this, "Remote Bundle Path: " + getRemotePath());
 
                     transferMethod.transfer(ssh, localPath, Paths.get(getRemotePath()));
+                    Logger.info(this, "Finished Transfering Files");
 
                 } catch (IOException e) {
                     Logger.error(this, "IOException error: ", e);

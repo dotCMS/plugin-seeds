@@ -1,5 +1,6 @@
 package com.dotcms.staticpublish.publisher;
 
+import com.dotmarketing.util.Logger;
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.xfer.FileSystemFile;
 
@@ -10,6 +11,7 @@ public class SFTPTransferMethod implements TransferMethod {
 
     @Override
     public void transfer(SSHClient client, Path localPath, Path remotePath) throws IOException {
+        Logger.info(this, "Transfering files...");
         client.newSFTPClient().put(new FileSystemFile(localPath.toString()), remotePath.toString());
     }
 
