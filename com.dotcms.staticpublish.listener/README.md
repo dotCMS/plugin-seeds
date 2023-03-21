@@ -1,6 +1,8 @@
 # README
 
-This plugin enables the push publishing of static objects from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that is subscribed to an event `SingleStaticPublishEndpointSuccessEvent`, once this plugin is deployed on dotCMS as a dynamic plugin.
+This plugin push publishing of static objects from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that is subscribed to an event `SingleStaticPublishEndpointSuccessEvent`, once this plugin is deployed on dotCMS as a dynamic plugin.
+
+You need to create a Static Endpoint, after the bundle is successfully saved locally is going to try to transfer the files to the SFTP server.
 
 For further information about dotCMS Dynamic Plugins and Push Publishing Listeners, please visit:
 
@@ -78,6 +80,7 @@ The following key properties are required:
 * **key.file.path**: absolute path (in the sender) where the .pem certificate to be used for the connection is located
 * **ssh.user**: ssh user to be used to connect with the receiver
 * **hosts**: receiver's ip address
+* **host.port**: receiver's port (22 by default)
 * **remote.path**: absolute path where static content will be stored in the receiver
 
 **Note:** The plugin needs to be built and redeployed as a dynamic plugin in dotCMS each time the `plugin.properties` file is modified
