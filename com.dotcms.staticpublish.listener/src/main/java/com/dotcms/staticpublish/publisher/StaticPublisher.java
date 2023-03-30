@@ -53,14 +53,17 @@ public class StaticPublisher {
     }
 
     private void publish(final Path localPath, TransferMethod transferMethod) {
+        Logger.info(this, "Starting with the publish to SFTP...");
         final List<String> hosts = getHosts();
         final SSHClient ssh      = new SSHClient();
+        Logger.info(this, "Created ssh client...");
         List<String> failedHosts = new ArrayList<>();
         EndpointDetail detail    = new EndpointDetail();
 
         try {
-            ssh.loadKnownHosts();
+            Logger.info(this, "Adding host key verifier...");
             ssh.addHostKeyVerifier(new PromiscuousVerifier());
+            Logger.info(this, "Added host key verifier..");
             this.currentStatusHistory = publishAuditAPI.getPublishAuditStatus(config.getId()).getStatusPojo();
 
             for (String host : hosts) {
@@ -91,10 +94,6 @@ public class StaticPublisher {
                     }
                 }
             }
-        } catch (IOException e) {
-            Logger.error(this, "Error loading ssh known hosts", e);
-            detail.setStatus(Status.FAILED_TO_PUBLISH.getCode());
-            detail.setInfo("Error sending bundle to " + String.join(",", hosts));
         } catch (DotPublisherException e) {
             Logger.error(this, "Error loading publish audit status", e);
             detail.setStatus(Status.FAILED_TO_PUBLISH.getCode());
