@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'src/main/resources/libs', include: '*.jar')
-    compile('com.dotcms:dotcms:23.06') { transitive = true }
+    compile('com.dotcms:dotcms:99.12.31') { transitive = true }
 }
 
 import java.util.jar.*
