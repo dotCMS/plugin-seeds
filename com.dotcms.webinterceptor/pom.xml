@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dotcms</groupId>
-    <artifactId>osgi-portlets-example</artifactId>
+    <artifactId>osgi-web-interceptors-example</artifactId>
     <version>0.2</version>
     <packaging>bundle</packaging>
 
@@ -41,13 +41,15 @@
                 <configuration>
                     <instructions>
                         <Bundle-Vendor>dotCMS</Bundle-Vendor>
-                        <Bundle-Description>dotCMS - Osgi Portlets example</Bundle-Description>
+                        <Bundle-Description>dotCMS - Osgi Web Interceptors example</Bundle-Description>
                         <Bundle-DocURL>https://dotcms.com/</Bundle-DocURL>
-                        <Bundle-Activator>com.dotmarketing.osgi.portlet.Activator</Bundle-Activator>
+                        <Bundle-Activator>com.dotmarketing.osgi.webinterceptors.Activator</Bundle-Activator>
                         <Import-Package>*</Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
+            <!-- Configure Maven Surefire Plugin for JUnit tests if you have any test cases -->
+            <!-- <plugin> ... </plugin> -->
         </plugins>
     </build>
 </project>
