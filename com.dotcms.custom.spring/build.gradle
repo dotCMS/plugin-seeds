@@ -14,7 +14,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:23.06') { transitive = true }
+    compile('com.dotcms:dotcms:24.02.17') { transitive = true }
     //Resolve dependencies. These jars can be downloaded from our Maven Repo
     //In case you want to create a Controller using other Spring version,
     //just change the version Attribute.

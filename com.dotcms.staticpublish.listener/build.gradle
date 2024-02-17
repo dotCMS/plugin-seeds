@@ -14,7 +14,7 @@ configurations {
 }
 
 dependencies {
-    compile('com.dotcms:dotcms:23.06') { transitive = true }
+    compile('com.dotcms:dotcms:24.02.17') { transitive = true }
 
     compileOnly('com.hierynomus:sshj:0.35.0'){
         exclude group: 'org.bouncycastle' //Why we exlude? See README's important notes.
