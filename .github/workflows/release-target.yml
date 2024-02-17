@@ -1,7 +1,12 @@
 name: Plugins Release Target
 on:
   repository_dispatch:
-    types: [trigger-workflow]
+    types: [on-plugins-release]
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release Version (yy.mm.dd[_lts_v##]])'
+        required: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -18,7 +23,9 @@ jobs:
       - name: Create Release Branch
         id: create-release-branch
         run: |
-          release_version=${{ github.event.client_payload.release_version }}
+          release_version="${{ github.event.inputs.release_version }}"
+          [[ -z "${release_version}" ]] && release_version=${{ github.event.client_payload.release_version }}
+
           release_branch=release-${release_version}
           
           git config user.name "${{ secrets.CI_MACHINE_USER }}"
