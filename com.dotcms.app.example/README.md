@@ -24,6 +24,6 @@ Secrets and App config stored in Apps can be accessed using code as displayed be
 How to build this example
 -------------------------
 
-To build this, run  `./gradlew jar`.  This will create two jars, both of which you should upload into your dotCMS.
+To build this, run  `mvn clean install`.  This will create a jar which you should upload into your dotCMS.
 
 
