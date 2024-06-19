@@ -1,6 +1,5 @@
 package com.dotmarketing.osgi.webinterceptors;
 
-import static com.dotcms.util.CollectionsUtils.map;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,7 @@ public class WrappingWebInterceptor implements WebInterceptor {
     // just includes some dummy attributes by default
     private class PreloadRequest extends HttpServletRequestWrapper {
 
-        private Map<String, Object> attributes = map("hello", "This is a hello test", 
+        private Map<String, Object> attributes = Map.of("hello", "This is a hello test", 
                         "pi", new Double(3.14159265359),
                         "goldenratio", new Double(1.6180339887))
                         ;

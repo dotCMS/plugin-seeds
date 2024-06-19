@@ -6,6 +6,7 @@ bin/*.sh
 .classpath
 .settings/*
 .project
+.vscode/
 .idea/
 *.iml
 *.ipr

@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dotcms</groupId>
-    <artifactId>viewtool</artifactId>
-    <version>0.2</version>
+    <artifactId>tuckey</artifactId>
+    <version>0.3</version>
     <packaging>bundle</packaging> <!-- Use 'bundle' packaging -->
 
     <properties>
@@ -17,7 +17,7 @@
     <repositories>
         <repository>
             <id>dotcms-repo</id>
-            <url>https://repo.dotcms.com/artifactory/libs-release</url>
+            <url>https://artifactory.dotcms.cloud/artifactory/libs-release</url>
         </repository>
     </repositories>
 
@@ -26,8 +26,8 @@
         <!-- Example: -->
         <dependency>
             <groupId>com.dotcms</groupId>
-            <artifactId>dotcms</artifactId>
-            <version>23.10.24</version>
+            <artifactId>dotcms-core</artifactId>
+            <version>24.05.13</version>
             <scope>compile</scope> <!-- Use 'compile' scope -->
         </dependency>
         <!-- Add other dependencies as needed -->

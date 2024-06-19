@@ -17,15 +17,15 @@
     <repositories>
         <repository>
             <id>dotcms-repo</id>
-            <url>https://repo.dotcms.com/artifactory/libs-release</url>
+            <url>https://artifactory.dotcms.cloud/artifactory/libs-release</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>com.dotcms</groupId>
-            <artifactId>dotcms</artifactId>
-            <version>23.10.24</version>
+            <artifactId>dotcms-core</artifactId>
+            <version>24.05.13</version>
             <scope>provided</scope>
         </dependency>
         <!-- Add more dependencies as needed, possibly from the local 'src/main/resources/libs' directory -->
