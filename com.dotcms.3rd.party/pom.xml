@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dotcms</groupId>
+    <artifactId>osgi-third-party-lib-example</artifactId>
+    <version>0.3</version>
+    <packaging>bundle</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>dotcms-repo</id>
+            <url>https://artifactory.dotcms.cloud/artifactory/libs-release</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.dotcms</groupId>
+            <artifactId>dotcms-core</artifactId>
+            <version>24.05.13</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>hirondelle.date4j</groupId>
+            <artifactId>date4j</artifactId>
+            <version>your.version</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/date4j.jar</systemPath>
+        </dependency>
+
+        <!-- Add more dependencies as needed -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>5.1.9</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Vendor>dotCMS</Bundle-Vendor>
+                        <Bundle-Description>dotCMS - OSGI 3rd Party library example</Bundle-Description>
+                        <Bundle-DocURL>https://dotcms.com/</Bundle-DocURL>
+                        <Bundle-Activator>com.dotmarketing.osgi.external.Activator</Bundle-Activator>
+                        <Bundle-ClassPath>.,libs/*</Bundle-ClassPath> <!-- This assumes all your libs are under 'libs' -->
+                        <Import-Package>!hirondelle.date4j.*,*;version=0</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <!-- Add Maven Dependency Plugin to copy libs from 'src/main/resources/libs' to 'target/libs' -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

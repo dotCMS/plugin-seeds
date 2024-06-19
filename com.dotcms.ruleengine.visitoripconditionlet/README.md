@@ -8,7 +8,7 @@ If you are using tomcat to retrieve the IP's with IPv4 format. `JAVA_OPTS="$JAVA
 ## How to build this example
 
 To install all you need to do is build the JAR. to do this run
-`./gradlew jar`
+`mvn clean install`
 
 This will build two jars in the `build/libs` directory: a bundle fragment (in order to expose needed 3rd party libraries from dotCMS) and the plugin jar 
 

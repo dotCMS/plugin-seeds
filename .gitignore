@@ -6,6 +6,7 @@ bin/*.sh
 .classpath
 .settings/*
 .project
+.vscode/
 .idea/
 *.iml
 *.ipr
@@ -49,6 +50,7 @@ dotCMS/WEB-INF/classes/
 libs/test
 build/
 out/
+target/
 dotCMS/WEB-INF/generated_web.xml
 dotCMS/WEB-INF/lib/*.jar
 dotCMS/WEB-INF/felix/bundle/dot.*.jar
