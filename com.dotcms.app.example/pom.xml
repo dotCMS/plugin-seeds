@@ -50,7 +50,10 @@
                         <Bundle-Description>dotCMS - App and Secrets Example</Bundle-Description>
                         <Bundle-DocURL>https://dotcms.com/</Bundle-DocURL>
                         <Bundle-Activator>com.dotcms.osgi.app.Activator</Bundle-Activator>
-                        <Import-Package>*</Import-Package>
+                        <Import-Package>
+                        com.dotcms.business.bytebuddy,
+                        *
+                        </Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
