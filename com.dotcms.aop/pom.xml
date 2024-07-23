@@ -8,10 +8,14 @@
     <version>0.3</version>
     <packaging>bundle</packaging>
 
+    <parent>
+        <groupId>com.dotcms</groupId>
+        <artifactId>plugin-seeds</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
         <aspectj.version>1.8.10</aspectj.version> <!-- Adjust as per your AspectJ version -->
     </properties>
 
