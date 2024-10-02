@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source> <!-- As per sourceCompatibility -->
         <maven.compiler.target>11</maven.compiler.target> <!-- As per sourceCompatibility -->
+        <dotcms-core.version>24.05.13</dotcms-core.version>
     </properties>
 
     <repositories>
@@ -25,7 +26,7 @@
         <dependency>
             <groupId>com.dotcms</groupId>
             <artifactId>dotcms-core</artifactId>
-            <version>24.05.13</version>
+            <version>${dotcms-core.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Add more dependencies as needed, possibly from the local 'src/main/resources/libs' directory -->
