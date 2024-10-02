@@ -15,7 +15,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: master
-          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -39,7 +38,7 @@ jobs:
           fi
           git checkout -b ${release_branch}
           
-          for file in $(find . -name build.gradle)
+          for file in $(find . -name pom.xml)
           do
             echo "Replacing version for ${file}"
             python3 ${{ github.workspace }}/update_osgi_plugins.py ${file} ${release_version}
