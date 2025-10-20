@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <dotcms-core.version>24.05.13</dotcms-core.version>
+        <dotcms-core.version>25.10.20-1</dotcms-core.version>
     </properties>
 
     <repositories>
