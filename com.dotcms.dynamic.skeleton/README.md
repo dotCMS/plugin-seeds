@@ -1,4 +1,17 @@
-# README
+# com.dotcms.dynamic.skeleton
+
+## Purpose
+This plugin provides a minimal skeleton for building dotCMS OSGi plugins with the standard activator lifecycle.
+
+## What This Plugin Does
+- Initializes plugin services in an activator that extends `GenericBundleActivator`.
+- Shows the available registration extension points as commented examples (actionlets, conditionlets, viewtools, portlets, and more).
+- Includes a simple sample class to demonstrate plugin code structure.
+
+## When a Customer Might Use This
+- You are starting a new plugin and need a clean baseline project.
+- You want a checklist of common `GenericBundleActivator` registration options.
+- You need a template for safe startup/shutdown behavior.
 
 ## How to build this example
 

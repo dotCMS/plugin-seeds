@@ -1,12 +1,17 @@
-# README
+# com.dotcms.hooks
 
-This bundle plugin is an example of how to add dotcms content hooks via OSGi. Content hooks work like interceptors and can be called before content has been modified (pre-hooks) or after the content has been checked in (post-hooks).
+## Purpose
+This plugin demonstrates how to attach pre and post Contentlet API hooks via OSGi.
 
-Example use cases:  
+## What This Plugin Does
+- Registers `SamplePreContentHook` and `SamplePostContentHook`.
+- Logs activity around content operations such as `contentletCount` and `checkin`.
+- Triggers sample hook execution during plugin startup for verification.
 
-* To apply extra or richer validation on a content object before checkin.
-* To modify or auto-assign values to specific fields on a content object on checkin
-* To perform an action once a content object has been checked in, i.e. synchronize content that has been checked in with a 3rd party system
+## When a Customer Might Use This
+- You need custom logic before or after content API operations.
+- You want to enrich, validate, or audit content actions centrally.
+- You need a reference implementation for content hook registration lifecycle.
 
 
 To see all the methods that can be overridden, see the interfaces:

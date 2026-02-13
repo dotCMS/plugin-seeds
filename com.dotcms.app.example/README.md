@@ -1,29 +1,30 @@
-# dotCMS Example App
-------
-![Screen Shot 2020-11-02 at 12 43 55 PM](https://user-images.githubusercontent.com/934364/97900775-26ee6180-1d09-11eb-85f5-4a2724202b13.png)
+# com.dotcms.app.example
 
+## Purpose
+This plugin demonstrates how to create a dotCMS App-backed plugin with secure configuration, request-time usage, and config-change listeners.
 
-This bundle plugin an OSGI example of how to create and use custom "Apps" built for dotCMS.  dotCMS Apps provide a secure store for plugin and system configuration and gives a dotCMS user the ability to surface and configure custom dotCMS functionality.  While this example is simple, Apps can be combined with osgi based custom REST endpoints, portlets, workflows, content hooks and servlets/filters to provide advanced and custom functionality.
+## What This Plugin Does
+- Installs `dotAppExample.yml` into the server app definitions folder on startup.
+- Registers a web interceptor that reads app secrets/config and logs the resolved values per request.
+- Subscribes to app secret save events so plugin code can react when app configuration changes.
 
-- This plugin adds a new `dotAppExample.yml` to the dotCMS app defintion folder.  You can see the example .yaml here:  https://github.com/dotCMS/plugin-seeds/blob/master/OSGi/com.dotcms.app.example/src/main/resources/dotAppExample.yml
-
-- This plugin also adds a simple example `WebInterceptor` that logs your app configuration - if available - on every request. 
-
-- Finally, this plugin registers an "App listener" that can be used to respond to changes in your App's configuration - to validate a config or do other external work.
+## When a Customer Might Use This
+- You need secure, host-aware plugin configuration managed through dotCMS Apps.
+- You want plugin behavior to change immediately when admins update app settings.
+- You need a reference for combining Apps, event subscribers, and interceptors in one plugin.
 
 Secrets and App config stored in Apps can be accessed using code as displayed below - which will return the App configuration of the current host, if available, or fall back and return the app configuration for the `SYSTEM_HOST`, if available. In order to access the App.getSecrets, the user must be a CMS_Admin or have access to the App portlet.
 
 ```java
-        
+
         final Host host = WebAPILocator.getHostWebAPI().getCurrentHostNoThrow(request);
         Optional<AppSecrets> appSecrets = APILocator.getAppsAPI().getSecrets(AppKeys.APP_KEY, true, host, APILocator.systemUser());
         return appSecrets
-        
+
 ```
 
 How to build this example
 -------------------------
 
 To build this, run  `mvn clean install`.  This will create a jar which you should upload into your dotCMS.
-
 

@@ -1,6 +1,17 @@
-# README
+# com.dotcms.content.validation
 
-This plugin is an example of how you can add custom validation to content using a WorkFlowActionlet.  The plugin supplies a new WorkflowActionlet called "Content Validation Actionlet Example" that can be added to workflow tasks.  The validation it uses is simple and intended as an example - it will not let you save a piece of content with "nosave" it its title, nor will it allow you to publish a piece of content with "nopublish" in its title. 
+## Purpose
+This plugin demonstrates workflow-time content validation using a custom Workflow Actionlet.
+
+## What This Plugin Does
+- Registers `ValidateContentlet` as `Content Validation Actionlet Example`.
+- Blocks save actions when title contains `nosave`.
+- Blocks publish actions when title contains `nopublish`.
+
+## When a Customer Might Use This
+- You need business-rule validation tied to specific workflow steps.
+- Authors must be prevented from saving or publishing content that violates policy.
+- You want a lightweight example of throwing validation exceptions from actionlets.
 
 ## How to build this example
 

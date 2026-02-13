@@ -1,7 +1,17 @@
-# README
+# com.dotcms.ruleengine.velocityscriptingactionlet
 
-This plugin allows to add an Rules Engine Actionlet (VelocityScriptingActionlet) that allow users to execute 
-arbitrary velocity code in a rule.  Using this, an admin can leverage the power of Velocity and work directly with the request, response and session objects.
+## Purpose
+This plugin adds a Rules Engine actionlet that executes Velocity script during rule evaluation.
+
+## What This Plugin Does
+- Registers `VelocityScriptingActionlet` as a custom rule actionlet.
+- Accepts a Velocity script parameter and evaluates it in web context.
+- Supports quote placeholders and logs errors if script evaluation fails.
+
+## When a Customer Might Use This
+- Rule behavior needs dynamic logic that changes without rebuilding Java code.
+- You need to inspect or manipulate request-context data inside rules.
+- You want a reference for custom Rule Actionlet registration and parameter handling.
 
 ## How to build this example
 

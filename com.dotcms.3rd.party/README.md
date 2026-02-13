@@ -1,6 +1,17 @@
-# README
+# com.dotcms.3rd.party
 
-This bundle plugin is an example of how to add 3rd party jars to a bundle plugin.
+## Purpose
+This plugin demonstrates how to package and use a third-party Java library inside a dotCMS OSGi bundle.
+
+## What This Plugin Does
+- Packages `date4j.jar` from `src/main/resources/libs/date4j.jar` into the OSGi bundle.
+- Starts with `com.dotmarketing.osgi.external.Activator`, then runs date/time examples from `com.dotmarketing.osgi.external.Examples`.
+- Prints the example output to the dotCMS logs/console to prove the third-party classes load and run correctly inside Felix.
+
+## When a Customer Might Use This
+- You need to integrate a non-dotCMS Java dependency (for example, an SDK or utility library) into a custom plugin.
+- You need a reference implementation for OSGi classloading and dependency packaging in dotCMS.
+- You want a minimal smoke test pattern that validates external library usage at bundle startup.
 
 ## How to build this example
 

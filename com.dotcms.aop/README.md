@@ -1,8 +1,17 @@
-# README
-This is an example of how to create and load Jersey Based REST resources in dotCMS via OSGi and Annotation Framework based on AOP 
+# com.dotcms.aop
 
-On the pom.xml you can see the necessary configuration to apply our aspects on your plugin in order to be able to use 
-the annotations in your project; currently dotCMS is using aspectjs as an AOP provider and compile-time injection for aspects.
+## Purpose
+This plugin demonstrates how to build OSGi REST APIs in dotCMS with AOP annotations for timing, transaction handling, and DB-session cleanup.
+
+## What This Plugin Does
+- Registers the Jersey resource `MyContentResource` at `/api/v1/custom/content`.
+- Exposes endpoints to fetch content by inode and delete older content.
+- Uses `@LogTime`, `@CloseDBIfOpened`, and `@WrapInTransaction` in service/resource methods.
+
+## When a Customer Might Use This
+- You need custom REST endpoints with consistent cross-cutting behavior.
+- You want transaction safety and automatic cleanup in plugin service methods.
+- You need a reference for dotCMS annotation-based AOP in OSGi plugins.
 
 In this example you can see how to use three annotations:
 

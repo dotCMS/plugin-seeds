@@ -1,6 +1,17 @@
-# README
+# com.dotcms.actionlet
 
-This bundle plugin is an example of how to add dotcms WorkFlowActionlet classes with our bundle plugin.
+## Purpose
+This plugin demonstrates how to add a custom Workflow Actionlet to dotCMS through an OSGi bundle.
+
+## What This Plugin Does
+- Registers `com.dotmarketing.osgi.actionlet.MyActionlet` at bundle startup using `registerActionlet(...)`.
+- Exposes the actionlet in Workflow actions as `My Osgi Actionlet`.
+- Runs custom actionlet logic in `executeAction(...)` (this example prints `Launch actionlet` to the logs/console).
+
+## When a Customer Might Use This
+- You need custom logic during a workflow step (for example, call an external API, enrich data, or trigger side effects).
+- Built-in workflow actions are not enough for your process.
+- You want a minimal reference for packaging and registering workflow actionlets via OSGi.
 
 ## How to build this example
 

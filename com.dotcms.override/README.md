@@ -1,6 +1,17 @@
-# README
+# com.dotcms.override
 
-This bundle plugin is an example of how to override dotCMS classes with our bundle plugin.
+## Purpose
+This plugin demonstrates overriding an existing dotCMS class implementation from an OSGi bundle.
+
+## What This Plugin Does
+- Provides a redefined `com.dotmarketing.portlets.folders.model.Folder` class.
+- Uses plugin startup to initialize shared services required for class override behavior.
+- Shows override effects with additional logging in `Folder.getPath()`.
+
+## When a Customer Might Use This
+- You must patch or alter behavior in core classes without forking the full platform.
+- You need a controlled proof-of-concept for class redefinition in dotCMS.
+- You want to understand lifecycle and limitations of override-style plugins.
 
 ## How to build this example
 

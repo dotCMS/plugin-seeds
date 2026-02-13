@@ -1,6 +1,17 @@
-# README
+# com.dotcms.contenttype
 
-This bundle plugin is an example of how to add dotcms Content Type
+## Purpose
+This plugin demonstrates creating and removing a custom Content Type programmatically from an OSGi bundle.
+
+## What This Plugin Does
+- Creates a content type named `My Content Type` (variable `MyContentType`) at startup.
+- Adds fields including screenshot, title, url, and integer order.
+- Associates the content type with the system workflow and deletes it on plugin stop.
+
+## When a Customer Might Use This
+- You need to provision content model changes automatically during plugin deployment.
+- You want repeatable setup/teardown of content types across environments.
+- You need a reference for ContentType API usage from dynamic plugins.
 
 ## How to build this example
 

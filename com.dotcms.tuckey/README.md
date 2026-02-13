@@ -1,7 +1,17 @@
+# com.dotcms.tuckey
 
-# README
+## Purpose
+This plugin demonstrates registering Tuckey URL rewrite, redirect, and forward rules from an OSGi bundle.
 
-This bundle plugin is an example of how add Tuckey rewrite Rules using an OSGI bundle plugin.
+## What This Plugin Does
+- Adds multiple rewrite rules programmatically at startup.
+- Demonstrates redirects, forwards, attribute setting, and conditional browser-based rules.
+- Unregisters rewrite services on stop to keep routing behavior clean.
+
+## When a Customer Might Use This
+- You need advanced URL handling not covered by default site routing.
+- You want programmable rewrite logic deployed as a plugin.
+- You need a reference for lifecycle-safe Tuckey rule registration.
 
 ## How to build this example
 
@@ -100,6 +110,5 @@ Will manually register Tuckey Rewrite Rules making use of the method *addRewrite
 * *Testing the redirect rule*: http://localhost:8080/example/redirect/
 * *Testing the rewrite rule*: http://localhost:8080/example/rewrite/locations/
 * *Testing the conditions*: http://localhost:8080/example/condition/ -> If call it using Google Chrome it will redirect to the about-us page and add an URL Parameter named "browser" with the value "chrome" (about-us/?browser=chrome), if is called from another browser will show up the 404 error page.
-
 
 

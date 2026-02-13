@@ -1,6 +1,17 @@
-# README
+# com.dotcms.hooks.pubsub
 
-This bundle plugin demonstrates how to add dotCMS content post hooks via OSGi on publish content and send a message to other nodes.
+## Purpose
+This plugin demonstrates publishing cluster-aware Pub/Sub events from a content publish hook.
+
+## What This Plugin Does
+- Registers a post-content hook that runs when content is published.
+- Publishes a custom topic event containing published content identifiers.
+- Subscribes to publish-related local system events and logs event details.
+
+## When a Customer Might Use This
+- You need node-to-node notifications after publish activity.
+- You want to trigger custom downstream processing based on publish events.
+- You need a reference for combining hooks and Pub/Sub in dynamic plugins.
 
 ## How to build this example
 

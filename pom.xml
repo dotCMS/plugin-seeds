@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dotcms</groupId>
+    <artifactId>plugin-seeds</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>dotCMS Plugin Seeds</name>
+    <description>Aggregator and shared parent for dotCMS OSGi plugin examples.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <dotcms-core.version>26.02.11-01</dotcms-core.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>dotcms-repo</id>
+            <url>https://artifactory.dotcms.cloud/artifactory/libs-release</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.dotcms</groupId>
+                <artifactId>dotcms-core</artifactId>
+                <version>${dotcms-core.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>com.dotcms.3rd.party</module>
+        <module>com.dotcms.actionlet</module>
+        <module>com.dotcms.aop</module>
+        <module>com.dotcms.app.example</module>
+        <module>com.dotcms.content.validation</module>
+        <module>com.dotcms.contenttype</module>
+        <module>com.dotcms.dynamic.skeleton</module>
+        <module>com.dotcms.fixasset</module>
+        <module>com.dotcms.hooks</module>
+        <module>com.dotcms.hooks.pubsub</module>
+        <module>com.dotcms.hooks.validations</module>
+        <module>com.dotcms.override</module>
+        <module>com.dotcms.portlet</module>
+        <module>com.dotcms.pushpublish.listener</module>
+        <module>com.dotcms.rest</module>
+        <module>com.dotcms.ruleengine.velocityscriptingactionlet</module>
+        <module>com.dotcms.ruleengine.visitoripconditionlet</module>
+        <module>com.dotcms.servlet</module>
+        <module>com.dotcms.simpleService</module>
+        <module>com.dotcms.staticpublish.listener</module>
+        <module>com.dotcms.tuckey</module>
+        <module>com.dotcms.viewtool</module>
+        <module>com.dotcms.webinterceptor</module>
+        <module>com.dotcms.job</module>
+    </modules>
+
+</project>

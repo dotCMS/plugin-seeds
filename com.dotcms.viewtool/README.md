@@ -1,4 +1,17 @@
-# README
+# com.dotcms.viewtool
+
+## Purpose
+This plugin demonstrates creating and registering a custom Velocity ViewTool for dotCMS templates.
+
+## What This Plugin Does
+- Registers `MyToolInfo` as a ViewTool service with key `osgitool`.
+- Exposes `MyViewTool` methods that templates can call (for example hello-message helpers).
+- Uses application scope for the tool instance lifecycle.
+
+## When a Customer Might Use This
+- Template authors need reusable helper methods without duplicating Velocity logic.
+- You want shared presentation utilities across multiple templates.
+- You need a reference for ViewTool registration via `registerViewToolService(...)`.
 
 ## How to build this example
 

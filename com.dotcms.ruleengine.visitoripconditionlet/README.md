@@ -1,6 +1,17 @@
-# README
+# com.dotcms.ruleengine.visitoripconditionlet
 
-This plugin allow to add a Conditionlet (VisitorIPConditionlet) to validate if the client IP matches or does not match an IP or a specific subnet.  It takes either a single standard IP(v4) like `192.168.1.45` or a whole subnet using CIDR notation, e.g. `192.168.1.1/24`
+## Purpose
+This plugin adds a Rules Engine conditionlet that evaluates visitor IP address against IP/CIDR criteria.
+
+## What This Plugin Does
+- Registers `VisitorIPConditionlet` as a rule condition.
+- Compares request IP using `IS` / `IS NOT` against a single IPv4 address or CIDR subnet.
+- Resolves visitor IP from request data and evaluates subnet membership when needed.
+
+## When a Customer Might Use This
+- You need geo/network-aware rule targeting by IP range.
+- You want to whitelist or block behaviors for specific client networks.
+- You need a reference for custom Rule Conditionlet logic with comparison parameters.
 
 **Note:** This plugin requires to add the JAVA_OPTS parameter `-Djava.net.preferIPv4Stack=true`.
 You can do this by adding it to your docker-compose environment variable `CMS_JAVA_OPTS` 

@@ -1,10 +1,17 @@
-# README
+# com.dotcms.portlet
 
-This bundle plugin is an example of how to create and add Portlets for use in the dotCMS' administrative console using an OSGI bundle plugin.
-This example includes the code to create three different types of Portlets, all of which are supported by dotCMS:
-* **Velocity Portlet**: a Portlet implementation that will display portlet content using a velocity file
-* **Jsp Portlet**: a Portlet implementation that will display portlet content using a jsp file
-* **Struts Portlet**: a Portlet implementation  that will call an Struts Action class that will use a jsp file in order to display portlet content.
+## Purpose
+This plugin demonstrates adding custom admin portlets to dotCMS via OSGi.
+
+## What This Plugin Does
+- Registers three portlet styles: Velocity, JSP, and Struts-based.
+- Adds Struts action mappings/forwards for the sample `HelloWorldAction`.
+- Loads portlet definitions from bundled config resources.
+
+## When a Customer Might Use This
+- You need custom UI tools in the dotCMS admin console.
+- Your feature requires server-side views/actions beyond REST-only integration.
+- You want a reference for packaging portlet XML, JSP/VTL resources, and action mappings.
 
 ## How to build this example
 

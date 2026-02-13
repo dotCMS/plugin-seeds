@@ -1,6 +1,17 @@
-# README
+# com.dotcms.simpleService
 
-This bundle plugin is an example of how to add a simple service class that can be use it by others bundles inside the Felix OSGI container (dotCMS/felix/load)
+## Purpose
+This plugin demonstrates publishing a reusable OSGi service for consumption by other bundles.
+
+## What This Plugin Does
+- Registers `HelloWorldService` under the `HelloWorld` interface in the OSGi service registry.
+- Adds service properties to support filtered service lookups.
+- Relies on OSGi lifecycle to unregister the service on plugin stop.
+
+## When a Customer Might Use This
+- You need shared business logic accessible by multiple plugins.
+- You want to decouple plugin components through service contracts.
+- You need a reference for OSGi service registration patterns in dotCMS.
 
 ## How to build this example
 

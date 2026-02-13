@@ -1,10 +1,17 @@
-# README
+# com.dotcms.webinterceptor
 
-This bundle plugin is an example of how to use WebInterceptors.  WebInterceptors respond to one or more URIs (they accept * at the end of their pattern) and can be used to:
+## Purpose
+This plugin demonstrates request/response interception patterns in dotCMS using WebInterceptors.
 
-* Act as a `javax.servlet.Filter`
-* Wrap the incoming request and the outgoing response to provide headers, or custom functionality
-* Act as a `javax.servlet.Servlet`, responding to specific URIs
+## What This Plugin Does
+- Registers `PreWebInterceptor` for `/app/helloworld` to demonstrate break, rewrite, and redirect behaviors.
+- Registers `WrappingWebInterceptor` for `/*` to wrap requests/responses and add headers/attributes.
+- Adds and removes interceptors through the interceptor delegate lifecycle.
+
+## When a Customer Might Use This
+- You need filter-like logic without writing raw servlet filters.
+- You want centralized header management, URL rewrites, or request decoration.
+- You need endpoint-specific interception with plugin deployment control.
 
 There are 2 WebInterceptors in this example.  
 

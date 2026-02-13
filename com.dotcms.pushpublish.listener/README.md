@@ -1,4 +1,17 @@
-# README
+# com.dotcms.pushpublish.listener
+
+## Purpose
+This plugin demonstrates listening to Push Publish lifecycle events in dotCMS.
+
+## What This Plugin Does
+- Subscribes to queue, start, end, and all-endpoints-success push publish events.
+- Logs event metadata and pushed queue elements through subscriber classes.
+- Cleans up subscriptions on plugin stop.
+
+## When a Customer Might Use This
+- You need observability or auditing around push publish operations.
+- You want to trigger integration logic when publish lifecycle events occur.
+- You need a reference for LocalSystemEvents subscriptions in OSGi plugins.
 ## How to build this example
 
 To build the JAR, run the following Maven command: 

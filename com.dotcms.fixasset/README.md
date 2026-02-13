@@ -1,13 +1,17 @@
-# README
+# com.dotcms.fixasset
 
-This bundle plugin is an example of how to add a dotcms fix tasks OSGi. FixTasks are run from the CMS Maintenance scree and can be used to fix corrupt data or other issues where the dotCMS store gets wonky.
+## Purpose
+This plugin demonstrates registering a custom CMS Maintenance Fix Task through OSGi.
 
-Example use cases:  
+## What This Plugin Does
+- Registers `SampleFixTask` so it is available in maintenance/fix task execution.
+- Implements `shouldRun()` and `executeFix()` using dotCMS fix task APIs.
+- Logs execution and writes a sample `FixAudit` record during task processing.
 
-* To prep legacy data in anticipation of an upgrade
-* To remove orphaned files on the file system
-* to clean up permission references
-* to add missing version_info records
+## When a Customer Might Use This
+- You need one-time or occasional repair logic for corrupted or legacy data.
+- You need repeatable maintenance routines that can run from dotCMS fix task infrastructure.
+- You want a reference for packaging operational data-fix code in a plugin.
 
 ## How to build this example
 

@@ -1,13 +1,17 @@
-# README
+# com.dotcms.hooks.validations
 
-This bundle plugin is an example of how to add dotcms content hooks via OSGi. 
-Content hooks works like interceptors and can be called before content has been modified (pre-hooks) or after the content has been checked in (post-hooks).
+## Purpose
+This plugin demonstrates pre-checkin validation hooks using a pluggable strategy pattern.
 
-This particular example works such as blueprint for a prehook over the validateContentlet method (on the ContentletAPI), you can use this example as a reference in order to extends by type or types 
-the custom validations via OSGI plugin 
+## What This Plugin Does
+- Registers `ValidatorPreContentHook` as a pre-content hook.
+- Applies multiple `ValidatorStrategy` implementations based on content type/conditions.
+- Throws validation exceptions for titles that do not satisfy sample strategy rules.
 
-In the example the hook is called ValidatorPreContentHook it basically use a set of ValidatorStrategies to do the validations, you can see in the 
-Activator how three Validator are being passed to the Hook instance.
+## When a Customer Might Use This
+- You need reusable validation rules shared across multiple content types.
+- You want richer validation than field-level constraints.
+- You need a reference for composable hook-based validation logic.
 
 ValidatorStrategy
 This interface encapsulates the signature for a validator, it basically has a test that will let it know to the hook if the validator could be or not applied to the contentlet, usually we will ask for a 

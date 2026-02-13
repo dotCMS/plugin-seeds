@@ -1,13 +1,17 @@
-# README
+# com.dotcms.staticpublish.listener
 
-This plugin push publishing of static objects from a dotCMS sender to a remote server using SSH File Transfer Protocol (SFTP). It is done through a push publishing listener that is subscribed to an event `SingleStaticPublishEndpointSuccessEvent`, once this plugin is deployed on dotCMS as a dynamic plugin.
+## Purpose
+This plugin demonstrates extending static push publishing with an event-driven file transfer workflow.
 
-You need to create a Static Endpoint, after the bundle is successfully saved locally is going to try to transfer the files to the SFTP server.
+## What This Plugin Does
+- Subscribes to `SingleStaticPublishEndpointSuccessEvent`.
+- On publish success, pushes generated static bundle files to remote endpoints over SFTP (or SCP pattern).
+- On remove/unpublish operations, removes remote files using the same endpoint context.
 
-For further information about dotCMS Dynamic Plugins and Push Publishing Listeners, please visit:
-
-* https://dotcms.com/docs/latest/osgi-plugins 
-* https://dotcms.com/docs/latest/push-publish-listeners-configuration
+## When a Customer Might Use This
+- You need static publish artifacts delivered to external file servers/CDN origin nodes.
+- You want custom post-publish transfer behavior tied to endpoint events.
+- You need a reference for static publish listener and transfer abstraction design.
 
 ## How to build this example
 

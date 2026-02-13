@@ -1,6 +1,17 @@
-# README
+# com.dotcms.rest
 
-This is an example of how to create and load Jersey Based REST resources in dotCMS via OSGi 
+## Purpose
+This plugin demonstrates exposing custom Jersey REST endpoints from a dotCMS OSGi bundle.
+
+## What This Plugin Does
+- Defines `ExampleResource` at `/api/example` with GET, POST, and PUT handlers.
+- Uses `WebResource.init(...)` to initialize request context and optionally enforce auth.
+- Returns simple JSON responses that include the current user context.
+
+## When a Customer Might Use This
+- You need lightweight custom APIs for integrations or front-end clients.
+- You want plugin-scoped endpoints without modifying core dotCMS services.
+- You need a starter example for authenticated and unauthenticated Jersey handlers.
 
 ## How to build this example
 

@@ -1,6 +1,17 @@
-# README
+# com.dotcms.job
 
-This bundle plugin is an example of how to Schedule Quartz Jobs using an OSGI bundle plugin.  It is an important example because it also demonstrates how to inject classes from your bundle into the running dotCMS instance.  The plugin activator has two methods that add and remove the class definitions to and from the dotCMS class loader. This is important because Quartz needs cleanly instantiate the Job and Test classes when it runs in the dotCMS context - outside of the bundle. 
+## Purpose
+This plugin demonstrates scheduling Quartz jobs from an OSGi bundle in dotCMS.
+
+## What This Plugin Does
+- Registers and schedules a sample `CustomJob` with a cron expression.
+- Bridges bundle classes into the host classloader so Quartz can instantiate job classes.
+- Unregisters scheduled services on stop to avoid orphaned jobs.
+
+## When a Customer Might Use This
+- You need recurring background work (sync, cleanup, reporting) in dotCMS.
+- You want job scheduling controlled by plugin deployment.
+- You need a reference for Quartz classloading behavior in OSGi context.
 
 ## How to build this example
 
