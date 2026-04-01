@@ -1,2 +1,3 @@
-# plugin-seeds
-Archived - see dotcms-community/plugin-examples
+# dotCMS plugin-seeds
+
+Moved, see https://github.com/dotcms-community/plugin-examples
